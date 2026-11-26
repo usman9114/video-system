@@ -16,7 +16,7 @@ Continue my Upwork video repurposing project from where the last session stopped
    as the source of truth for decisions, status and what is waiting on me.
 2. This is a new Claude account, so cloud environments and secrets don't carry over. If this session
    can't reach api.kaggle.com, propose a personal environment named "upwork-video-system"
-   allowing api.kaggle.com, www.kaggle.com, storage.googleapis.com (see docs/kaggle-gpu-setup.md),
+   allowing api.kaggle.com, www.kaggle.com, storage.googleapis.com, www.kaggleusercontent.com (see docs/kaggle-gpu-setup.md),
    and ask me for the Kaggle token via the secure credential form when the GPU is needed.
 3. Video files live in my Google Drive folder "upwork-video-system" (source, broll, assets,
    previews, exports). Download what you need; never modify the original source video.

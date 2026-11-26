@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# kgpu: run a job folder on a free Kaggle GPU. See docs/kaggle-gpu-setup.md
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+if [ ! -x "$ROOT/.venv/bin/python" ]; then
+  uv venv -q "$ROOT/.venv" && uv pip install -q --python "$ROOT/.venv/bin/python" -r "$ROOT/lane/requirements.txt"
+fi
+cd "$ROOT" && exec .venv/bin/python -m lane.kgpu "$@"
