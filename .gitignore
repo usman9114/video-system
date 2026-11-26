@@ -1,0 +1,24 @@
+# Media lives in Google Drive, not git
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4a
+*.wav
+*.mp3
+source/*
+broll/*
+previews/*
+exports/*
+!*/.gitkeep
+# Local tools, envs, secrets
+tools/
+.venv/
+node_modules/
+kaggle/inputs/
+kaggle/outputs/
+data/private/
+.env
+*.token
+kaggle.json
+access_token
