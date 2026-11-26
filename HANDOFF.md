@@ -43,8 +43,8 @@ credentials, client results or testimonials, no synthetic-looking face, ask befo
 - [ ] Phases 4-10 for the remaining 9 gigs. **Still need the owner's Upwork gig titles and descriptions.**
 
 ## Waiting on owner
-1. Feedback on DRAFT1 (clean master)
-2. 60 MB original → Drive `upwork-video-system/source/`
+1. **Feedback on video #1** (`exports/01_n8n_automation.mp4`): look, pacing, claims on screen
+2. 60 MB original → upload on kaggle.com as a **private dataset named `source-video`** (Drive connector can't fetch >10 MB)
 3. Upwork gig titles and descriptions (at least the n8n gig text)
 4. Yes or no on the ChatGPT lane (Remotion turned out not to be needed: promo.py uses Pillow + ffmpeg)
 5. Confirm the transcript line "We test **what works**" (the old subtitle said "with words")
