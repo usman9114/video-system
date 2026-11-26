@@ -1,0 +1,22 @@
+# Lessons Learned (keep updated; each lesson says where it is encoded)
+
+| # | Lesson | Encoded in |
+|---|---|---|
+| 1 | The Kaggle CLI (2.2.5) validates `KAGGLE_API_TOKEN` by sending it in the request **body** (IntrospectToken). The proxy only injects **headers**, so the stock CLI always says "not authenticated". Fix: skip introspection and detect the username from an authenticated "my notebooks" call. | `lane/kgpu.py` (`_api`, `_detect_user`) |
+| 2 | A Kaggle dataset and a notebook can't share a title (409 "title already in use by a dataset"). | `lane/kgpu.py`: datasets are `kgpu-<job>-data` |
+| 3 | Kaggle job outputs download from `www.kaggleusercontent.com`; uploads go through `storage.googleapis.com`. Both must be allowed in the environment. | `docs/kaggle-gpu-setup.md`, env `upwork-video-system` |
+| 4 | Kaggle's GPU image is **CUDA 13 / PyTorch 2.11**. `faster-whisper` (CTranslate2, needs libcublas.so.12) fails, and its PyAV audio decoding clashes with the image. Use `openai-whisper` (runs on the preinstalled torch). | `jobs/transcribe/run.py` |
+| 5 | `--acc NvidiaTeslaT4` = Kaggle's **2× T4** machine. Use both GPUs with `torch.multiprocessing.spawn`, one worker per GPU. LaMa did 1,457 frames (256×256) in 48 s. | `lane/kgpu.py` default, `jobs/inpaint-logo/run.py` |
+| 6 | This Kaggle account's GPU quota is **6 h/week** (21,600 s), not the 30 h quoted online. Check with `bin/kgpu quota`. | `docs/kaggle-gpu-setup.md` |
+| 7 | ffmpeg `delogo` smears coloured details (sticky notes) into streaks. Per-frame **LaMa inpainting** of a small crop, then temporal averaging (±2 frames) **within each shot** (cuts detected from frame differences) gives a clean, stable result. | `jobs/inpaint-logo/run.py`, `scripts/clean_master.py --logo-patch` |
+| 8 | The camera slowly pushes in within shots, so a static clean plate won't align. Inpaint every frame. | same |
+| 9 | Source timing: the WFP end card fades in at 48.6 s, right after the last word (48.59 s). Cut at **48.55 s**. The corner logo fades out by itself at about 48 s. | `templates/clean_master.json` `trim_end` |
+| 10 | Burned-in subtitles can't be removed cleanly. Cover them with a blurred, darkened rounded panel in the same place and draw new captions on top. | `templates/clean_master.json` `subtitle_panel`, `scripts/clean_master.py` |
+| 11 | Whisper splits hyphenated words ("AI -powered") and can leave orphan words on a line. Join tokens that start with `-`, and balance 2-line captions at the space nearest the middle. | `scripts/clean_master.py` `_join`, `_balance` |
+| 12 | Transcript beats burned subtitles: the original WFP subtitle "We test with words" is really "We test **what works**" (Whisper confidence on "what" was only 0.27, so owner to confirm). | `assets/transcripts/*.words.json` |
+| 13 | The Google Drive connector can **download** a 3.6 MB video, but **uploads are capped at about 3 MB per call** (4.2 MB request limit). Drafts go to the owner through the app's file send. Large downloads (the 60 MB original) are untested. | this file, `HANDOFF.md` |
+| 14 | Cloud sessions can't create GitHub repos (`gh repo create` → 403). The owner creates the repo and grants the Claude GitHub App access; then `add_repo`. | `docs/CONTINUE-PROMPT.md` |
+| 15 | Installing the Codex CLI (ChatGPT lane) was blocked by the auto-mode safety check. It needs the owner's explicit OK first. | `HANDOFF.md` |
+| 16 | `ffprobe -of csv=p=0:s=' '` fails (a space separator can't be parsed); use `s=x` and `IFS=x`. | `scripts/make_clean_master.sh` |
+| 17 | The source is 4:5 (864×1080) with a clean area of only about 600×650 px around the face (above the subtitles). Plan 9:16 and 16:9 as **designed layouts** (framed talking head + text panels), not crops or upscales. | `reports/02-source-footage.md` |
+| 18 | Final encode: x264 `veryslow` CRF 14 on the CPU gives better quality than NVENC on the T4s. Use the GPUs for AI steps only (Whisper, LaMa). | `templates/clean_master.json` `encode` |

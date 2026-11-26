@@ -1,43 +1,51 @@
 # HANDOFF: Read This First
 
 Living status file. Every session updates it before ending, so any Claude account can continue.
+Also read: `docs/LESSONS.md` (what went wrong and how it's fixed in code), `README.md` (how to run).
 
-_Last updated: 2026-11-26, end of Phase 1 / start of Phase 2_
+_Last updated: 2026-11-26 ~22:50 UTC_
 
 ## Project
 Turn one generic talking-head video of the owner into 10 targeted Upwork promo videos.
-The full brief is in `docs/BRIEF.md`. Hard rules: $0 default, max about €10 total with owner approval,
-no fabricated credentials, client results or testimonials, no synthetic-looking face, ask before installs or spending.
+Full brief: `docs/BRIEF.md`. Hard rules: $0 default, max about €10 total with owner approval, no fabricated
+credentials, client results or testimonials, no synthetic-looking face, ask before installs or spending.
 
 ## Where things live
 | What | Where |
 |---|---|
-| Code, templates, configs, scripts, reports | GitHub `usman9114/video-system` (private) |
-| Video files (source, B-roll, previews, exports) | Google Drive folder `upwork-video-system/` (subfolders: source, broll, assets, previews, exports) |
-| Kaggle GPU lane | `docs/kaggle-gpu-setup.md` (token stored as a cloud-environment network secret, never in git) |
+| Code, configs, docs, reports | GitHub `usman9114/video-system` (private), branch `main` |
+| Video files | Google Drive folder `upwork-video-system/` (source, broll, assets, previews, exports). Connector uploads max about 3 MB per call, so send drafts with the app's file send |
+| Kaggle GPU lane | `bin/kgpu` + `docs/kaggle-gpu-setup.md`. Kaggle user `usmanqureshi94`, quota 6 GPU h/week (resets weekly; next 2026-11-28) |
 | Cloud environment | `upwork-video-system` (personal; allows api.kaggle.com, www.kaggle.com, storage.googleapis.com, www.kaggleusercontent.com; Kaggle token saved as a network secret). It's per Claude account, so recreate it on a new account |
 
 ## Decisions made
-1. **Stack:** Remotion v4 (templates, captions, CTA) + FFmpeg (cuts, audio, QA) + faster-whisper/WhisperX (local captions). Fallback: pure FFmpeg. See `reports/01-tool-research.md`.
-2. **Run in the cloud** (not on the owner's computer). Usage limits are per account, so work moves between accounts through git + Drive.
-3. **Meta Muse:** not usable (Muse Video is a closed beta and it generates new footage; Muse Spark is a text model).
-4. **Lip-sync:** not the default. Default = real footage + the owner's own voiceover. MuseTalk on Kaggle is to be tested in Phase 6 only.
-5. **Free GPU:** Kaggle chosen. Colab/Lightning/Modal rejected for now. Budget of about €10 available if a paid option clearly helps (e.g. fal.ai LatentSync about $0.20 per clip up to 40 s; RunPod 4090 about $0.34/h). Ask first.
-6. **Thumbnails:** a real frame of the owner + a generated background + text added locally. Optional ChatGPT lane (Codex CLI on the owner's ChatGPT Go plan, from repo `usman9114/drop-shipping-` branch `claude/eager-hawking-jmvcqj`, files `scout/chatgpt.py`, `scripts/install_codex.sh`, `.claude/skills/chatgpt/SKILL.md`). **Install NOT yet approved.** Never send face frames to OpenAI without asking.
+1. **Stack:** FFmpeg + Python for cutting, compositing, captions and encoding. Kaggle 2×T4 for AI steps (Whisper large-v3, LaMa).
+   Remotion v4 is planned for animated promo templates (**npm install not yet approved by the owner**).
+2. **Cloud only.** Work moves between accounts through git + Drive.
+3. Meta Muse: not usable. Lip-sync: not the default (MuseTalk test only, later).
+4. **Owner confirmed** they may reuse the WFP footage. They asked to remove the end card and logo and replace the subtitles in place (done).
+5. Thumbnails: real frame + generated background + text added locally. ChatGPT lane (Codex CLI, from repo
+   `usman9114/drop-shipping-` branch `claude/eager-hawking-jmvcqj`) **install not approved yet**.
 
 ## Status
-- [x] Phase 1: research + recommendation
-- [~] Phase 2: environment created, Kaggle reachable, Drive + git set up. Tool smoke test not yet run.
-- [x] Kaggle GPU lane working end to end: `bin/kgpu run <job>` (Tesla T4, CUDA, torch 2.11, ffmpeg). Smoke test `jobs/hello-gpu` passed 2026-11-26
-- [ ] Phase 3: waiting for the source video (owner uploads to Drive `upwork-video-system/source/`)
-- [ ] Phase 4: waiting for the owner's Upwork gig titles and descriptions
-- [ ] Phases 5 to 10
+- [x] Phase 1: research (`reports/01-tool-research.md`)
+- [x] Phase 2: env, Kaggle lane, git, Drive
+- [x] Phase 3 (on compressed copy): `reports/02-source-footage.md`. Transcript `assets/transcripts/original_small.words.json`
+- [x] **Clean master v1** from the compressed copy: `scripts/make_clean_master.sh` → `exports/clean_master_from_small.mp4`
+      (QA: -14.0 LUFS, -1.5 dBTP, no black or frozen frames). Sent to the owner as `previews/DRAFT1_clean_master_review.mp4`.
+- [ ] Re-run on the **60 MB original** once it's in Drive `source/` (the owner said they'll upload it).
+      Note: a Drive download of 60 MB through the connector is untested.
+- [ ] **Video #1 = n8n automation gig** (owner request 2026-11-26: "make something for n8n, like I'm a pro and
+      would help you with your problems"). Concept and script in progress: `scripts/videos/01_n8n.md` (next step).
+- [ ] Phases 4-10 for the remaining 9 gigs. **Still need the owner's Upwork gig titles and descriptions.**
 
 ## Waiting on owner
-1. Source video uploaded to Drive `upwork-video-system/source/`
-2. Upwork gig titles and descriptions
-3. Yes or no on installing the ChatGPT lane (Codex CLI)
+1. Feedback on DRAFT1 (clean master)
+2. 60 MB original → Drive `upwork-video-system/source/`
+3. Upwork gig titles and descriptions (at least the n8n gig text)
+4. OK to `npm install` Remotion v4 (for animated templates), and yes or no on the ChatGPT lane
+5. Confirm the transcript line "We test **what works**" (the old subtitle said "with words")
 
 ## Next step for Claude
-Once the video is in Drive: download it to `source/` (never modify the original), install the pinned tools
-(ask first), run the smoke test, write `reports/02-source-footage.md`.
+Write the n8n video concept and script (reusing only true, generic lines from the source + on-screen text and B-roll),
+get the owner's OK, then build the promo template and render the preview.
