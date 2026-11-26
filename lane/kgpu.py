@@ -6,6 +6,7 @@
                                             [--timeout-min 60] [--no-wait]
     python -m lane.kgpu status hello-gpu
     python -m lane.kgpu output hello-gpu
+    python -m lane.kgpu quota                  # weekly GPU hours used/left
     python -m lane.kgpu clean hello-gpu        # delete the private input dataset + notebook on Kaggle
 
 A job folder contains:
@@ -164,7 +165,7 @@ def cmd_run(a) -> None:
         "dataset_sources": [ds], "competition_sources": [], "kernel_sources": [],
     }
     (k / "kernel-metadata.json").write_text(json.dumps(meta, indent=1))
-    r = api.kernels_push(str(k), timeout=str(a.timeout_min * 60))
+    r = api.kernels_push(str(k), timeout=str(a.timeout_min * 60), acc=None if a.no_gpu else a.acc)
     err = getattr(r, "error", None)
     if err:
         sys.exit(f"kgpu: push failed: {err}")
@@ -231,6 +232,8 @@ def main() -> None:
     r.add_argument("--no-internet", action="store_true")
     r.add_argument("--timeout-min", type=int, default=60)
     r.add_argument("--no-wait", action="store_true")
+    r.add_argument("--acc", default="NvidiaTeslaT4", help="Kaggle machine shape (NvidiaTeslaT4 = 2x T4)")
+    sub.add_parser("quota")
     for n in ("status", "output", "wait", "clean"):
         sub.add_parser(n).add_argument("job")
     a = p.parse_args()
@@ -241,6 +244,14 @@ def main() -> None:
         return
     if a.cmd == "run":
         cmd_run(a)
+        return
+    if a.cmd == "quota":
+        api, _ = _api()
+        q = api.quota_view()
+        for name in ("gpu_quota", "tpu_quota"):
+            v = getattr(q, name, None)
+            print(name, v.to_dict() if hasattr(v, "to_dict") else v)
+        print("refresh:", getattr(q, "quota_refresh_time", None))
         return
     api, user = _api()
     slug = a.job if a.job.startswith(PREFIX) else _slug(Path(a.job).name)

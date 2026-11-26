@@ -1,0 +1,55 @@
+{
+  "_doc": "Regions measured on the 864x1080 source (scaled automatically if the input differs). See reports/02-source-footage.md",
+  "base_size": [
+    864,
+    1080
+  ],
+  "trim_end": 48.55,
+  "logo_box": {
+    "x": 703,
+    "y": 40,
+    "w": 122,
+    "h": 152
+  },
+  "subtitle_panel": {
+    "x": 88,
+    "y": 852,
+    "w": 688,
+    "h": 150,
+    "radius": 18,
+    "blur_sigma": 28,
+    "darken": 0.42
+  },
+  "captions": {
+    "font": "Inter SemiBold",
+    "size": 34,
+    "max_chars_per_line": 32,
+    "max_lines": 2,
+    "color": "&H00FFFFFF",
+    "outline_color": "&H00000000",
+    "outline": 0,
+    "shadow": 0,
+    "highlight": false,
+    "fixes": {
+      "WFP": "WFP"
+    }
+  },
+  "audio": {
+    "lufs": -14,
+    "true_peak": -1.5,
+    "lra": 7,
+    "highpass_hz": 70
+  },
+  "encode": {
+    "crf": 14,
+    "preset": "veryslow",
+    "audio_bitrate": "256k"
+  },
+  "logo_patch_crop": {
+    "x": 608,
+    "y": 0,
+    "w": 256,
+    "h": 256,
+    "mask_pad": 6
+  }
+}
