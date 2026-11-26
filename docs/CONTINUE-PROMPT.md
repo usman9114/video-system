@@ -1,11 +1,11 @@
 # Prompt to continue on another Claude account
 
 ## Before switching (one time)
-1. The GitHub repo `usman9114/upwork-video-system` must be reachable by the new account's GitHub connection
+1. The GitHub repo `usman9114/video-system` must be reachable by the new account's GitHub connection
    (same GitHub account, or add the other GitHub user as a collaborator in repo Settings → Collaborators).
 2. Google Drive: connect the **same Google account** that owns the `upwork-video-system` Drive folder,
    or share that folder with the new account's Google account.
-3. In the new Claude account, start a **cloud** Claude Code session with the repo `usman9114/upwork-video-system` selected.
+3. In the new Claude account, start a **cloud** Claude Code session with the repo `usman9114/video-system` selected.
 
 ## Paste this as the first message
 
