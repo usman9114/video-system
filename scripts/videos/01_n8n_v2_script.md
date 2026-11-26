@@ -1,30 +1,46 @@
-# Video 01 v2: n8n Automation, new script (first person, about 38 s)
+# Video 01 v2: n8n Automation, new script (first person, about 40 s)
 
-**Target client:** small business owners, agencies, ops managers doing repetitive work by hand.
-**Pain:** copy-pasting between apps, leads waiting in inboxes, hand-built reports.
-**Promise (no invented results):** working n8n workflows, AI only where it helps, tested, documented.
+Source of truth for claims: the owner's Upwork gig text (2026-11-26), saved below. Nothing beyond it is claimed.
+
+**Target client:** business owners, agencies, sales and ops teams doing repetitive work by hand.
+**Pain:** chasing leads, sorting email, manual CRM updates, hand-built reports, apps that don't talk.
+**Promise:** n8n + AI workflows tailored to their business. Save hours, fewer errors, time to grow.
 **Delivery:** calm, confident, talking to one person. Smile on the hook and the CTA.
 
 | # | Time | Spoken (owner's voice) | On screen | Visual |
 |---|---|---|---|---|
-| 1 HOOK | 0-3 s | "If you're copy-pasting data between apps every day… that's a job for n8n, not for you." | **"Still copy-pasting between apps?"** | Close-up, quick push-in |
-| 2 PAIN | 3-9 s | "Leads sit in your inbox. Someone updates the CRM by hand. Reports eat hours every week." | ✕ Leads waiting · ✕ Manual CRM updates · ✕ Hours on reports | Cards pop in on each phrase |
-| 3 WHO | 9-13 s | "I'm Usman, an AI and automation consultant." | Name + title lower third | Wide shot |
-| 4 WHAT | 13-22 s | "I build n8n workflows that connect your tools, use AI where it actually helps, like sorting emails or drafting replies, and run quietly in the background." | Animated workflow: Gmail → AI → CRM → Slack | Graphic, then you |
-| 5 HOW | 22-30 s | "I map your process first, build and test the workflow, add error alerts, and hand it over with clear documentation." | ① Map ② Build & test ③ Alerts ④ Docs & handover | Step cards |
-| 6 CTA | 30-38 s | "Send me the one task you hate doing every week, and I'll show you how to automate it." | **"Send me the task you hate doing."** · Message me on Upwork | Close-up, open-hand gesture, end card |
+| 1 HOOK | 0-3 s | "Doing the same task over and over again? Let's automate it." | **"Doing the same task over and over?"** | Close-up, quick push-in |
+| 2 PAIN | 3-9 s | "Chasing leads, sorting emails, updating your CRM, building reports by hand… it eats your week." | ✕ Chasing leads · ✕ Sorting emails · ✕ Manual CRM updates · ✕ Reports by hand | Cards pop in on each phrase |
+| 3 WHO + WHAT | 9-20 s | "I'm Usman. I build n8n automations and AI-powered workflows that connect your apps, capture leads from every source, follow up with customers, and keep your data in sync, automatically." | Lower third: **Usman Qureshi · n8n & AI Automation** · animated workflow: Lead form → AI → CRM → Follow-up email | Wide, then graphic |
+| 4 MORE | 20-27 s | "Need an AI chatbot, an AI agent, or a custom API integration? I'll build it around how your business actually works." | ✔ AI chatbots · ✔ AI agents · ✔ API integrations | Feature cards |
+| 5 VALUE | 27-33 s | "The goal isn't just automation. It's saving you hours, cutting errors, and giving you time to grow." | **Save hours · Fewer errors · Time to grow** | Close-up |
+| 6 CTA | 33-40 s | "Send me your idea, and let's turn it into a workflow that runs itself." | **"Send me your idea."** · Message me on Upwork | Open-hand gesture → end card |
 
-Words: about 95 at a natural pace ≈ 36-40 s.
+Words: about 105 at a natural pace ≈ 38-42 s.
 
-## Claims to confirm (owner)
-- Title "AI and automation consultant" ✔/✘
-- Can deliver: tool integrations, AI steps (email sorting, drafting), error alerts, documentation and handover ✔/✘
-- Any real example workflow we may screen-record (best proof, no fake results)
+## Teleprompter version (read this; pause briefly at each line break)
+Doing the same task over and over again? Let's automate it.
+Chasing leads, sorting emails, updating your CRM, building reports by hand… it eats your week.
+I'm Usman. I build n8n automations and AI-powered workflows
+that connect your apps, capture leads from every source, follow up with customers, and keep your data in sync, automatically.
+Need an AI chatbot, an AI agent, or a custom API integration?
+I'll build it around how your business actually works.
+The goal isn't just automation. It's saving you hours, cutting errors, and giving you time to grow.
+Send me your idea, and let's turn it into a workflow that runs itself.
 
-## Teleprompter version (read this)
-If you're copy-pasting data between apps every day… that's a job for n8n, not for you.
-Leads sit in your inbox. Someone updates the CRM by hand. Reports eat hours every week.
-I'm Usman, an AI and automation consultant.
-I build n8n workflows that connect your tools, use AI where it actually helps, like sorting emails or drafting replies, and run quietly in the background.
-I map your process first, build and test the workflow, add error alerts, and hand it over with clear documentation.
-Send me the one task you hate doing every week, and I'll show you how to automate it.
+## Recording tips (phone, 5-10 min)
+- The same spot as the original (whiteboard, window light) if possible, or any tidy wall facing a window.
+- Phone at eye level, vertical, about 1 m away. Use the lav mic if you have it, otherwise a quiet room.
+- Do 2-3 takes of each line, with a 2 s pause between lines. I'll cut out the pauses and pick the best takes.
+- A voice memo only (no video) also works: I'd use your existing footage + B-roll, with lip-sync where your face is on screen.
+
+## Owner's gig text (claims source)
+> I help businesses save time, reduce manual work, and streamline their operations using n8n automation and
+> AI-powered workflows. I can automate repetitive tasks like lead generation, email management, CRM updates, data
+> collection, customer follow-ups, reporting, and connecting different apps so they work together seamlessly.
+> Whether you need to automate your sales process, capture leads from multiple sources, build AI chatbots or AI agents,
+> integrate APIs, or create a workflow that handles tasks automatically, I can build a solution tailored to your
+> business. My goal isn't just to build automations. It's to help you save hours, reduce errors, and focus on growing
+> your business instead of wasting time on repetitive tasks. If you have a process that takes too much time or
+> involves doing the same thing over and over, let's automate it. Send me your idea, and let's turn it into an
+> efficient automated workflow.

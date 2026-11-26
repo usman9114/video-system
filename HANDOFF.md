@@ -40,12 +40,13 @@ credentials, client results or testimonials, no synthetic-looking face, ask befo
       Build: `python3 scripts/promo.py scripts/videos/01_n8n.json --final`. Spec = `scripts/videos/01_n8n.json`,
       design = `templates/promo_4x5.json`. Sent to the owner for review. **Do not batch the other 9 until the owner approves #1.**
       Unconfirmed claims on screen: title "AI Solutions Consultant", feature cards (self-hosted/cloud, AI agents + API, docs & handover).
+- [~] **Video #1 v2**: new first-person script from the owner's gig text (`scripts/videos/01_n8n_v2_script.md`). Needs new audio: owner recording (recommended) or AI test (Chatterbox MIT voice + MuseTalk lip-sync on Kaggle). Owner hasn't chosen yet.
 - [ ] Phases 4-10 for the remaining 9 gigs. **Still need the owner's Upwork gig titles and descriptions.**
 
 ## Waiting on owner
 1. **Feedback on video #1** (`exports/01_n8n_automation.mp4`): look, pacing, claims on screen
 2. 60 MB original → upload on kaggle.com as a **private dataset named `source-video`** (Drive connector can't fetch >10 MB)
-3. Upwork gig titles and descriptions (at least the n8n gig text)
+3. Upwork gig titles and descriptions for gigs 2-10 (n8n gig text received, saved in scripts/videos/01_n8n_v2_script.md)
 4. Yes or no on the ChatGPT lane (Remotion turned out not to be needed: promo.py uses Pillow + ffmpeg)
 5. Confirm the transcript line "We test **what works**" (the old subtitle said "with words")
 
