@@ -1,0 +1,21 @@
+{
+  "_doc": "Video 01: n8n automation gig. Concept: scripts/videos/01_n8n.md. Times in 'src' refer to the source transcript.",
+  "id": "01_n8n_automation",
+  "template": "templates/promo_4x5.json",
+  "transcript": "assets/transcripts/original_small.words.json",
+  "name": "Usman Qureshi",
+  "title": "AI Solutions Consultant",
+  "segments": [
+    {"type": "workflow", "dur": 2.8, "headline": ["Still copy-pasting", "between apps?"], "progress": [0.0, 0.45]},
+    {"type": "list", "dur": 3.6, "kicker": "Sound familiar?", "icon": "x",
+     "items": ["Leads stuck in your inbox", "Reports built by hand", "Tools that don't talk"]},
+    {"type": "talk", "src": [30.80, 34.98], "lower_third": true, "emphasis": ["practical"]},
+    {"type": "workflow", "dur": 4.0, "headline": ["I build n8n workflows", "that do the busywork"], "progress": [0.45, 1.0], "done": true},
+    {"type": "talk", "src": [35.06, 37.28], "emphasis": ["works,"]},
+    {"type": "list", "dur": 4.8, "kicker": "What you get", "icon": "check",
+     "items": ["Self-hosted or n8n Cloud", "AI agents + any API", "Docs & handover included"]},
+    {"type": "talk", "src": [39.58, 48.45], "video_in": 39.85, "emphasis": ["efficiently,", "decisions,", "building."]},
+    {"type": "end", "dur": 4.6, "headline": ["Send me the task", "you hate doing."], "sub": "I'll map the automation.",
+     "button": "Message me on Upwork", "photo_src_t": 47.2}
+  ]
+}

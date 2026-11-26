@@ -1,0 +1,48 @@
+{
+  "_doc": "Design tokens for promo videos (4:5, 1080x1350). Used by scripts/promo.py. Change here = every video changes.",
+  "size": [1080, 1350],
+  "fps": 30,
+  "colors": {
+    "bg": "#0C1220",
+    "bg_grid": "#16203A",
+    "text": "#FFFFFF",
+    "muted": "#A9B4CC",
+    "accent": "#35C2D9",
+    "accent_dark": "#11616E",
+    "bad": "#FF6B6B",
+    "card": "#141D31",
+    "card_edge": "#24324F"
+  },
+  "fonts": {
+    "black": "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf",
+    "bold": "/usr/share/fonts/opentype/inter/Inter-Bold.otf",
+    "semibold": "/usr/share/fonts/opentype/inter/Inter-SemiBold.otf",
+    "medium": "/usr/share/fonts/opentype/inter/Inter-Medium.otf"
+  },
+  "talk": {
+    "source_crop": [0, 0, 864, 846],
+    "frame_h": 1058,
+    "zoom_from": 1.0,
+    "zoom_to": 1.07,
+    "zoom_anchor": [432, 360],
+    "band_fade_px": 140
+  },
+  "captions": {
+    "size": 54,
+    "max_chars_per_line": 24,
+    "max_lines": 2,
+    "y_center": 1206,
+    "line_gap": 10,
+    "active_word_color": "accent"
+  },
+  "audio": {
+    "lufs": -14,
+    "true_peak": -1.5,
+    "music_db": -27,
+    "speech_fade_ms": 40
+  },
+  "encode": {
+    "preview": {"preset": "medium", "crf": 18},
+    "final": {"preset": "veryslow", "crf": 14}
+  }
+}
