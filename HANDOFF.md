@@ -3,7 +3,7 @@
 Living status file. Every session updates it before ending, so any Claude account can continue.
 Also read: `docs/LESSONS.md` (what went wrong and how it's fixed in code), `README.md` (how to run).
 
-_Last updated: 2026-11-26 ~22:50 UTC_
+_Last updated: 2026-11-26 ~23:10 UTC_
 
 ## Project
 Turn one generic talking-head video of the owner into 10 targeted Upwork promo videos.
@@ -33,19 +33,23 @@ credentials, client results or testimonials, no synthetic-looking face, ask befo
 - [x] Phase 3 (on compressed copy): `reports/02-source-footage.md`. Transcript `assets/transcripts/original_small.words.json`
 - [x] **Clean master v1** from the compressed copy: `scripts/make_clean_master.sh` → `exports/clean_master_from_small.mp4`
       (QA: -14.0 LUFS, -1.5 dBTP, no black or frozen frames). Sent to the owner as `previews/DRAFT1_clean_master_review.mp4`.
-- [ ] Re-run on the **60 MB original** once it's in Drive `source/` (the owner said they'll upload it).
-      Note: a Drive download of 60 MB through the connector is untested.
-- [ ] **Video #1 = n8n automation gig** (owner request 2026-11-26: "make something for n8n, like I'm a pro and
-      would help you with your problems"). Concept and script in progress: `scripts/videos/01_n8n.md` (next step).
+- [ ] **60 MB original** (`sample-video.mp4`) is in Drive but the connector caps downloads at 10 MB. Asked the owner to upload it
+      as a private Kaggle dataset `source-video`; then `bin/kgpu`'s Kaggle API can fetch it. Then re-run
+      `scripts/make_clean_master.sh` + `promo.py --source source/<orig>.mp4` (all resolution-independent).
+- [x] **Video #1 = n8n automation** rendered: `exports/01_n8n_automation.mp4` (4:5 1080×1350, 34.8 s, -14.4 LUFS).
+      Build: `python3 scripts/promo.py scripts/videos/01_n8n.json --final`. Spec = `scripts/videos/01_n8n.json`,
+      design = `templates/promo_4x5.json`. Sent to the owner for review. **Do not batch the other 9 until the owner approves #1.**
+      Unconfirmed claims on screen: title "AI Solutions Consultant", feature cards (self-hosted/cloud, AI agents + API, docs & handover).
 - [ ] Phases 4-10 for the remaining 9 gigs. **Still need the owner's Upwork gig titles and descriptions.**
 
 ## Waiting on owner
 1. Feedback on DRAFT1 (clean master)
 2. 60 MB original → Drive `upwork-video-system/source/`
 3. Upwork gig titles and descriptions (at least the n8n gig text)
-4. OK to `npm install` Remotion v4 (for animated templates), and yes or no on the ChatGPT lane
+4. Yes or no on the ChatGPT lane (Remotion turned out not to be needed: promo.py uses Pillow + ffmpeg)
 5. Confirm the transcript line "We test **what works**" (the old subtitle said "with words")
 
 ## Next step for Claude
-Write the n8n video concept and script (reusing only true, generic lines from the source + on-screen text and B-roll),
-get the owner's OK, then build the promo template and render the preview.
+Apply the owner's feedback on video #1 (edit the spec/template JSON, re-render). Then get the gig list and write specs 02-10
+(`scripts/videos/NN_*.json`), making each meaningfully different (hook, segment order, list items, colour accent, maybe 9:16).
+Add a 9:16 template (`templates/promo_9x16.json`) when needed.

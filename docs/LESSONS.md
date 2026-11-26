@@ -20,3 +20,10 @@
 | 16 | `ffprobe -of csv=p=0:s=' '` fails (a space separator can't be parsed); use `s=x` and `IFS=x`. | `scripts/make_clean_master.sh` |
 | 17 | The source is 4:5 (864×1080) with a clean area of only about 600×650 px around the face (above the subtitles). Plan 9:16 and 16:9 as **designed layouts** (framed talking head + text panels), not crops or upscales. | `reports/02-source-footage.md` |
 | 18 | Final encode: x264 `veryslow` CRF 14 on the CPU gives better quality than NVENC on the T4s. Use the GPUs for AI steps only (Whisper, LaMa). | `templates/clean_master.json` `encode` |
+| 19 | Single-pass `loudnorm` is **dynamic**: it pumps quiet music-only sections up to almost speech level (music measured -16 dB vs speech -14). Use **two-pass linear** loudnorm + `alimiter` on the final mix. | `scripts/promo.py` `build_audio` |
+| 20 | Fully static text cards trip QA freeze detection and feel dead. The background grid drifts 12 px/s. Holds of about 1-1.3 s after a list's last item are intentional reading time (freezedetect still flags them at n=0.001). | `scripts/promo.py` `bg_at` |
+| 21 | Source cuts inside a clip cause flash frames (e.g. "Done right" starts 0.2 s before a camera cut). Use a J-cut: `video_in` later than the audio start, so the previous card covers the first words. | `scripts/videos/01_n8n.json` (`video_in`), `promo.py` timeline |
+| 22 | The promo crop is source region y < 846 px (above the old subtitle band), scaled 1.25× to 1080 wide with a slow 1.00→1.07 push-in. A footage→caption-band gradient hides the edge. | `templates/promo_4x5.json` `talk` |
+| 23 | No Remotion needed so far: Pillow + numpy + ffmpeg render 1080×1350 at about 11 fps on 4 CPUs (35 s video ≈ 1.5-3 min). | `scripts/promo.py` |
+| 24 | Music: a synthesized original pad (royalty-free by construction) at -27 dB on cards and -38 dB under speech, smoothed over 0.25 s. Swap it for a licensed track if the owner prefers. | `scripts/promo.py` `make_music` |
+| 25 | Kaggle dataset uploads from the Kaggle website are the way to get files over 10 MB in (the Drive connector caps downloads at 10 MB). | `HANDOFF.md` |
