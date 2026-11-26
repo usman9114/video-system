@@ -25,3 +25,5 @@ access_token
 kaggle/build/
 kaggle/outputs/
 kaggle/work/
+__pycache__/
+*.pyc
