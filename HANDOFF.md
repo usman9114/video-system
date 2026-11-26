@@ -12,7 +12,7 @@ no fabricated credentials, client results or testimonials, no synthetic-looking 
 ## Where things live
 | What | Where |
 |---|---|
-| Code, templates, configs, scripts, reports | GitHub `usman9114/upwork-video-system` (private) |
+| Code, templates, configs, scripts, reports | GitHub `usman9114/video-system` (private) |
 | Video files (source, B-roll, previews, exports) | Google Drive folder `upwork-video-system/` (subfolders: source, broll, assets, previews, exports) |
 | Kaggle GPU lane | `docs/kaggle-gpu-setup.md` (token stored as a cloud-environment network secret, never in git) |
 | Cloud environment | `upwork-video-system` (personal; allows api.kaggle.com, www.kaggle.com, storage.googleapis.com). It's per Claude account, so recreate it on a new account |
