@@ -15,7 +15,7 @@ no fabricated credentials, client results or testimonials, no synthetic-looking 
 | Code, templates, configs, scripts, reports | GitHub `usman9114/video-system` (private) |
 | Video files (source, B-roll, previews, exports) | Google Drive folder `upwork-video-system/` (subfolders: source, broll, assets, previews, exports) |
 | Kaggle GPU lane | `docs/kaggle-gpu-setup.md` (token stored as a cloud-environment network secret, never in git) |
-| Cloud environment | `upwork-video-system` (personal; allows api.kaggle.com, www.kaggle.com, storage.googleapis.com). It's per Claude account, so recreate it on a new account |
+| Cloud environment | `upwork-video-system` (personal; allows api.kaggle.com, www.kaggle.com, storage.googleapis.com, www.kaggleusercontent.com; Kaggle token saved as a network secret). It's per Claude account, so recreate it on a new account |
 
 ## Decisions made
 1. **Stack:** Remotion v4 (templates, captions, CTA) + FFmpeg (cuts, audio, QA) + faster-whisper/WhisperX (local captions). Fallback: pure FFmpeg. See `reports/01-tool-research.md`.
@@ -28,7 +28,7 @@ no fabricated credentials, client results or testimonials, no synthetic-looking 
 ## Status
 - [x] Phase 1: research + recommendation
 - [~] Phase 2: environment created, Kaggle reachable, Drive + git set up. Tool smoke test not yet run.
-- [ ] Kaggle: owner to create account, verify phone, create API token, then Claude requests it via the secure form
+- [x] Kaggle GPU lane working end to end: `bin/kgpu run <job>` (Tesla T4, CUDA, torch 2.11, ffmpeg). Smoke test `jobs/hello-gpu` passed 2026-11-26
 - [ ] Phase 3: waiting for the source video (owner uploads to Drive `upwork-video-system/source/`)
 - [ ] Phase 4: waiting for the owner's Upwork gig titles and descriptions
 - [ ] Phases 5 to 10
@@ -37,7 +37,6 @@ no fabricated credentials, client results or testimonials, no synthetic-looking 
 1. Source video uploaded to Drive `upwork-video-system/source/`
 2. Upwork gig titles and descriptions
 3. Yes or no on installing the ChatGPT lane (Codex CLI)
-4. Kaggle token (when ready)
 
 ## Next step for Claude
 Once the video is in Drive: download it to `source/` (never modify the original), install the pinned tools
