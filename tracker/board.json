@@ -36,7 +36,8 @@
         "TBDub full-res needs owner's sample-video.mp4 (60 MB original).",
         "2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.",
         "2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).",
-        "2026-11-27: blocked -> review"
+        "2026-11-27: blocked -> review",
+        "2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md."
       ]
     },
     {
@@ -70,19 +71,23 @@
       "list": "todo",
       "project": "upwork",
       "needs_owner": true,
-      "notes": []
+      "notes": [
+        "2026-11-27: Questionnaire drafted by ChatGPT: docs/gig_questionnaire.md. Owner fills it per gig."
+      ]
     },
     {
       "id": "T06",
       "title": "Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)",
-      "list": "blocked",
+      "list": "review",
       "project": "greece",
       "needs_owner": true,
       "notes": [
         "Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.",
         "2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).",
         "2026-11-27: 2026-11-27: prepared without photos: 7 narration mp3s extracted to trips/greece/work/vo/ (gitignored, from paid ElevenLabs cache), upbeat music generator tested OK. ONLY missing input: the 13 photos in trips/greece/photos/. Then: render.py trips/greece (preview first) -> scripts/trip/finish.py -> final_cut.py --kind trip -> back up to Kaggle (T08).",
-        "2026-11-27: Drive photos: this session has NO Google Drive connector (ListConnectors empty; registry shows Google Drive not installed). Owner to connect Google Drive in claude.ai connectors and start a new session in env video-system, or upload photos."
+        "2026-11-27: Drive photos: this session has NO Google Drive connector (ListConnectors empty; registry shows Google Drive not installed). Owner to connect Google Drive in claude.ai connectors and start a new session in env video-system, or upload photos.",
+        "2026-11-27: Photos in place, preview at exports/trip_greece. Waiting M1: owner OK on preview, then full render + finish.py + final_cut + backup.",
+        "2026-11-27: blocked -> review"
       ]
     },
     {
@@ -235,7 +240,9 @@
       "blocked_by": [
         "T04"
       ],
-      "notes": []
+      "notes": [
+        "2026-11-27: S3 agent producing audio-only fix at -2.0 dBTP ceiling."
+      ]
     },
     {
       "id": "T14",
@@ -267,8 +274,17 @@
       "needs_owner": true,
       "blocked_by": [],
       "notes": []
+    },
+    {
+      "id": "D10",
+      "title": "S1 Greece v2: preview rendered with Drive photos (12/12; 13th 69a32a81 dropped in storyline as near-duplicate). IMG_9423 crop moved to face. Bus selfie orientation verified correct.",
+      "list": "done",
+      "project": "greece",
+      "needs_owner": false,
+      "blocked_by": [],
+      "notes": []
     }
   ],
-  "updated": "2026-11-27 20:03 UTC",
+  "updated": "2026-11-27 20:09 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

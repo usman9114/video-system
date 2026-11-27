@@ -1,16 +1,11 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:03 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:09 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
-## Blocked (3)
+## Blocked (2)
 
-- **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
-  - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
-  - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
-  - 2026-11-27: 2026-11-27: prepared without photos: 7 narration mp3s extracted to trips/greece/work/vo/ (gitignored, from paid ElevenLabs cache), upbeat music generator tested OK. ONLY missing input: the 13 photos in trips/greece/photos/. Then: render.py trips/greece (preview first) -> scripts/trip/finish.py -> final_cut.py --kind trip -> back up to Kaggle (T08).
-  - 2026-11-27: Drive photos: this session has NO Google Drive connector (ListConnectors empty; registry shows Google Drive not installed). Owner to connect Google Drive in claude.ai connectors and start a new session in env video-system, or upload photos.
 - **T12** Re-render Greece v1 (master lost) once photos are uploaded  _(greece · needs owner)_
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 - **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
@@ -23,6 +18,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T04** Render n8n video v7 with the winning lip-sync  _(n8n · after T03)_
   - Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final
 - **T05** Get gig texts for Upwork videos 2-10  _(upwork · needs owner)_
+  - 2026-11-27: Questionnaire drafted by ChatGPT: docs/gig_questionnaire.md. Owner fills it per gig.
 - **T08** Back up every export to the Kaggle media-backup dataset right after rendering  _(infra)_
   - trip_greece.mp4 was lost this way (LESSONS #64).
 - **T09** Ask owner: TI2V-5B gate test on 4 Greece hero scenes (~$7.60 Modal credits)?  _(greece · needs owner)_
@@ -33,12 +29,13 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint.
   - 2026-11-27: greece-v2 now also contains final-cut-lab.
 - **T13** Fix true peak 0.1 dB over limit in promo master (v7)  _(n8n · after T04)_
+  - 2026-11-27: S3 agent producing audio-only fix at -2.0 dBTP ceiling.
 - **T15** Delete stale claude/project-thread-* branches (Rule 0; content already in greece-v2)  _(infra · needs owner)_
 
 ## In progress (0)
 
 
-## Waiting on owner review (2)
+## Waiting on owner review (3)
 
 - **T02** Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res  _(n8n · after T01)_
   - python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3
@@ -46,10 +43,18 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.
   - 2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).
   - 2026-11-27: blocked -> review
+  - 2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md.
+- **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
+  - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
+  - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
+  - 2026-11-27: 2026-11-27: prepared without photos: 7 narration mp3s extracted to trips/greece/work/vo/ (gitignored, from paid ElevenLabs cache), upbeat music generator tested OK. ONLY missing input: the 13 photos in trips/greece/photos/. Then: render.py trips/greece (preview first) -> scripts/trip/finish.py -> final_cut.py --kind trip -> back up to Kaggle (T08).
+  - 2026-11-27: Drive photos: this session has NO Google Drive connector (ListConnectors empty; registry shows Google Drive not installed). Owner to connect Google Drive in claude.ai connectors and start a new session in env video-system, or upload photos.
+  - 2026-11-27: Photos in place, preview at exports/trip_greece. Waiting M1: owner OK on preview, then full render + finish.py + final_cut + backup.
+  - 2026-11-27: blocked -> review
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
-## Done (11)
+## Done (12)
 
 - **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
   - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
@@ -77,3 +82,4 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device.
   - 2026-11-27: Signed in; lane.chatgpt ask test returned ok. Auth at ~/.codex/auth.json (per container).
   - 2026-11-27: blocked -> done
+- **D10** S1 Greece v2: preview rendered with Drive photos (12/12; 13th 69a32a81 dropped in storyline as near-duplicate). IMG_9423 crop moved to face. Bus selfie orientation verified correct.  _(greece)_
