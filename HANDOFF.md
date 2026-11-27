@@ -102,6 +102,16 @@ Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.g
       cover-crop (no 4:3→16:9 squash) and EXIF transpose (the transpose fix is in the last commit → auto-deploy).
 - [ ] Gate-test SageAttention2 / MagCache / FP8 / torch.compile+snapshots (docs/optimization.md). Batch TBDub calls.
 
+### Kaggle labs (final cut + fill), added 2026-11-27 (branch `final-cut-lab`)
+- **Final-cut lab = mandatory last step before delivering any master**: `python3 scripts/final_cut.py <master.mp4> --kind promo --spec <spec>`
+  (or `--kind trip --storyline trips/<x>/storyline.json`). Kaggle 2x T4: Whisper large-v3 script check, SyncNet on every face
+  shot of the cut, loudness/true-peak/black/freeze, "no cut away while talking", contact sheet → ChatGPT-vision AI-tell
+  review (needs the Codex login), and the face-detail touch-up candidate (gated; never replaces the master).
+  Report: `reports/final-cut/<id>.md`. v6 result: FAIL on lip-sync (known) and true peak −1.4 dB vs max −1.5 (0.1 dB over).
+- **Fill lab**: `python3 scripts/fill_lab.py <clips> --preset hero_clip|lipsync` (RIFE 4.25 interpolation, Real-ESRGAN x2).
+  RIFE on lip-sync clips FAILED the SyncNet gate (LESSONS #77) → only for no-face clips. Upscale not yet tested on a real clip.
+- Weekly Kaggle budget plan: `docs/kaggle-max.md`. Settings: `templates/production.json` → `final_cut`, `fill_lab`.
+
 ## Next steps (in order) — updated 2026-11-27 17:20 UTC
 A. Owner merges PR #2 (branch `greece-film`) → Modal redeploy with the new LIPSYNC_API_KEY + LatentSync 1.6 / X-Dub routes.
    Needs a FRESH session (env secrets only load at session start). Then: `python3 -m lane.modal_lipsync health`,

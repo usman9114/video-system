@@ -1,0 +1,190 @@
+{
+ "id": "01_n8n_automation_v6",
+ "kind": "promo",
+ "info": {
+  "width": 1080,
+  "height": 1350,
+  "fps": 30.0,
+  "frames": 1381,
+  "duration": 46.033333,
+  "has_audio": true
+ },
+ "checks": {
+  "loudness": {
+   "status": "fail",
+   "integrated_lufs": -14.0,
+   "lra_lu": 4.2,
+   "true_peak_db": -1.4,
+   "target_lufs": -14,
+   "true_peak_max_db": -1.5
+  },
+  "black": {
+   "status": "pass",
+   "segments": []
+  },
+  "freeze": {
+   "status": "pass",
+   "segments": [],
+   "note": "warn only: check each is an intended hold"
+  },
+  "transcript": {
+   "heard": "Doing the same task over and over again? Let's automate it. Chasing leads, sorting emails, updating your CRM, building reports by hand, it eats your week. I'm Usman. I build N8n automations and AI-powered workflows that connect your apps, capture leads from every source, follow up with customers, and keep your data in sync automatically. Need an AI chatbot, an AI agent, or a custom API integration? I'll build it around how your business actually works. Goal isn't just automation, it's saving you hours, cutting errors, and giving you time to grow. Send me your idea and let's turn it into a workflow that runs itself.",
+   "low_confidence": [],
+   "wer": 0.009,
+   "max_wer": 0.08,
+   "differences": [
+    "missing 'the'"
+   ],
+   "status": "pass"
+  },
+  "lipsync": {
+   "status": "fail",
+   "min_lse_c": 6.887,
+   "tracks": [
+    {
+     "track": 0,
+     "start": 0.0,
+     "end": 10.16,
+     "frames": 254,
+     "offset": 3,
+     "lse_d": 11.336,
+     "lse_c": 3.898,
+     "status": "fail"
+    },
+    {
+     "track": 1,
+     "start": 11.48,
+     "end": 22.96,
+     "frames": 287,
+     "offset": 2,
+     "lse_d": 9.457,
+     "lse_c": 6.05,
+     "status": "fail"
+    },
+    {
+     "track": 2,
+     "start": 25.16,
+     "end": 32.56,
+     "frames": 185,
+     "offset": 1,
+     "lse_d": 10.194,
+     "lse_c": 5.638,
+     "status": "fail"
+    },
+    {
+     "track": 3,
+     "start": 33.84,
+     "end": 43.56,
+     "frames": 243,
+     "offset": 2,
+     "lse_d": 10.759,
+     "lse_c": 4.03,
+     "status": "fail"
+    }
+   ],
+   "note": "one row per face shot >= 4 s"
+  },
+  "cut_while_talking": {
+   "status": "pass",
+   "cuts_away_mid_phrase": [],
+   "cuts_total": 7,
+   "note": ""
+  },
+  "touchup_face_detail": {
+   "status": "rejected",
+   "frames_touched": 1236,
+   "frames": 1381,
+   "blend": 0.35,
+   "face_ssim_mean": 0.9948,
+   "face_ssim_p05": 0.9938,
+   "face_ssim_min_required": 0.95,
+   "syncnet": [
+    {
+     "start": 0.0,
+     "end": 10.16,
+     "master": 3.898,
+     "touched": 3.861,
+     "drop_pct": 0.95
+    },
+    {
+     "start": 11.48,
+     "end": 22.96,
+     "master": 6.05,
+     "touched": 5.962,
+     "drop_pct": 1.45
+    },
+    {
+     "start": 25.16,
+     "end": 32.56,
+     "master": 5.638,
+     "touched": 5.578,
+     "drop_pct": 1.06
+    },
+    {
+     "start": 33.84,
+     "end": 43.56,
+     "master": 4.03,
+     "touched": 3.889,
+     "drop_pct": 3.5
+    }
+   ],
+   "syncnet_drop_max_pct": 2,
+   "gpu_s": 700.8,
+   "note": "candidate = passed the numbers; the owner's eye decides (side-by-side in previews/)"
+  }
+ },
+ "gpu": {
+  "lanes": {
+   "gpu0": {
+    "rc": 0,
+    "seconds": 849.7,
+    "gpu": 0,
+    "steps": [
+     {
+      "step": "lane_touchup.py",
+      "rc": 0,
+      "seconds": 533.6
+     },
+     {
+      "step": "lane_listen.py",
+      "rc": 0,
+      "seconds": 316.1
+     }
+    ]
+   },
+   "gpu1": {
+    "rc": 0,
+    "seconds": 1047.0,
+    "gpu": 1,
+    "steps": [
+     {
+      "step": "lane_touchup.py",
+      "rc": 0,
+      "seconds": 715.8
+     },
+     {
+      "step": "lane_finish.py",
+      "rc": 0,
+      "seconds": 331.2
+     }
+    ]
+   }
+  },
+  "util": {
+   "gpu0": {
+    "mean_util_pct": 35.6,
+    "busy_pct": 44.3,
+    "peak_mem_mb": 10845,
+    "samples": 508
+   },
+   "gpu1": {
+    "mean_util_pct": 43.9,
+    "busy_pct": 55.1,
+    "peak_mem_mb": 1635,
+    "samples": 508
+   }
+  },
+  "total_s": 1096.6
+ },
+ "verdict": "FAIL: loudness, lipsync"
+}
