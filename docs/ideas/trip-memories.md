@@ -25,9 +25,17 @@ A 45-75 s film, 9:16 (Reels/TikTok) + 16:9 (YouTube), 30 fps (60 optional):
 | Narration (optional) | ElevenLabs clone ✅ or traveller's voice memo | ✅ |
 | Edit + titles + export 9:16 / 16:9 | `scripts/promo.py` renderer (new "trip" template) | ✅ engine, NEW template |
 
-## Cost (free Modal credits, $30/month)
-About 10 photos × ~$0.95 per TI2V-5B clip ≈ **$10 per trip** with 1 seed (+ re-rolls only for rejected clips; RIFE adds cents).
-So ~2-3 trips/month inside the free tier; beyond that ≈ $10-20/trip of GPU, a healthy margin as a paid gig.
+## Cost: optimised (owner 2026-11-27: "$10 is a lot")
+The first TI2V-5B test cost $0.95/clip because of: memory offload on a 48 GB card, 50 steps, 5 s, model reload per photo.
+Optimised plan:
+| Lever | Effect |
+|---|---|
+| **FastWan2.2-TI2V-5B** (FastVideo, Apache-2.0): 3-step DMD distill of the owner's preferred model, guidance 1.0 (no CFG) | ~15-30× fewer transformer passes |
+| **One GPU session per trip** (model loaded once) | saves ~2-3 min/photo |
+| No offload on the 48 GB L40S | ~2-3× faster |
+| 3.5 s per photo (85 frames) instead of 5 s | ~1.4× |
+| Animate 4-5 hero photos; 2.5D parallax (depth-based) on the rest | ~2× |
+Target: **≈ $0.30-0.80 per 10-photo trip** (to be confirmed by the first measured batch). Quality fallback: full TI2V-5B for hero shots only.
 
 ## Quality rules (inherit templates/production.json)
 - Faces: reject any clip where the person drifts from their photo (identity check), use the parallax fallback instead.
