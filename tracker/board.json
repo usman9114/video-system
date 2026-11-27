@@ -295,7 +295,9 @@
       "project": "n8n",
       "needs_owner": true,
       "blocked_by": [],
-      "notes": []
+      "notes": [
+        "2026-11-27: Owner idea 2026-11-27: (1) every scene opens on the REAL photo (hold ~0.7 s, full-res, same 9:16 crop) then dissolves into the Wan motion; (2) presenter-style first-person narration with verified landmark facts ('Behind me is the Erechtheion...'). Facts must match his real places (ref clip's Zeus temple is not one he visited). ChatGPT research -> trips/greece/landmark_facts.md; narration v4 after pilot review."
+      ]
     },
     {
       "id": "D10",
@@ -318,6 +320,6 @@
       ]
     }
   ],
-  "updated": "2026-11-27 21:42 UTC",
+  "updated": "2026-11-27 22:10 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }
