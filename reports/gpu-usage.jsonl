@@ -12,3 +12,4 @@
 {"job": "kgpu-voice-clone", "event": "start", "gpu": true, "at": "2026-11-26T23:52:25Z"}
 {"job": "kgpu-transcribe", "event": "start", "gpu": true, "at": "2026-11-27T00:22:20Z"}
 {"job": "kgpu-transcribe", "event": "end", "status": "complete", "wall_s": 125, "at": "2026-11-27T00:24:25Z"}
+{"job": "kgpu-voice-chatterbox", "event": "start", "gpu": true, "at": "2026-11-27T00:28:01Z"}
