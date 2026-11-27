@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 22:10 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 22:29 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -11,7 +11,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
   - 2026-11-27: Owner idea 2026-11-27: (1) every scene opens on the REAL photo (hold ~0.7 s, full-res, same 9:16 crop) then dissolves into the Wan motion; (2) presenter-style first-person narration with verified landmark facts ('Behind me is the Erechtheion...'). Facts must match his real places (ref clip's Zeus temple is not one he visited). ChatGPT research -> trips/greece/landmark_facts.md; narration v4 after pilot review.
 
-## To do (5)
+## To do (6)
 
 - **T03** SyncNet-gate the A/B clips, side-by-side, owner picks winner  _(n8n · after T02)_
   - bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65).
@@ -24,6 +24,8 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint.
   - 2026-11-27: greece-v2 now also contains final-cut-lab.
 - **T15** Delete stale claude/project-thread-* branches (Rule 0; content already in greece-v2)  _(infra · needs owner)_
+- **T18** Workflow overhaul after Greece v4 (owner 2026-11-27: too much back-and-forth, wasted resources)  _(infra · needs owner)_
+  - 2026-11-27: Waste seen today: (1) 2 full renders discarded because style/narration changed AFTER render -> lock a one-page brief (style ref clip, narration, shot list) with owner BEFORE any render; (2) Greece v1 master lost (no backup) -> auto-backup in render script; (3) keys lost on env move/restart -> all keys as env network secrets; (4) 3 sample rebuilds from ambiguous 'scene 2' -> owner gives timecodes, we confirm with a timestamped sheet first; (5) Wan pilot 45+ min on H100 with no time estimate -> benchmark 1 clip first, set budget cap per job; (6) Claude tokens on reviews -> ChatGPT does review/writing by default.
 
 ## In progress (1)
 

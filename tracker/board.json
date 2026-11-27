@@ -318,8 +318,19 @@
       "notes": [
         "2026-11-27: Pilot 3 shots (a0a41173 Caryatids, IMG_9282 Meteora, IMG_9451 driving) running on Modal H100; gate each for text/landmark/face. If pass: shot list for all 12 scenes (~2 shots each), budget ~$25-35 of Modal free credits, ask before going over."
       ]
+    },
+    {
+      "id": "T18",
+      "title": "Workflow overhaul after Greece v4 (owner 2026-11-27: too much back-and-forth, wasted resources)",
+      "list": "todo",
+      "project": "infra",
+      "needs_owner": true,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-27: Waste seen today: (1) 2 full renders discarded because style/narration changed AFTER render -> lock a one-page brief (style ref clip, narration, shot list) with owner BEFORE any render; (2) Greece v1 master lost (no backup) -> auto-backup in render script; (3) keys lost on env move/restart -> all keys as env network secrets; (4) 3 sample rebuilds from ambiguous 'scene 2' -> owner gives timecodes, we confirm with a timestamped sheet first; (5) Wan pilot 45+ min on H100 with no time estimate -> benchmark 1 clip first, set budget cap per job; (6) Claude tokens on reviews -> ChatGPT does review/writing by default."
+      ]
     }
   ],
-  "updated": "2026-11-27 22:10 UTC",
+  "updated": "2026-11-27 22:29 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }
