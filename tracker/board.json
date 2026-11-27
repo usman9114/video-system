@@ -25,7 +25,7 @@
     {
       "id": "T02",
       "title": "Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res",
-      "list": "review",
+      "list": "done",
       "project": "n8n",
       "needs_owner": false,
       "blocked_by": [
@@ -40,7 +40,9 @@
         "2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md.",
         "2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7.",
         "2026-11-27: S2 result: frozen frames 39/81/167/233 replaced (blend). Fixed TBDub 03_who LSE-C 6.17 offset 0 (was 6.13) -> still below 6.89 gate; owner chose TBDub by eye anyway. f89 = real head lunge in the take (static background), left as is. Files: work/ab/03_who_tbdub_fixed.mp4, 03_who_compare.mp4, 03_who_mouth_slowmo.mp4.",
-        "2026-11-27: Owner: jerk at ~4 s remains. Cause: one-frame jump cut in the SOURCE plate (03_who_src splice between frames 89/90), inherited by TBDub. ChatGPT: punch-in, not morph. Made work/ab/03_who_punch_hard.mp4 (instant 1.05 at the splice, my pick) and _ramp (eased). Owner to pick; then apply to every splice in all 6 lines (scan src clips for one-frame jumps)."
+        "2026-11-27: Owner: jerk at ~4 s remains. Cause: one-frame jump cut in the SOURCE plate (03_who_src splice between frames 89/90), inherited by TBDub. ChatGPT: punch-in, not morph. Made work/ab/03_who_punch_hard.mp4 (instant 1.05 at the splice, my pick) and _ramp (eased). Owner to pick; then apply to every splice in all 6 lines (scan src clips for one-frame jumps).",
+        "PM: review -> done",
+        "PM: 2026-11-27: Promo pipeline now auto-applies frozen-frame and jump-cut fixes. Upwork v7 rendered at 25 fps with lip-sync post-fix on all lines and backed up. T04 is waiting on owner review."
       ]
     },
     {
@@ -67,24 +69,27 @@
       "notes": [
         "Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final",
         "2026-11-27: v7 rendered: exports/01_n8n_automation_v7_25fps.mp4 (46 s, 25 fps, -14.0 LUFS, TP -1.9). scripts/fix_lipsync.py on all 6 lines (frozen 3/10/14/5/8/2, punch-ins 03_who@90, 04_more@164). ChatGPT final review + motion scan: remaining jumps are planned cuts/punches; 30 fps frame-repeat stutter removed by 25 fps. Backed up to Kaggle video-system-exports. Open: small jump at 15.87 s inside 03_who.",
-        "2026-11-27: todo -> review"
+        "2026-11-27: todo -> review",
+        "PM: 2026-11-27: Upwork v7 rendered at 25 fps with lip-sync post-fix on all lines and backed up. Waiting for owner review."
       ]
     },
     {
       "id": "T05",
       "title": "Get gig texts for Upwork videos 2-10",
-      "list": "todo",
+      "list": "review",
       "project": "upwork",
       "needs_owner": true,
       "notes": [
         "2026-11-27: Questionnaire drafted by ChatGPT: docs/gig_questionnaire.md. Owner fills it per gig.",
-        "2026-11-27: ChatGPT drafted 9 gig briefs from known facts: docs/gigs_draft.md (proof/price/links marked OWNER TO CONFIRM). Owner to confirm/edit, then scripts."
+        "2026-11-27: ChatGPT drafted 9 gig briefs from known facts: docs/gigs_draft.md (proof/price/links marked OWNER TO CONFIRM). Owner to confirm/edit, then scripts.",
+        "PM: todo -> review",
+        "PM: 2026-11-27: ChatGPT drafted 9 gig briefs in docs/gigs_draft.md for videos 2–10. Awaiting owner confirmation or edits before scripting."
       ]
     },
     {
       "id": "T06",
       "title": "Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)",
-      "list": "review",
+      "list": "done",
       "project": "greece",
       "needs_owner": true,
       "notes": [
@@ -98,7 +103,9 @@
         "2026-11-27: Doc style implemented (preview OK by Claude; captions need a subtle bottom gradient for legibility on bright frames). Waiting owner OK on preview + music sample, then full render.",
         "2026-11-27: Owner 2026-11-27: it's a real documentary, he is telling the story. New first-person narration draft (ChatGPT, 124 words, 907 chars): trips/greece/narration_v3.json. Owner to edit/approve before ElevenLabs (~907 credits of ~11k). Then scene timing driven by VO length.",
         "2026-11-27: review -> review",
-        "2026-11-27: v3 delivered: exports/trip_greece_v3_master.mp4 (83 s, -14.4 LUFS, TP -1.7), narrated documentary; share copy sent; backed up to Kaggle video-system-exports."
+        "2026-11-27: v3 delivered: exports/trip_greece_v3_master.mp4 (83 s, -14.4 LUFS, TP -1.7), narrated documentary; share copy sent; backed up to Kaggle video-system-exports.",
+        "PM: review -> done",
+        "PM: 2026-11-27: Greece v3 narrated documentary delivered and backed up to Kaggle video-system-exports."
       ]
     },
     {
@@ -114,10 +121,12 @@
     {
       "id": "T08",
       "title": "Back up every export to the Kaggle media-backup dataset right after rendering",
-      "list": "todo",
+      "list": "done",
       "project": "infra",
       "notes": [
-        "trip_greece.mp4 was lost this way (LESSONS #64)."
+        "trip_greece.mp4 was lost this way (LESSONS #64).",
+        "PM: todo -> done",
+        "PM: 2026-11-27: Greece v3 and Upwork v7 exports backed up after rendering."
       ]
     },
     {
