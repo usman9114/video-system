@@ -7,15 +7,15 @@ T = "/tmp/sn"
 def sh(c):
     print("+", c, flush=True); subprocess.run(c, shell=True, check=True)
 sh(f"git clone -q --depth 1 https://github.com/joonson/syncnet_python.git {T}")
-sh(f"{sys.executable} -m pip install -q scenedetect==0.5.1 python_speech_features")
+sh(f"{sys.executable} -m pip install -q 'scenedetect>=0.6.4' python_speech_features")
 sh(f"cd {T} && bash download_model.sh")
 res = {}
 for f in sorted(glob.glob(f"{INP}/*.mp4")):
     name = os.path.splitext(os.path.basename(f))[0]
     # syncnet expects 25 fps
     sh(f"ffmpeg -v error -y -i {f} -r 25 -ar 16000 {T}/{name}.mp4")
-    subprocess.run(f"cd {T} && {sys.executable} run_pipeline.py --videofile {name}.mp4 --reference {name} --data_dir /tmp/snd",
-                   shell=True, capture_output=True, text=True)
+    pp = subprocess.run(f"cd {T} && {sys.executable} run_pipeline.py --videofile {name}.mp4 --reference {name} --data_dir /tmp/snd",
+                        shell=True, capture_output=True, text=True)
     r = subprocess.run(f"cd {T} && {sys.executable} run_syncnet.py --videofile {name}.mp4 --reference {name} --data_dir /tmp/snd",
                        shell=True, capture_output=True, text=True)
     txt = r.stdout + r.stderr
@@ -23,6 +23,7 @@ for f in sorted(glob.glob(f"{INP}/*.mp4")):
     res[name] = {"offset": int(off[0]) if off else None, "lse_d": float(md[0]) if md else None,
                  "lse_c": float(cf[0]) if cf else None, "tracks": len(cf)}
     if not cf:
-        res[name]["log"] = txt[-800:]
+        res[name]["log"] = txt[-600:]
+        res[name]["pipeline_log"] = (pp.stdout + pp.stderr)[-1500:]
     print(name, res[name], flush=True)
 json.dump(res, open(f"{OUT}/syncnet.json", "w"), indent=1)

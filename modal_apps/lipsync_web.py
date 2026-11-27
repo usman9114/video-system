@@ -187,8 +187,12 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24) -> dict:
         img = Image.open(io.BytesIO(base64.b64decode(it["image_b64"]))).convert("RGB")
         w, h = img.size
         # TI2V-5B native 1280x704 / 704x1280 (multiples of 32); keep orientation
-        W_, H_ = (1280, 704) if w >= h else (704, 1280)
-        img = img.resize((W_, H_))
+        orient = it.get("orient") or ("landscape" if w >= h else "portrait")
+        W_, H_ = (1280, 704) if orient == "landscape" else (704, 1280)
+        # cover-crop to the model's aspect (never squash a 4:3 phone photo into 16:9); optional focus x/y 0..1
+        from PIL import ImageOps
+        img = ImageOps.fit(img, (W_, H_), method=Image.LANCZOS,
+                           centering=(float(it.get("focus_x", 0.5)), float(it.get("focus_y", 0.5))))
         n = int(round(it.get("seconds", 3.5) * fps / 4)) * 4 + 1
         g = torch.Generator("cuda").manual_seed(int(it.get("seed", 42)))
         frames = pipe(image=img, prompt=it["prompt"], height=H_, width=W_, num_frames=n, num_inference_steps=steps,
