@@ -40,7 +40,7 @@ credentials, client results or testimonials, no synthetic-looking face, ask befo
       Build: `python3 scripts/promo.py scripts/videos/01_n8n.json --final`. Spec = `scripts/videos/01_n8n.json`,
       design = `templates/promo_4x5.json`. Sent to the owner for review. **Do not batch the other 9 until the owner approves #1.**
       Unconfirmed claims on screen: title "AI Solutions Consultant", feature cards (self-hosted/cloud, AI agents + API, docs & handover).
-- [~] **Video #1 v2**: new first-person script from the owner's gig text (`scripts/videos/01_n8n_v2_script.md`). Needs new audio: owner recording (recommended) or AI test (Chatterbox MIT voice + MuseTalk lip-sync on Kaggle). Owner hasn't chosen yet.
+- [~] **Video #1 v2**: new first-person script from the owner's gig text (`scripts/videos/01_n8n_v2_script.md`). Needs new audio: owner recording (recommended) or AI test (Chatterbox MIT voice + MuseTalk lip-sync on Kaggle). Owner chose 'Test AI first'. Qwen3-TTS clone verdict (owner 2026-11-27): **"very robotic, not like mine" → rejected**. Chatterbox fast rerun in progress (`jobs/voice-chatterbox`). Guaranteed path = owner records voice memo/video.
 - [ ] Phases 4-10 for the remaining 9 gigs. **Still need the owner's Upwork gig titles and descriptions.**
 
 ## Waiting on owner
