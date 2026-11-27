@@ -7,3 +7,6 @@
 {"job": "kgpu-transcribe", "event": "end", "status": "complete", "wall_s": 153, "at": "2026-11-26T22:31:44Z"}
 {"job": "kgpu-inpaint-logo", "event": "start", "gpu": true, "at": "2026-11-26T22:35:01Z"}
 {"job": "kgpu-inpaint-logo", "event": "end", "status": "complete", "wall_s": 163, "at": "2026-11-26T22:37:45Z"}
+{"job": "kgpu-voice-clone", "event": "start", "gpu": true, "at": "2026-11-26T23:50:23Z"}
+{"job": "kgpu-voice-clone", "event": "end", "status": "error", "wall_s": 107, "at": "2026-11-26T23:52:10Z"}
+{"job": "kgpu-voice-clone", "event": "start", "gpu": true, "at": "2026-11-26T23:52:25Z"}
