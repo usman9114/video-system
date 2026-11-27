@@ -68,3 +68,5 @@
 62. **Phone photos carry EXIF orientation**: always `ImageOps.exif_transpose` before cropping/animating (Greece set: 5 sideways, 1 mirrored, 1 flipped).
 63. **Never `resize()` a 4:3 photo to the model's 16:9**: cover-crop (`ImageOps.fit`) with a focus point.
 64. **Gitignored media dies with the container**: back it up to a private Kaggle dataset (Drive connector uploads cap ~3 MB).
+65. **FastWan2.2-TI2V-5B (3-step) repaints the photo instead of animating it** (Greece test: new graffiti, invented flag/fortress, fake readable plate). Fast + cheap ($0.024/clip on H100) but fails realism-first. Default for Trip Memories = real photo + camera move; generative motion only after a clip passes the diff-map gate (`% pixels changed` on a subtle-motion prompt ≤ ~20%).
+66. **SyncNet baselines** (25 fps, ≥100 frames needed): real footage LSE-C 8.23, sync-3 7.65, TBDub teacher v6 4.2-6.1 → TBDub fails the 0.9×sync-3 gate; the owner's eye agreed.
