@@ -1,0 +1,28 @@
+{
+  "_doc": "Video 01 v6: follows templates/production.json rules (no cutaways while talking, B-roll only as beats between lines, zoom <= 1.05, no reversed footage). Faces built by scripts/make_faces.py (TBDub teacher on Modal).",
+  "id": "01_n8n_automation_v6",
+  "template": "templates/promo_4x5.json",
+  "vo_dir": "assets/voice/01_n8n",
+  "name": "Usman Qureshi",
+  "title": "n8n & AI Automation",
+  "segments": [
+    {"type": "face", "vo": "01_hook", "video": "auto", "zoom": [1.05, 1.0], "headline": ["Same task,", "over and over?"], "tail": 0.2},
+    {"type": "face", "vo": "02_pain", "video": "auto", "zoom": [1.0, 1.03],
+     "chips": {"title": "Every single week", "icon": "x", "items": ["Chasing leads", "Sorting emails", "Updating your CRM", "Reports by hand"],
+               "item_words": ["leads", "emails", "CRM", "reports"]}},
+    {"type": "image", "dur": 1.3, "image": "broll/generated/pain_desk_01.png", "zoom": [1.08, 1.16], "focus": [0.55, 0.5]},
+    {"type": "face", "vo": "03_who", "video": "auto", "zoom": [1.0, 1.04], "lower_third": true,
+     "strip": {"labels": ["Lead form", "AI qualifies", "CRM synced", "Follow-up"], "at": 4.5}},
+    {"type": "image", "dur": 2.2, "image": "broll/generated/n8n_canvas_wide.png", "fit": "contain", "zoom": [1.0, 1.12],
+     "focus": [0.5, 0.5], "pan": 0.15, "y_center": 0.47, "kicker": "Built in n8n"},
+    {"type": "face", "vo": "04_more", "video": "auto", "zoom": [1.0, 1.03],
+     "chips": {"title": "Built around your business", "icon": "check", "items": ["AI chatbots", "AI agents", "API integrations"],
+               "item_words": ["chatbot", "agent", "API"]}},
+    {"type": "image", "dur": 1.3, "image": "broll/generated/time_to_grow.png", "zoom": [1.06, 1.0], "kicker": "The real goal"},
+    {"type": "face", "vo": "05_value", "video": "auto", "zoom": [1.0, 1.03],
+     "chips": {"icon": "check", "items": ["Save hours", "Fewer errors", "Time to grow"], "item_words": ["hours", "errors", "grow"]}},
+    {"type": "face", "vo": "06_cta", "video": "auto", "zoom": [1.0, 1.05], "ease_zoom": true, "tail": 0.15},
+    {"type": "end", "dur": 2.6, "headline": ["Send me", "your idea."], "sub": "Let's turn it into a workflow.",
+     "button": "Message me on Upwork", "photo_src_t": 47.2}
+  ]
+}

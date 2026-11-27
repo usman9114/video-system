@@ -1,19 +1,40 @@
 {
   "_doc": "SINGLE SOURCE OF TRUTH for production settings. Every tool reads this (promo.py enforces the rules, make_faces.py uses the lip-sync/footage settings). Change a setting HERE, never ad hoc. Each value records why/who decided.",
   "rules": {
-    "no_cutaway_while_talking": {"value": true, "why": "owner 2026-11-27: unnecessary cuts while talking not allowed"},
-    "broll_only_between_lines": {"value": true, "why": "B-roll/canvas/photo only in beats between VO lines; overlays OK on face shots"},
-    "max_zoom_on_talking_face": {"value": 1.05, "why": "punch-ins up to 1.22x magnified lip-sync artifacts in v5 (owner rejected)"},
-    "allow_reversed_footage": {"value": false, "why": "bounce/reversed head motion looked wrong in v5"},
-    "max_beat_between_lines_s": {"value": 2.2, "why": "keep pace tight; cutaway beats are short"}
+    "no_cutaway_while_talking": {
+      "value": true,
+      "why": "owner 2026-11-27: unnecessary cuts while talking not allowed"
+    },
+    "broll_only_between_lines": {
+      "value": true,
+      "why": "B-roll/canvas/photo only in beats between VO lines; overlays OK on face shots"
+    },
+    "max_zoom_on_talking_face": {
+      "value": 1.05,
+      "why": "punch-ins up to 1.22x magnified lip-sync artifacts in v5 (owner rejected)"
+    },
+    "allow_reversed_footage": {
+      "value": false,
+      "why": "bounce/reversed head motion looked wrong in v5"
+    },
+    "max_beat_between_lines_s": {
+      "value": 2.2,
+      "why": "keep pace tight; cutaway beats are short"
+    }
   },
   "voice": {
     "provider": "elevenlabs",
     "voice_file": "assets/voice/elevenlabs_voice.json",
     "model": "eleven_multilingual_v2",
-    "settings": {"stability": 0.45, "similarity_boost": 0.85, "style": 0.0, "use_speaker_boost": true, "speed": 1.0},
+    "settings": {
+      "stability": 0.45,
+      "similarity_boost": 0.85,
+      "style": 0.0,
+      "use_speaker_boost": true,
+      "speed": 1.0
+    },
     "takes": 1,
-    "why": "only clone that sounded like the owner (ECAPA 0.51 vs Qwen 0.10 / Chatterbox 0.01); credits tight → 1 take"
+    "why": "only clone that sounded like the owner (ECAPA 0.51 vs Qwen 0.10 / Chatterbox 0.01); credits tight \u2192 1 take"
   },
   "lipsync": {
     "engine": "tbdub",
@@ -21,13 +42,34 @@
     "where": "modal",
     "api": "https://nubuqqrr--video-system-lipsync-api.us-east.modal.run",
     "why": "owner picked TBDub best (option C) in the 4-way A/B on 2026-11-27",
-    "quality_gate": {"metric": "SyncNet LSE-C (higher=better) / LSE-D (lower=better)", "min_lse_c_vs_sync3": 0.9,
-                     "why": "a clip must reach ≥90% of sync-3's sync confidence on the same line, or it's regenerated"}
+    "quality_gate": {
+      "metric": "SyncNet LSE-C (higher=better) / LSE-D (lower=better)",
+      "min_lse_c_vs_sync3": 0.9,
+      "why": "a clip must reach \u226590% of sync-3's sync confidence on the same line, or it's regenerated"
+    }
   },
   "footage": {
     "plate": "kaggle/work/original_small/plate.mp4",
-    "source_crop": [0, 0, 864, 846],
-    "clean_ranges_s": [[5.6, 21.0], [23.1, 37.3], [39.9, 45.2]],
+    "source_crop": [
+      0,
+      0,
+      864,
+      846
+    ],
+    "clean_ranges_s": [
+      [
+        5.6,
+        21.0
+      ],
+      [
+        23.1,
+        37.3
+      ],
+      [
+        39.9,
+        45.2
+      ]
+    ],
     "why": "continuous single-camera stretches with no burned subtitles (crop), no lower third, no camera cut",
     "min_margin_s": 0.3,
     "fps": 30
@@ -42,6 +84,28 @@
     "template": "templates/promo_4x5.json",
     "loudness_lufs": -14,
     "true_peak_db": -1.5,
-    "final_encode": {"preset": "veryslow", "crf": 14}
+    "final_encode": {
+      "preset": "veryslow",
+      "crf": 14
+    }
+  },
+  "generative_video": {
+    "engine": "wan2.2",
+    "where": "modal",
+    "status": "experimental",
+    "allowed_for": [
+      "no-face B-roll",
+      "wide shots where the owner is not recognisable"
+    ],
+    "not_allowed_for": [
+      "owner's face / close shots",
+      "replacing lip-synced talking shots"
+    ],
+    "why": "2026-11-27 tests from a real frame: both I2V-A14B ($1.83, 16 fps) and TI2V-5B ($0.95, 24 fps) drift the owner's identity and ignore camera-move directions (brief: no synthetic-looking face)",
+    "default_model": "ti2v-5B",
+    "cost_per_5s_clip_usd": {
+      "ti2v-5B": 0.95,
+      "i2v-A14B": 1.83
+    }
   }
 }
