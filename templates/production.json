@@ -26,7 +26,8 @@
       "why": "keep pace tight; cutaway beats are short"
     },
     "delegate_to_chatgpt": "Owner 2026-11-27: save Claude tokens, use ChatGPT (python3 -m lane.chatgpt ask|research|image) at max. Send research, writing, reviews, analysis and image work to ChatGPT; Claude only directs, checks results and runs tools. Keep Claude replies short.",
-    "trip_generated_shots": "Owner 2026-11-27: for TRIP films, generated shots (Wan 2.2 I2V on Modal) from the owner's real photos are allowed, including of him, to get a cinematic documentary (reference: Gemini/Veo clip). Every clip is gated: legible/real text, correct landmark, face consistent with the photo, no morphing; failures are regenerated or fall back to the real photo + camera move. Promo videos keep the strict realism rule."
+    "trip_generated_shots": "Owner 2026-11-27: for TRIP films, generated shots (Wan 2.2 I2V on Modal) from the owner's real photos are allowed, including of him, to get a cinematic documentary (reference: Gemini/Veo clip). Every clip is gated: legible/real text, correct landmark, face consistent with the photo, no morphing; failures are regenerated or fall back to the real photo + camera move. Promo videos keep the strict realism rule.",
+    "narration_subject_in_frame": "Owner 2026-11-27: whatever the narrator describes must be clearly visible in frame while he says it. Order sentences to match the shot (establish the landmark, then push to him); phrase off-screen things as off-screen ('in the museum down the hill'); QC = frame at each phrase start/end + ChatGPT vision check, failures re-cut/reworded/regenerated."
   },
   "voice": {
     "provider": "elevenlabs",
