@@ -37,6 +37,17 @@ _Last updated: 2026-11-27 ~16:00 UTC (session ran out of context; handoff writte
 | ChatGPT lane | Codex CLI in `tools/codex`, logged in to owner's ChatGPT: `python3 -m lane.chatgpt image|ask|research` (re-login may be needed on a new container) |
 | Cloud env | `upwork-video-system` (hosts: api.kaggle.com, www.kaggle.com, storage.googleapis.com, www.kaggleusercontent.com, auth.openai.com, chatgpt.com + secret hosts: Kaggle, ElevenLabs, Modal API). Per Claude account → recreate on a new account |
 
+## Secrets / keys (NEVER in git; nothing to copy from the repo)
+| Key | Where it lives | On a new Claude account |
+|---|---|---|
+| Kaggle API token | cloud env network secret, host `api.kaggle.com`, header Authorization | re-enter (secure form / env Settings) |
+| ElevenLabs API key | network secret, host `api.elevenlabs.io`, header `xi-api-key` | re-enter |
+| Lip-sync API key (`LIPSYNC_API_KEY`) | network secret, host `nubuqqrr--video-system-lipsync-api.us-east.modal.run`, header `x-api-key`; ALSO GitHub repo secret | re-enter the same value. GitHub secrets can't be read back: if lost, make a new random value, set it in GitHub repo secret `LIPSYNC_API_KEY` + re-run the deploy workflow (it syncs into Modal), then use it here |
+| sync.so key | network secret, host `api.sync.so` | optional (free tier = watermark, not used) |
+| Modal token id/secret | GitHub repo secrets (used by the deploy workflow) | nothing to do, stays with the repo. Local `.env.modal` is not needed |
+| ChatGPT (Codex) login | `tools/codex/auth.json` (gitignored, per container) | re-login in the new container (device-code flow; hosts auth.openai.com + chatgpt.com) |
+Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.googleapis.com, www.kaggleusercontent.com, auth.openai.com, chatgpt.com (package managers on).
+
 ## Status
 ### Upwork video #1 (n8n)
 - [x] Script from the owner's gig text, ElevenLabs voice (`assets/voice/01_n8n/`), 6 TBDub-teacher lip-sync clips (≈$1.14).
