@@ -160,6 +160,21 @@ def _font(chain, size):
     return ImageFont.load_default()
 
 
+_SCRIM = {}
+
+
+def _scrim(strength: float, frac: float) -> Image.Image:
+    """L-mode mask: 0 above the bottom `frac` of the frame, rising smoothly to `strength` at the bottom edge."""
+    key = (round(strength, 2), frac)
+    if key not in _SCRIM:
+        h0 = int(H * (1 - frac))
+        col = np.zeros(H, np.float32)
+        r = np.linspace(0, 1, H - h0)
+        col[h0:] = (r * r * (3 - 2 * r)) * strength
+        _SCRIM[key] = Image.fromarray((np.repeat(col[:, None], W, 1) * 255).astype(np.uint8), "L")
+    return _SCRIM[key]
+
+
 def draw_spaced(fr, txt, size, alpha, y, x=None, track=0.0, small_caps=False, chain=None, color=(242, 235, 221),
                 shadow=True):
     """Letter-spaced serif text on baseline y; x=None centres it. small_caps: first letter of each word full size, rest 0.8."""
@@ -312,7 +327,10 @@ def main():
             fr = scene_frame(s, tt)
             txt = ST.get("captions", {}).get(s["act"]) if s["first_of_act"] else None
             if txt:
-                fr = draw_spaced(fr, txt, cs.get("size", 60), doc_caption_alpha(s, tt), H - cs.get("bottom", 300),
+                ca = doc_caption_alpha(s, tt)
+                if cs.get("scrim", 0) > 0 and ca > 0:           # faint bottom gradient so small serif reads on bright frames
+                    fr = Image.composite(Image.new("RGB", (W, H), (0, 0, 0)), fr, _scrim(cs["scrim"] * ca, cs.get("scrim_h", 0.32)))
+                fr = draw_spaced(fr, txt, cs.get("size", 60), ca, H - cs.get("bottom", 300),
                                  x=cs.get("left", 84), track=cs.get("track", 0.16), small_caps=True)
             if img is None:
                 img = fr

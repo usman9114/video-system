@@ -1,182 +1,265 @@
 {
-  "title": "Greece",
-  "subtitle": "November 2026",
-  "arc": "A week in Greece told as a climb from looking up to looking out: grey Athens lanes beneath the Acropolis, the silence of Meteora's rock towers, finally standing on the Acropolis, then a Fiat 500 across Santorini that ends in late golden light over the sea.",
-  "acts": [
-    {"name": "Cold open", "purpose": "Flash-forward to the most striking image: the traveller above Oia's rooftops and the sea. Introduces who we follow and what the trip is building toward; the title card follows.", "music_energy": "low"},
-    {"name": "Below the Rock", "purpose": "Athens, 9 Nov, overcast: wandering the lanes on foot and seeing the Acropolis only from below. Anticipation.", "music_energy": "low"},
-    {"name": "Stone Towers", "purpose": "Meteora, 10 Nov: the tone shifts from city lanes to scale and silence. The landscape awe beat.", "music_energy": "mid"},
-    {"name": "Up Top", "purpose": "Back in Athens, 12 Nov, now in sunshine: moving through the city, then standing on the Acropolis he looked up at on day one. The payoff.", "music_energy": "mid"},
-    {"name": "The Island", "purpose": "Santorini by Fiat 500: road, sea, lighthouse, small discoveries. Lightness and momentum.", "music_energy": "high"},
-    {"name": "Last Light", "purpose": "Golden hour on a Santorini terrace: a human moment, then a quiet look out to sea. Reflection and farewell.", "music_energy": "low"}
-  ],
-  "scenes": [
-    {
-      "photo": "trips/greece/photos/89499c09.jpeg",
-      "act": "Cold open",
-      "seconds": 3.5,
-      "hero": false,
-      "camera_move": "slow lateral drift left-to-right: the 9:16 crop opens on the traveller against the caldera and drifts across to Oia's white rooftops and blue domes (about 25% of frame width). 2.5D parallax only, traveller as foreground layer.",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller's face, body, clothing and pose stay exactly as photographed.",
-      "caption": null,
-      "narration": null,
-      "transition_in": "cut",
-      "why_here": "No EXIF, so it is free to place by story: it is the most striking, unmistakably Greek frame and introduces the traveller (white hoodie, per the hint). Used once, as a flash-forward cold open, then the title card. Person prominent, so camera move only."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9268.jpeg",
-      "act": "Below the Rock",
-      "seconds": 3.5,
-      "hero": true,
-      "camera_move": "very slow push-in along the path toward its vanishing point (photo is portrait after EXIF rotation, so the 9:16 crop is a light side trim).",
-      "animation_prompt": "Subtle, physically plausible motion only: leaves and thin branches in the canopy at the top of the frame stir in a light breeze, the weeds along the base of the wall move faintly, soft overcast daylight flickers very slightly through the trees. Everything else is completely static. Do not alter people, faces, text, signs or buildings: the graffiti, the painted faces and their eyes, all lettering, the wall, the railings and the path stay exactly as photographed. No new elements, no people.",
-      "caption": "Color on old Athens walls",
-      "narration": "Athens, on foot, under a grey sky.",
-      "transition_in": "dissolve",
-      "why_here": "Earliest EXIF (9 Nov 16:11). Hero because there are no people and the only motion is foliage and light; risk flag: the model may try to animate the painted cartoon faces, so the realism gate must reject any motion on the wall and fall back to parallax."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9270.jpeg",
-      "act": "Below the Rock",
-      "seconds": 4.5,
-      "hero": true,
-      "camera_move": "slow tilt-up from the uneven lane and potted plants to the Acropolis wall and the flag (portrait photo, ideal for vertical; tilt-up = scale).",
-      "animation_prompt": "Subtle, physically plausible motion only: the Greek flag on the ridge ripples gently in a light breeze, the overcast clouds drift slowly to one side, the leaves of the tree on the right and the potted plants stir faintly. Do not alter people, faces, text, signs or buildings: the rock, the Acropolis wall, every house, door, window and stone stays exactly as photographed. No new elements.",
-      "caption": "Anafiotika, beneath the Acropolis",
-      "narration": "From these lanes, I kept looking up.",
-      "transition_in": "cut",
-      "why_here": "EXIF 9 Nov 16:13, two minutes after the graffiti lane. It sets up the film's through-line (looking up at the Acropolis, standing on it later). Strongest hero candidate: no people, a flag and clouds."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9282.jpeg",
-      "act": "Stone Towers",
-      "seconds": 6.0,
-      "hero": true,
-      "camera_move": "slow lateral pan left-to-right across the landscape (4:3 frame cropped to 9:16): starts on the left pillar with the red-roofed monastery, crosses the valley and ends on the right-hand cliffs with the buildings on top.",
-      "animation_prompt": "Subtle, physically plausible motion only: the heavy cloud layers drift slowly and almost imperceptibly, the pale band of light on the horizon shifts very slightly, the foreground trees stir in a light breeze. Do not alter people, faces, text, signs or buildings: every rock pillar, monastery, road, the tiny vehicles and figures stay exactly as photographed and in place. No new elements.",
-      "caption": "Meteora under a heavy sky",
-      "narration": null,
-      "transition_in": "dissolve",
-      "why_here": "EXIF 10 Nov. The tone shift from city to vast silence; the longest shot (awe beat) and left silent on purpose. Hero: only tiny distant figures, the motion is clouds and foliage."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9313.jpeg",
-      "act": "Up Top",
-      "seconds": 4.0,
-      "hero": false,
-      "camera_move": "slow lateral pan left-to-right (4:3 cropped to 9:16 cannot hold both people at once): opens on the traveller and the bus seats, drifts across to the shuttered buildings and graffiti through the right-hand window.",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; both people in the foreground and the passenger behind stay exactly as photographed.",
-      "caption": "Athens from the upper deck",
-      "narration": "Back in Athens, now from the top deck.",
-      "transition_in": "dissolve",
-      "why_here": "EXIF 12 Nov 10:43, Athens. The 'on the move' beat before the summit. A second person (a woman) is in frame: never named, no relationship implied; caption and narration stay on the place. Faces prominent, so camera move only."
-    },
-    {
-      "photo": "trips/greece/photos/a0a41173.jpeg",
-      "act": "Up Top",
-      "seconds": 5.0,
-      "hero": false,
-      "camera_move": "slow push-in toward the Caryatid porch with slight parallax: the traveller as the foreground layer, the porch and the distant city behind (portrait photo, the 9:16 crop holds both).",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller, the Caryatid statues and every stone stay exactly as photographed.",
-      "caption": "The Caryatids, Acropolis of Athens",
-      "narration": "And then, up on the rock itself.",
-      "transition_in": "cut",
-      "why_here": "No EXIF. Placed on 12 Nov, after the bus: same black Levi's T-shirt and the same blue-lens sunglasses as the 12 Nov bus selfie, and the clear sky matches 12 Nov rather than the overcast 9 Nov. It pays off 'looking up' from Anafiotika. Person prominent, so camera move only."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9444.jpeg",
-      "act": "The Island",
-      "seconds": 4.0,
-      "hero": true,
-      "camera_move": "very slow push-in toward the front of the Fiat (portrait photo after EXIF rotation).",
-      "animation_prompt": "Subtle, physically plausible motion only: the clouds drift slowly across the blue sky, the tall pine and the dark tree on the right sway very faintly, soft sunlight shifts a little on the pavement. The car, the scooter, the parked car on the right, the wires and the railing are completely still. Do not alter people, faces, text, signs or buildings: the licence plate characters, the Fiat badge, the white building and the railing stay exactly as photographed, sharp and unchanged. No new elements, no people.",
-      "caption": "Santorini, by Fiat 500",
-      "narration": "Santorini: I drove the island in a Fiat 500.",
-      "transition_in": "dissolve",
-      "why_here": "EXIF 15 Nov, moved ahead of the 13-14 Nov island shots on purpose: the car is how he got around the island (hint), so it opens the Santorini act, and keeping it chronological would push the drive after the sunset and kill the ending. Hero: no people; risk flag: the plate text must not shimmer, otherwise fall back to parallax."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9451.jpeg",
-      "act": "The Island",
-      "seconds": 3.5,
-      "hero": false,
-      "camera_move": "slow lateral drift left-to-right from the driver toward the windscreen and the sea, with a slight push (portrait photo after EXIF rotation; lateral = journey).",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the driver's face, hands and body and the car interior stay exactly as photographed.",
-      "caption": "Island roads by the sea",
-      "narration": null,
-      "transition_in": "cut",
-      "why_here": "EXIF 15 Nov 14:33. Kept next to the car shot as the 'on the road' beat; silent so the music carries the momentum. Driver prominent, so camera move only."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9359.jpeg",
-      "act": "The Island",
-      "seconds": 4.0,
-      "hero": false,
-      "camera_move": "slow tilt-up from the traveller on the rocky path to the lighthouse and the flag (portrait photo).",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller, the lighthouse and the flag stay exactly as photographed.",
-      "caption": "Akrotiri Lighthouse, Santorini",
-      "narration": "Out to the lighthouse at the island's edge.",
-      "transition_in": "cut",
-      "why_here": "EXIF 13 Nov; the lighthouse is named in the hint. The flag would animate well, but the traveller is prominent, so camera move only per the owner's rule."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9404.jpeg",
-      "act": "The Island",
-      "seconds": 3.0,
-      "hero": false,
-      "camera_move": "slow push-in toward the traveller at the viewing scope (portrait photo).",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller, the scope, the wall and the Santorini sign and map stay exactly as photographed.",
-      "caption": "A closer look at Santorini",
-      "narration": null,
-      "transition_in": "cut",
-      "why_here": "EXIF 14 Nov 14:26. A light, playful beat before the act turns quiet. The sign reads Santorini; the place is a viewing scope at an exhibit courtyard, and no museum or venue is named. Person prominent, so camera move only."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9423.jpeg",
-      "act": "Last Light",
-      "seconds": 4.0,
-      "hero": false,
-      "camera_move": "slow lateral pan right-to-left (4:3 cropped to 9:16): opens on the traveller's face, drifts across the palm toward the low sun over the bay; stops before the sun clips the frame edge.",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller's face and expression, the dome, the palm and the sea stay exactly as photographed.",
-      "caption": "Golden hour on Santorini",
-      "narration": "And then the light turned gold.",
-      "transition_in": "dissolve",
-      "why_here": "EXIF 14 Nov 16:30. The human moment of the finale. Shown before IMG_9421 (16:27), a two-minute swap, so the film ends on the wide, quiet frame instead of a selfie."
-    },
-    {
-      "photo": "trips/greece/photos/IMG_9421.jpeg",
-      "act": "Last Light",
-      "seconds": 5.0,
-      "hero": false,
-      "camera_move": "slow pull-out: starts tight on the domes and the sunlit bay, eases back to reveal the striped lounger and the terrace (portrait photo; pull-out = farewell). Continues under the ending card.",
-      "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the reclining person, the domes, the crosses and the sea stay exactly as photographed.",
-      "caption": "Late light over the Aegean",
-      "narration": null,
-      "transition_in": "dissolve",
-      "why_here": "EXIF 14 Nov 16:27. The most composed, reflective frame, used as the closing image and left silent. The reclining person is kept neutral (not named as the traveller). Water shimmer would suit it, but a person is prominent, so camera move only."
-    }
-  ],
-  "ending": {"caption": "Until next time.", "seconds": 4.5},
-  "dropped": [
-    {"photo": "trips/greece/photos/69a32a81.jpeg", "why": "Near-duplicate of a0a41173 (same Caryatid porch, same outfit, same visit). It is a tighter selfie with the porch at the left edge and the face at the right edge, so a 9:16 crop loses one or the other. a0a41173 is wider, shows the city beyond and crops cleanly."}
-  ],
-  "music_note": "One instrumental track, building and releasing at act breaks only (never mid-scene). Cold open: a single sustained, airy pad or a solo piano phrase, about 70 bpm, fading under the title. Below the Rock: low, sparse acoustic (guitar or piano), unhurried, about 80 bpm, overcast and curious. Stone Towers: a slow swell (strings or pad) with no beat, so the scale lands in near-silence. Up Top: light percussion enters, mid energy, about 95 bpm, warmer and brighter for the sunny Athens day. The Island: highest energy, a bright and loose rhythm (acoustic guitar, hand percussion) at about 105-110 bpm for the road-trip feel. Last Light: drops back to the opening piano or pad motif, slow, warm, resolving on the ending card and fading to black. Keep it organic, with no EDM drops or trailer hits; it should feel like a real person's holiday film.",
-  "claims_to_check": [
-    "Title subtitle 'November 2026': EXIF dates span 9-15 Nov 2026.",
-    "IMG_9268 caption 'Color on old Athens walls': the graffiti lane is in Athens (EXIF 9 Nov 16:11, two minutes before IMG_9270; exact street unknown).",
-    "IMG_9270 caption 'Anafiotika, beneath the Acropolis': the photo was taken in Anafiotika and the wall above is the Acropolis (high-confidence analysis plus the hint).",
-    "IMG_9282 caption 'Meteora under a heavy sky': the photo shows Meteora (high-confidence analysis, hint, EXIF 10 Nov).",
-    "IMG_9313 caption 'Athens from the upper deck' and narration 'Back in Athens, now from the top deck': an open-top bus in Athens on 12 Nov, after the 10 Nov Meteora visit.",
-    "a0a41173 caption 'The Caryatids, Acropolis of Athens': the Erechtheion's Caryatid porch on the Acropolis (high-confidence analysis).",
-    "a0a41173 placement and narration 'And then, up on the rock itself': no EXIF; it is placed after the 12 Nov bus ride because of the matching black Levi's T-shirt, the blue sunglasses and the sunny sky. Confirm the date with the traveller.",
-    "IMG_9444 caption 'Santorini, by Fiat 500' and narration 'Santorini: I drove the island in a Fiat 500': the Fiat in the photo is the car the traveller drove on Santorini (hint plus EXIF 15 Nov).",
-    "IMG_9451 caption 'Island roads by the sea': the drive is on Santorini (EXIF 15 Nov).",
-    "IMG_9359 caption 'Akrotiri Lighthouse, Santorini': the lighthouse is Akrotiri Lighthouse (hint plus EXIF 13 Nov).",
-    "IMG_9359 narration 'Out to the lighthouse at the island's edge': Akrotiri Lighthouse stands at Santorini's south-western tip.",
-    "IMG_9404 caption 'A closer look at Santorini': the photo was taken on Santorini (the sign reads Σαντορίνη / Santorini; EXIF 14 Nov). No venue is named.",
-    "IMG_9423 caption 'Golden hour on Santorini': the photo was taken on Santorini (EXIF 14 Nov 16:30, near sunset).",
-    "IMG_9421 caption 'Late light over the Aegean': the sea in view is the Aegean (Santorini; the exact viewpoint, Oia or otherwise, is not claimed)."
-  ],
-  "music": {"style": "doc", "bpm": 80},
-  "style": {"dissolve_s": 0.45, "act_fade_s": 0.35, "zoom": 1.045, "ending": {"fade_to_black_s": 1.2, "card_s": 2.0}, "captions": {"Cold open": "OIA, SANTORINI", "Below the Rock": "ATHENS · 9 NOVEMBER", "Stone Towers": "METEORA · 10 NOVEMBER", "Up Top": "ATHENS · 12 NOVEMBER", "The Island": "SANTORINI", "Last Light": "SANTORINI"}, "caption": {"font": "assets/fonts/CormorantGaramond-SemiBold.ttf (OFL); fallback Liberation Serif", "color": "#F2EBDD", "size": 60, "track": 0.16, "left": 84, "bottom": 300}, "title": {"seconds": 2.6, "bg": [8, 8, 9], "size": 104, "track": 0.42, "sub_size": 42, "sub_track": 0.16}, "grade": {"contrast": 1.03, "warmth": [3.0, 1.0, -2.5], "black_lift": 5, "grain": 2.0, "saturation": 0.95, "lut_strength": 0.4}}
+ "title": "Greece",
+ "subtitle": "November 2026",
+ "arc": "A week in Greece told as a climb from looking up to looking out: grey Athens lanes beneath the Acropolis, the silence of Meteora's rock towers, finally standing on the Acropolis, then a Fiat 500 across Santorini that ends in late golden light over the sea.",
+ "acts": [
+  {
+   "name": "Cold open",
+   "purpose": "Flash-forward to the most striking image: the traveller above Oia's rooftops and the sea. Introduces who we follow and what the trip is building toward; the title card follows.",
+   "music_energy": "low"
+  },
+  {
+   "name": "Below the Rock",
+   "purpose": "Athens, 9 Nov, overcast: wandering the lanes on foot and seeing the Acropolis only from below. Anticipation.",
+   "music_energy": "low"
+  },
+  {
+   "name": "Stone Towers",
+   "purpose": "Meteora, 10 Nov: the tone shifts from city lanes to scale and silence. The landscape awe beat.",
+   "music_energy": "mid"
+  },
+  {
+   "name": "Up Top",
+   "purpose": "Back in Athens, 12 Nov, now in sunshine: moving through the city, then standing on the Acropolis he looked up at on day one. The payoff.",
+   "music_energy": "mid"
+  },
+  {
+   "name": "The Island",
+   "purpose": "Santorini by Fiat 500: road, sea, lighthouse, small discoveries. Lightness and momentum.",
+   "music_energy": "high"
+  },
+  {
+   "name": "Last Light",
+   "purpose": "Golden hour on a Santorini terrace: a human moment, then a quiet look out to sea. Reflection and farewell.",
+   "music_energy": "low"
+  }
+ ],
+ "scenes": [
+  {
+   "photo": "trips/greece/photos/89499c09.jpeg",
+   "act": "Cold open",
+   "seconds": 3.5,
+   "hero": false,
+   "camera_move": "slow lateral drift left-to-right: the 9:16 crop opens on the traveller against the caldera and drifts across to Oia's white rooftops and blue domes (about 25% of frame width). 2.5D parallax only, traveller as foreground layer.",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller's face, body, clothing and pose stay exactly as photographed.",
+   "caption": null,
+   "narration": null,
+   "transition_in": "cut",
+   "why_here": "No EXIF, so it is free to place by story: it is the most striking, unmistakably Greek frame and introduces the traveller (white hoodie, per the hint). Used once, as a flash-forward cold open, then the title card. Person prominent, so camera move only."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9268.jpeg",
+   "act": "Below the Rock",
+   "seconds": 3.5,
+   "hero": true,
+   "camera_move": "very slow push-in along the path toward its vanishing point (photo is portrait after EXIF rotation, so the 9:16 crop is a light side trim).",
+   "animation_prompt": "Subtle, physically plausible motion only: leaves and thin branches in the canopy at the top of the frame stir in a light breeze, the weeds along the base of the wall move faintly, soft overcast daylight flickers very slightly through the trees. Everything else is completely static. Do not alter people, faces, text, signs or buildings: the graffiti, the painted faces and their eyes, all lettering, the wall, the railings and the path stay exactly as photographed. No new elements, no people.",
+   "caption": "Color on old Athens walls",
+   "narration": "Athens, on foot, under a grey sky.",
+   "transition_in": "dissolve",
+   "why_here": "Earliest EXIF (9 Nov 16:11). Hero because there are no people and the only motion is foliage and light; risk flag: the model may try to animate the painted cartoon faces, so the realism gate must reject any motion on the wall and fall back to parallax."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9270.jpeg",
+   "act": "Below the Rock",
+   "seconds": 4.5,
+   "hero": true,
+   "camera_move": "slow tilt-up from the uneven lane and potted plants to the Acropolis wall and the flag (portrait photo, ideal for vertical; tilt-up = scale).",
+   "animation_prompt": "Subtle, physically plausible motion only: the Greek flag on the ridge ripples gently in a light breeze, the overcast clouds drift slowly to one side, the leaves of the tree on the right and the potted plants stir faintly. Do not alter people, faces, text, signs or buildings: the rock, the Acropolis wall, every house, door, window and stone stays exactly as photographed. No new elements.",
+   "caption": "Anafiotika, beneath the Acropolis",
+   "narration": "From these lanes, I kept looking up.",
+   "transition_in": "cut",
+   "why_here": "EXIF 9 Nov 16:13, two minutes after the graffiti lane. It sets up the film's through-line (looking up at the Acropolis, standing on it later). Strongest hero candidate: no people, a flag and clouds."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9282.jpeg",
+   "act": "Stone Towers",
+   "seconds": 6.0,
+   "hero": true,
+   "camera_move": "slow lateral pan left-to-right across the landscape (4:3 frame cropped to 9:16): starts on the left pillar with the red-roofed monastery, crosses the valley and ends on the right-hand cliffs with the buildings on top.",
+   "animation_prompt": "Subtle, physically plausible motion only: the heavy cloud layers drift slowly and almost imperceptibly, the pale band of light on the horizon shifts very slightly, the foreground trees stir in a light breeze. Do not alter people, faces, text, signs or buildings: every rock pillar, monastery, road, the tiny vehicles and figures stay exactly as photographed and in place. No new elements.",
+   "caption": "Meteora under a heavy sky",
+   "narration": null,
+   "transition_in": "dissolve",
+   "why_here": "EXIF 10 Nov. The tone shift from city to vast silence; the longest shot (awe beat) and left silent on purpose. Hero: only tiny distant figures, the motion is clouds and foliage."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9313.jpeg",
+   "act": "Up Top",
+   "seconds": 4.0,
+   "hero": false,
+   "camera_move": "slow lateral pan left-to-right (4:3 cropped to 9:16 cannot hold both people at once): opens on the traveller and the bus seats, drifts across to the shuttered buildings and graffiti through the right-hand window.",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; both people in the foreground and the passenger behind stay exactly as photographed.",
+   "caption": "Athens from the upper deck",
+   "narration": "Back in Athens, now from the top deck.",
+   "transition_in": "dissolve",
+   "why_here": "EXIF 12 Nov 10:43, Athens. The 'on the move' beat before the summit. A second person (a woman) is in frame: never named, no relationship implied; caption and narration stay on the place. Faces prominent, so camera move only."
+  },
+  {
+   "photo": "trips/greece/photos/a0a41173.jpeg",
+   "act": "Up Top",
+   "seconds": 5.0,
+   "hero": false,
+   "camera_move": "slow push-in toward the Caryatid porch with slight parallax: the traveller as the foreground layer, the porch and the distant city behind (portrait photo, the 9:16 crop holds both).",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller, the Caryatid statues and every stone stay exactly as photographed.",
+   "caption": "The Caryatids, Acropolis of Athens",
+   "narration": "And then, up on the rock itself.",
+   "transition_in": "cut",
+   "why_here": "No EXIF. Placed on 12 Nov, after the bus: same black Levi's T-shirt and the same blue-lens sunglasses as the 12 Nov bus selfie, and the clear sky matches 12 Nov rather than the overcast 9 Nov. It pays off 'looking up' from Anafiotika. Person prominent, so camera move only."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9444.jpeg",
+   "act": "The Island",
+   "seconds": 4.0,
+   "hero": true,
+   "camera_move": "very slow push-in toward the front of the Fiat (portrait photo after EXIF rotation).",
+   "animation_prompt": "Subtle, physically plausible motion only: the clouds drift slowly across the blue sky, the tall pine and the dark tree on the right sway very faintly, soft sunlight shifts a little on the pavement. The car, the scooter, the parked car on the right, the wires and the railing are completely still. Do not alter people, faces, text, signs or buildings: the licence plate characters, the Fiat badge, the white building and the railing stay exactly as photographed, sharp and unchanged. No new elements, no people.",
+   "caption": "Santorini, by Fiat 500",
+   "narration": "Santorini: I drove the island in a Fiat 500.",
+   "transition_in": "dissolve",
+   "why_here": "EXIF 15 Nov, moved ahead of the 13-14 Nov island shots on purpose: the car is how he got around the island (hint), so it opens the Santorini act, and keeping it chronological would push the drive after the sunset and kill the ending. Hero: no people; risk flag: the plate text must not shimmer, otherwise fall back to parallax."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9451.jpeg",
+   "act": "The Island",
+   "seconds": 3.5,
+   "hero": false,
+   "camera_move": "slow lateral drift left-to-right from the driver toward the windscreen and the sea, with a slight push (portrait photo after EXIF rotation; lateral = journey).",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the driver's face, hands and body and the car interior stay exactly as photographed.",
+   "caption": "Island roads by the sea",
+   "narration": null,
+   "transition_in": "cut",
+   "why_here": "EXIF 15 Nov 14:33. Kept next to the car shot as the 'on the road' beat; silent so the music carries the momentum. Driver prominent, so camera move only."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9359.jpeg",
+   "act": "The Island",
+   "seconds": 4.0,
+   "hero": false,
+   "camera_move": "slow tilt-up from the traveller on the rocky path to the lighthouse and the flag (portrait photo).",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller, the lighthouse and the flag stay exactly as photographed.",
+   "caption": "Akrotiri Lighthouse, Santorini",
+   "narration": "Out to the lighthouse at the island's edge.",
+   "transition_in": "cut",
+   "why_here": "EXIF 13 Nov; the lighthouse is named in the hint. The flag would animate well, but the traveller is prominent, so camera move only per the owner's rule."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9404.jpeg",
+   "act": "The Island",
+   "seconds": 3.0,
+   "hero": false,
+   "camera_move": "slow push-in toward the traveller at the viewing scope (portrait photo).",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller, the scope, the wall and the Santorini sign and map stay exactly as photographed.",
+   "caption": "A closer look at Santorini",
+   "narration": null,
+   "transition_in": "cut",
+   "why_here": "EXIF 14 Nov 14:26. A light, playful beat before the act turns quiet. The sign reads Santorini; the place is a viewing scope at an exhibit courtyard, and no museum or venue is named. Person prominent, so camera move only."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9423.jpeg",
+   "act": "Last Light",
+   "seconds": 4.0,
+   "hero": false,
+   "camera_move": "slow lateral pan right-to-left (4:3 cropped to 9:16): opens on the traveller's face, drifts across the palm toward the low sun over the bay; stops before the sun clips the frame edge.",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the traveller's face and expression, the dome, the palm and the sea stay exactly as photographed.",
+   "caption": "Golden hour on Santorini",
+   "narration": "And then the light turned gold.",
+   "transition_in": "dissolve",
+   "why_here": "EXIF 14 Nov 16:30. The human moment of the finale. Shown before IMG_9421 (16:27), a two-minute swap, so the film ends on the wide, quiet frame instead of a selfie."
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9421.jpeg",
+   "act": "Last Light",
+   "seconds": 5.0,
+   "hero": false,
+   "camera_move": "slow pull-out: starts tight on the domes and the sunlit bay, eases back to reveal the striped lounger and the terrace (portrait photo; pull-out = farewell). Continues under the ending card.",
+   "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; the reclining person, the domes, the crosses and the sea stay exactly as photographed.",
+   "caption": "Late light over the Aegean",
+   "narration": null,
+   "transition_in": "dissolve",
+   "why_here": "EXIF 14 Nov 16:27. The most composed, reflective frame, used as the closing image and left silent. The reclining person is kept neutral (not named as the traveller). Water shimmer would suit it, but a person is prominent, so camera move only."
+  }
+ ],
+ "ending": {
+  "caption": "Until next time.",
+  "seconds": 4.5
+ },
+ "dropped": [
+  {
+   "photo": "trips/greece/photos/69a32a81.jpeg",
+   "why": "Near-duplicate of a0a41173 (same Caryatid porch, same outfit, same visit). It is a tighter selfie with the porch at the left edge and the face at the right edge, so a 9:16 crop loses one or the other. a0a41173 is wider, shows the city beyond and crops cleanly."
+  }
+ ],
+ "music_note": "One instrumental track, building and releasing at act breaks only (never mid-scene). Cold open: a single sustained, airy pad or a solo piano phrase, about 70 bpm, fading under the title. Below the Rock: low, sparse acoustic (guitar or piano), unhurried, about 80 bpm, overcast and curious. Stone Towers: a slow swell (strings or pad) with no beat, so the scale lands in near-silence. Up Top: light percussion enters, mid energy, about 95 bpm, warmer and brighter for the sunny Athens day. The Island: highest energy, a bright and loose rhythm (acoustic guitar, hand percussion) at about 105-110 bpm for the road-trip feel. Last Light: drops back to the opening piano or pad motif, slow, warm, resolving on the ending card and fading to black. Keep it organic, with no EDM drops or trailer hits; it should feel like a real person's holiday film.",
+ "claims_to_check": [
+  "Title subtitle 'November 2026': EXIF dates span 9-15 Nov 2026.",
+  "IMG_9268 caption 'Color on old Athens walls': the graffiti lane is in Athens (EXIF 9 Nov 16:11, two minutes before IMG_9270; exact street unknown).",
+  "IMG_9270 caption 'Anafiotika, beneath the Acropolis': the photo was taken in Anafiotika and the wall above is the Acropolis (high-confidence analysis plus the hint).",
+  "IMG_9282 caption 'Meteora under a heavy sky': the photo shows Meteora (high-confidence analysis, hint, EXIF 10 Nov).",
+  "IMG_9313 caption 'Athens from the upper deck' and narration 'Back in Athens, now from the top deck': an open-top bus in Athens on 12 Nov, after the 10 Nov Meteora visit.",
+  "a0a41173 caption 'The Caryatids, Acropolis of Athens': the Erechtheion's Caryatid porch on the Acropolis (high-confidence analysis).",
+  "a0a41173 placement and narration 'And then, up on the rock itself': no EXIF; it is placed after the 12 Nov bus ride because of the matching black Levi's T-shirt, the blue sunglasses and the sunny sky. Confirm the date with the traveller.",
+  "IMG_9444 caption 'Santorini, by Fiat 500' and narration 'Santorini: I drove the island in a Fiat 500': the Fiat in the photo is the car the traveller drove on Santorini (hint plus EXIF 15 Nov).",
+  "IMG_9451 caption 'Island roads by the sea': the drive is on Santorini (EXIF 15 Nov).",
+  "IMG_9359 caption 'Akrotiri Lighthouse, Santorini': the lighthouse is Akrotiri Lighthouse (hint plus EXIF 13 Nov).",
+  "IMG_9359 narration 'Out to the lighthouse at the island's edge': Akrotiri Lighthouse stands at Santorini's south-western tip.",
+  "IMG_9404 caption 'A closer look at Santorini': the photo was taken on Santorini (the sign reads Σαντορίνη / Santorini; EXIF 14 Nov). No venue is named.",
+  "IMG_9423 caption 'Golden hour on Santorini': the photo was taken on Santorini (EXIF 14 Nov 16:30, near sunset).",
+  "IMG_9421 caption 'Late light over the Aegean': the sea in view is the Aegean (Santorini; the exact viewpoint, Oia or otherwise, is not claimed)."
+ ],
+ "music": {
+  "style": "doc",
+  "bpm": 80
+ },
+ "style": {
+  "dissolve_s": 0.45,
+  "act_fade_s": 0.35,
+  "zoom": 1.045,
+  "ending": {
+   "fade_to_black_s": 1.2,
+   "card_s": 2.0
+  },
+  "captions": {
+   "Cold open": "OIA, SANTORINI",
+   "Below the Rock": "ATHENS · 9 NOVEMBER",
+   "Stone Towers": "METEORA · 10 NOVEMBER",
+   "Up Top": "ATHENS · 12 NOVEMBER",
+   "The Island": "SANTORINI",
+   "Last Light": "SANTORINI"
+  },
+  "caption": {
+   "font": "assets/fonts/CormorantGaramond-SemiBold.ttf (OFL); fallback Liberation Serif",
+   "color": "#F2EBDD",
+   "size": 60,
+   "track": 0.16,
+   "left": 84,
+   "bottom": 300,
+   "scrim": 0.45,
+   "scrim_h": 0.3
+  },
+  "title": {
+   "seconds": 2.6,
+   "bg": [
+    8,
+    8,
+    9
+   ],
+   "size": 104,
+   "track": 0.42,
+   "sub_size": 42,
+   "sub_track": 0.16
+  },
+  "grade": {
+   "contrast": 1.03,
+   "warmth": [
+    3.0,
+    1.0,
+    -2.5
+   ],
+   "black_lift": 5,
+   "grain": 2.0,
+   "saturation": 0.95,
+   "lut_strength": 0.4
+  }
+ }
 }
