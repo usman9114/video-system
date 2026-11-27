@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""Client for our own Modal lip-sync API (modal_apps/lipsync_web.py), over plain HTTPS.
+
+    python3 -m lane.modal_lipsync health
+    python3 -m lane.modal_lipsync download [--variants student,teacher]          # CPU, fills the weights Volume
+    python3 -m lane.modal_lipsync wait <call_id>
+    python3 -m lane.modal_lipsync lipsync --video face.mp4 --audio voice.mp3 --out out.mp4 [--mode student|teacher]
+
+Auth: `x-api-key` is a network secret injected by the proxy (we send a placeholder). Costs are logged to
+reports/modal-usage.jsonl (GPU seconds × L40S rate, reported by the worker). Free credits: $30/month.
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import json
+import sys
+import time
+from pathlib import Path
+from urllib import error, request
+
+API = "https://nubuqqrr--video-system-lipsync-api.us-east.modal.run"
+ROOT = Path(__file__).resolve().parent.parent
+USAGE = ROOT / "reports" / "modal-usage.jsonl"
+
+
+def call(method, path, body=None, timeout=120):
+    data = json.dumps(body).encode() if body is not None else None
+    req = request.Request(API + path, data=data, method=method,
+                          headers={"x-api-key": "proxy-injected", "Content-Type": "application/json"})
+    try:
+        with request.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read())
+    except error.HTTPError as e:
+        sys.exit(f"{method} {path}: HTTP {e.code} {e.read()[:400]!r}")
+
+
+def wait(call_id: str, every: float = 10, limit: float = 3600) -> dict:
+    t0 = time.time()
+    while True:
+        r = call("GET", f"/result/{call_id}", timeout=60)
+        if r.get("status") != "running":
+            return r
+        if time.time() - t0 > limit:
+            sys.exit(f"timeout waiting for {call_id}")
+        print(f"  [{int(time.time() - t0)}s] running", flush=True)
+        time.sleep(every)
+
+
+def log(rec):
+    USAGE.parent.mkdir(parents=True, exist_ok=True)
+    rec["at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    with USAGE.open("a") as f:
+        f.write(json.dumps(rec) + "\n")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("health")
+    d = sub.add_parser("download")
+    d.add_argument("--variants", default="student,teacher")
+    w = sub.add_parser("wait")
+    w.add_argument("call_id")
+    l = sub.add_parser("lipsync")
+    l.add_argument("--video", required=True)
+    l.add_argument("--audio", required=True)
+    l.add_argument("--out", required=True)
+    l.add_argument("--mode", default="student")
+    a = ap.parse_args()
+    if a.cmd == "health":
+        print(call("GET", "/health"))
+    elif a.cmd == "download":
+        print(call("POST", "/download", {"variants": a.variants}))
+    elif a.cmd == "wait":
+        r = wait(a.call_id)
+        r.pop("video_b64", None)
+        print(json.dumps(r, indent=1)[:3000])
+    else:
+        body = {"video_b64": base64.b64encode(Path(a.video).read_bytes()).decode(),
+                "audio_b64": base64.b64encode(Path(a.audio).read_bytes()).decode(), "mode": a.mode}
+        cid = call("POST", "/lipsync", body, timeout=300)["call_id"]
+        print("call", cid, flush=True)
+        r = wait(cid)
+        log({"op": "tbdub", "mode": a.mode, "call_id": cid, "ok": r.get("ok"), "gpu_seconds": r.get("gpu_seconds"),
+             "usd": r.get("usd")})
+        if not r.get("ok"):
+            print(r.get("log", "")[-3000:])
+            sys.exit("lipsync failed")
+        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.out).write_bytes(base64.b64decode(r["video_b64"]))
+        print(f"wrote {a.out}  gpu {r.get('gpu_seconds')}s ≈ ${r.get('usd')}")
+
+
+if __name__ == "__main__":
+    main()
