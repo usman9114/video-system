@@ -38,7 +38,7 @@
       "speed": 1.0
     },
     "takes": 1,
-    "why": "only clone that sounded like the owner (ECAPA 0.51 vs Qwen 0.10 / Chatterbox 0.01); credits tight \u2192 1 take"
+    "why": "only clone that sounded like the owner (ECAPA 0.51 vs Qwen 0.10 / Chatterbox 0.01); credits tight → 1 take"
   },
   "lipsync": {
     "engine": "tbdub",
@@ -49,7 +49,27 @@
     "quality_gate": {
       "metric": "SyncNet LSE-C (higher=better) / LSE-D (lower=better)",
       "min_lse_c_vs_sync3": 0.9,
-      "why": "a clip must reach \u226590% of sync-3's sync confidence on the same line, or it's regenerated"
+      "why": "a clip must reach ≥90% of sync-3's sync confidence on the same line, or it's regenerated",
+      "baselines_2026_11_27": {
+        "real_footage": {
+          "lse_c": 8.225,
+          "lse_d": 7.611,
+          "offset": 0
+        },
+        "sync3_hookcta": {
+          "lse_c": 7.652,
+          "lse_d": 7.445,
+          "offset": 1
+        },
+        "tbdub_teacher_v6": {
+          "02_pain": 4.197,
+          "03_who": 6.125,
+          "04_more": 6.014,
+          "05_value": 5.03
+        },
+        "verdict": "TBDub teacher on the small plate = 55-80% of sync-3 -> FAILS the 0.9 gate; owner also rejected by eye. Next: A/B on full-res original, LatentSync 1.6 on L40S full settings, X-Dub.",
+        "note": "syncnet needs >= 100 frames (4 s at 25 fps): pad/loop clips shorter than 4 s before scoring"
+      }
     }
   },
   "footage": {
@@ -154,9 +174,9 @@
   "realism_gate": {
     "applies_to": "every AI-touched shot (lip-sync, Wan/FastWan animation, ChatGPT images) before it goes into any edit",
     "checks": [
-      "face identity vs the real source \u2265 baseline (no drift, no 'different person' look)",
-      "lip-sync SyncNet LSE-C within 10% of the real-footage baseline; offset 0 \u00b1 1 frame",
-      "AI-tell review: ChatGPT vision inspects 6 sampled frames per shot for tells (warped hands/text, waxy skin, melting background, flicker, identity change) \u2192 any 'likely AI' = reject",
+      "face identity vs the real source ≥ baseline (no drift, no 'different person' look)",
+      "lip-sync SyncNet LSE-C within 10% of the real-footage baseline; offset 0 ± 1 frame",
+      "AI-tell review: ChatGPT vision inspects 6 sampled frames per shot for tells (warped hands/text, waxy skin, melting background, flicker, identity change) → any 'likely AI' = reject",
       "owner's eye is final; 'feels fake' = reject even if numbers pass"
     ],
     "on_fail": "drop the AI version and use the real footage/photo (plain or with a gentle real-camera-style move) instead; never ship a borderline shot",
