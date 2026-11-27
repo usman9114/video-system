@@ -136,8 +136,10 @@ class Renderer:
         self.F = Fonts(tpl["fonts"])
         self.bg = self._make_bg()
         self.T = 0.0
-        tr = json.loads((ROOT / spec["transcript"]).read_text())
-        self.words = [w for sgm in tr["segments"] for w in sgm["words"]]
+        self.words = []
+        if spec.get("transcript"):
+            tr = json.loads((ROOT / spec["transcript"]).read_text())
+            self.words = [w for sgm in tr["segments"] for w in sgm["words"]]
 
     def _make_bg(self) -> Image.Image:
         step = 90
@@ -266,13 +268,13 @@ class Renderer:
         self.headline(layer, seg["headline"], t, y0=300)
         p0, p1 = seg["progress"]
         p = p0 + (p1 - p0) * clamp01((t - 0.35) / max(dur - 0.9, 0.5))
-        self.workflow_graphic(layer, p, t, seg.get("done") and t > dur - 1.1)
+        self.workflow_graphic(layer, p, t, seg.get("done") and t > dur - 1.1, seg.get("labels"), seg.get("done_text"))
         canvas.alpha_composite(layer)
         return canvas
 
-    def workflow_graphic(self, layer, p, t, done):
+    def workflow_graphic(self, layer, p, t, done, labels=None, done_text=None):
         d = ImageDraw.Draw(layer)
-        labels = ["New email", "AI sorts it", "CRM updated", "Team notified"]
+        labels = labels or ["New email", "AI sorts it", "CRM updated", "Team notified"]
         cy, size, gap = 790, 190, 250
         xs = [self.W / 2 + (k - 1.5) * gap for k in range(4)]
         c = p * 4.0
@@ -309,7 +311,7 @@ class Renderer:
                              appear, x=x - text_w(fl, labels[k]) / 2)
         if done:
             fb = self.F("bold", 40)
-            msg = "Automated. No copy-paste."
+            msg = done_text or "Automated. No copy-paste."
             w = text_w(fb, msg) + 120
             a = ease((t % 100) and 1.0)
             x0 = (self.W - w) / 2
@@ -353,15 +355,16 @@ class Renderer:
         d = ImageDraw.Draw(layer)
         fk = self.F("bold", 40)
         a = ease(t / 0.3)
-        self.text_center(layer, seg["kicker"].upper(), fk, 330, self.C["accent"], a, (1 - a) * 20)
+        self.text_center(layer, seg["kicker"].upper(), fk, seg.get("kicker_y", 330), self.C["accent"], a, (1 - a) * 20)
         fi = self.F("bold", 56)
         n = len(seg["items"])
         step = (seg["dur"] - 0.8) / n
-        y = 470
+        y = seg.get("y0", 470)
         for k, item in enumerate(seg["items"]):
-            p = ease((t - 0.25 - k * step) / 0.35)
+            at = seg["_item_t"][k] if seg.get("_item_t") else 0.25 + k * step
+            p = ease((t - at) / 0.3)
             if p <= 0:
-                y += 190
+                y += seg.get("step_y", 190)
                 continue
             x0 = 90 + (1 - p) * 50
             d.rounded_rectangle([x0, y, self.W - 90 + (1 - p) * 50, y + 150], radius=34,
@@ -371,7 +374,46 @@ class Renderer:
             d.ellipse([x0 + 38, y + 39, x0 + 110, y + 111], fill=ic[:3] + (int(255 * p),))
             (self.check if good else self.cross)(d, x0 + 74, y + 75, 16, self.C["bg"][:3] + (int(255 * p),))
             d.text((x0 + 140, y + 44), item, font=fi, fill=self.C["text"][:3] + (int(255 * p),))
-            y += 190
+            y += seg.get("step_y", 190)
+        canvas.alpha_composite(layer)
+        return canvas
+
+    def seg_image(self, seg, i, t):
+        """Ken Burns on a still (ChatGPT B-roll photo): cover-fit, slow zoom + drift, bottom gradient for captions."""
+        if "_img" not in seg:
+            seg["_img"] = Image.open(ROOT / seg["image"]).convert("RGB")
+        im = seg["_img"]
+        u = clamp01(t / max(seg["dur"], 0.1))
+        z0, z1 = seg.get("zoom", [1.0, 1.10])
+        z = z0 + (z1 - z0) * u
+        scale = max(self.W / im.width, self.H / im.height) * z
+        vw, vh = self.W / scale, self.H / scale
+        fx, fy = seg.get("focus", [0.5, 0.5])
+        dx = seg.get("pan", 0.0) * (u - 0.5)
+        x0 = min(max(im.width * (fx + dx) - vw / 2, 0), im.width - vw)
+        y0 = min(max(im.height * fy - vh / 2, 0), im.height - vh)
+        frame = im.transform((self.W, self.H), Image.AFFINE, (1 / scale, 0, x0, 0, 1 / scale, y0), resample=Image.BICUBIC)
+        canvas = frame.convert("RGBA")
+        g = Image.new("L", (1, self.H))
+        for yy in range(self.H):
+            g.putpixel((0, yy), int(235 * clamp01((yy - self.H * 0.55) / (self.H * 0.42)) ** 1.3))
+        if seg.get("headline"):   # top scrim so headlines stay readable on bright photos
+            for yy in range(int(self.H * 0.45)):
+                v = int(225 * (1 - yy / (self.H * 0.45)) ** 1.4)
+                g.putpixel((0, yy), max(g.getpixel((0, yy)), v))
+        shade = Image.new("RGBA", (self.W, self.H), self.C["bg"])
+        canvas = Image.composite(shade, canvas, g.resize((self.W, self.H)))
+        layer = Image.new("RGBA", (self.W, self.H), (0, 0, 0, 0))
+        if seg.get("kicker"):
+            fk = self.F("bold", 38)
+            a = ease((t - 0.2) / 0.35)
+            w = text_w(fk, seg["kicker"].upper()) + 56
+            d = ImageDraw.Draw(layer)
+            x = (self.W - w) / 2
+            d.rounded_rectangle([x, 120, x + w, 190], radius=35, fill=self.C["bg"][:3] + (int(200 * a),))
+            self.text_center(layer, seg["kicker"].upper(), fk, 133, self.C["accent"], a)
+        if seg.get("headline"):
+            self.headline(layer, seg["headline"], t, y0=seg.get("headline_y", 230))
         canvas.alpha_composite(layer)
         return canvas
 
@@ -429,6 +471,22 @@ def build_timeline(spec, r: Renderer):
             seg["dur"] = a1 - vin
             ws = [w for w in r.words if a0 - 0.05 <= w["s"] < a1]
             seg["_cards"] = card_words(ws, cp["max_chars_per_line"], cp["max_lines"])
+        if seg.get("vo"):
+            vd = ROOT / spec["vo_dir"]
+            mp3 = vd / f"{seg['vo']}.mp3"
+            dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                                  "-of", "csv=p=0", str(mp3)]))
+            al = json.loads((vd / f"{seg['vo']}.align.json").read_text())["words"]
+            lead = seg.get("lead", 0.12)
+            seg["_vo_mp3"], seg["_lead"] = str(mp3), lead
+            seg["dur"] = round(lead + dur + seg.get("tail", 0.18), 3)
+            seg["_vin"] = -lead                       # captions use t + _vin == time inside the VO line
+            seg["_cards"] = card_words(al, cp["max_chars_per_line"], cp["max_lines"])
+            if seg.get("item_words"):
+                def find(word):
+                    return next((w["s"] for w in al if word.lower() in w["w"].lower()), None)
+                seg["_item_t"] = [(find(x) if find(x) is not None else 0.3 + k) + lead - 0.08
+                                  for k, x in enumerate(seg["item_words"])]
         seg["_t0"] = t
         t += seg["dur"]
     return t
@@ -463,7 +521,8 @@ def make_music(total: float, spec, path: Path, sr: int = 48000, card_db=-27.0, t
     out /= np.max(np.abs(out)) + 1e-9
     gain = np.full(n, 10 ** (card_db / 20), np.float32)
     for seg in spec["segments"]:
-        if seg["type"] == "talk":
+        if seg["type"] == "talk" or seg.get("vo"):
+            seg.setdefault("_pre", 0.0)
             i0 = int(max(seg["_t0"] - seg["_pre"] - 0.15, 0) * sr)
             i1 = int(min(seg["_t0"] + seg["dur"] + 0.1, total) * sr)
             gain[i0:i1] = 10 ** (talk_db / 20)
@@ -487,6 +546,11 @@ def build_audio(spec, src_audio: str, total: float, tmp: Path, tpl: dict, final:
     fd = tpl["audio"]["speech_fade_ms"] / 1000
     k = 1
     for seg in spec["segments"]:
+        if seg.get("vo"):
+            inputs += ["-i", seg["_vo_mp3"]]
+            parts.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,adelay={int((seg['_t0'] + seg['_lead']) * 1000)}:all=1[s{k}]")
+            k += 1
+            continue
         if seg["type"] != "talk":
             continue
         a0, a1 = seg["src"]
@@ -545,7 +609,12 @@ def main():
         r.T = seg["_t0"] + t
         if seg["type"] == "talk":
             return r.seg_talk(seg, frames, min(i, len(frames) - 1), t)
-        return getattr(r, "seg_" + seg["type"])(seg, i, t)
+        fr = getattr(r, "seg_" + seg["type"])(seg, i, t)
+        if seg.get("vo") and seg.get("captions", True):
+            lay = Image.new("RGBA", (r.W, r.H), (0, 0, 0, 0))
+            r.captions(lay, seg, t + seg["_vin"])
+            fr.alpha_composite(lay)
+        return fr
 
     if a.still:
         outdir = ROOT / "previews" / f"{spec['id']}_stills"
