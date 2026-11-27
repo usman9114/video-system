@@ -5,7 +5,7 @@ import os, json, glob
 import whisper
 inp, out = os.environ["KGPU_INPUT"], os.environ["KGPU_OUTPUT"]
 m = whisper.load_model("large-v3", device="cuda")
-for f in sorted(glob.glob(inp + "/*")):
+for f in sorted(glob.glob(inp + "/**/*", recursive=True)):
     if not f.lower().endswith((".wav", ".mp3", ".m4a", ".mp4", ".flac")):
         continue
     r = m.transcribe(f, language="en", word_timestamps=True, condition_on_previous_text=False, temperature=0)

@@ -263,7 +263,9 @@ xdub_image = (
                   "sed -i 's/^opencv-python==.*/opencv-python==4.10.0.84/' /opt/X-Dub/requirements.txt",
                   "pip install -r /opt/X-Dub/requirements.txt", "pip install 'setuptools<70' wheel cython 'numpy==1.26.4'")  # mmcv/chumpy setup.py need pkg_resources
     # OpenMMLab stack per the X-Dub README; mmcv compiled with CUDA ops for Ada (L40S) + Hopper (H100)
-    .env({"FORCE_CUDA": "1", "MMCV_WITH_OPS": "1", "TORCH_CUDA_ARCH_LIST": "8.9;9.0", "MAX_JOBS": "8"})
+    .env({"FORCE_CUDA": "1", "MMCV_WITH_OPS": "1", "TORCH_CUDA_ARCH_LIST": "8.9;9.0", "MAX_JOBS": "8",
+          # add_python's interpreter was built with clang, so setuptools links with clang++ (not installed) -> use gcc
+          "CC": "gcc", "CXX": "g++", "LDSHARED": "g++ -pthread -shared"})
     .run_commands("pip install chumpy==0.70 --no-build-isolation", "pip install mmengine==0.10.7",
                   "pip install mmcv==2.1.0 --no-build-isolation", "pip install mmdet==3.2.0 mmpose==1.3.2",
                   "cd /opt/X-Dub && pip install -e . --no-deps", gpu="L40S")

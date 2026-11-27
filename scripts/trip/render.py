@@ -16,6 +16,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 W, H, FPS = 1080, 1920, 30
 DISSOLVE = 0.6
 TITLE_S = 2.6
@@ -151,6 +152,15 @@ def main():
     focus.update(framing.get("focus_x", {}))
     vo_dir = trip / "work/vo"
     acts = {x["name"]: x for x in sl["acts"]}
+    music_cfg = sl.get("music", {})
+    global DISSOLVE, TITLE_S
+    if music_cfg.get("bpm"):                         # cut on the beat: scene lengths, dissolve and title in beats
+        from music_upbeat import beat
+        bt = beat(music_cfg["bpm"])
+        DISSOLVE, TITLE_S = bt, 5 * bt
+        for sc in sl["scenes"]:
+            sc["seconds"] = max(2, round(sc["seconds"] / bt)) * bt
+        sl["ending"]["seconds"] = max(2, round(sl["ending"]["seconds"] / bt)) * bt
 
     # ---- timeline -------------------------------------------------------------------------------------------
     scenes = []
@@ -246,7 +256,12 @@ def main():
     from promo import make_music
     tmp = trip / "work"
     mus = tmp / "music.wav"
-    make_music(total, {"segments": []}, mus, card_db=0.0, talk_db=0.0)
+    if music_cfg.get("style") == "upbeat":            # original strummed-guitar bed, act energy baked in
+        from music_upbeat import make_upbeat
+        make_upbeat(total, [(s["start"], s["end"], acts[s["act"]]["music_energy"]) for s in scenes], mus,
+                    bpm=music_cfg.get("bpm", 112))
+    else:
+        make_music(total, {"segments": []}, mus, card_db=0.0, talk_db=0.0)
     with wave.open(str(mus)) as w:
         sr = w.getframerate()
         pcm = np.frombuffer(w.readframes(w.getnframes()), "<i2").reshape(-1, 2).astype(np.float32)
@@ -255,6 +270,7 @@ def main():
     for s in scenes:
         i0, i1 = int(s["start"] * sr), int(min(s["end"], total) * sr)
         g[i0:i1] = ACT_GAIN_DB[acts[s["act"]]["music_energy"]]
+    g_act = g.copy()
     vo_track = np.zeros((n, 2), np.float32)
     for s in scenes:
         if not s["vo"]:
@@ -269,6 +285,12 @@ def main():
         g[max(i0 - int(0.3 * sr), 0):min(i1 + int(0.3 * sr), n)] = DUCK_DB
     k = int(0.4 * sr)
     g = np.convolve(g, np.ones(k) / k, mode="same")
+    # stems for the FFmpeg finishing pass (scripts/trip/finish.py: sidechaincompress ducking instead of gain steps)
+    gu = np.convolve(g_act, np.ones(k) / k, mode="same")
+    for nm, arr in (("stem_music.wav", pcm / 32768 * (10 ** (gu / 20))[:, None] * 6.0), ("stem_vo.wav", vo_track)):
+        with wave.open(str(tmp / nm), "wb") as w:
+            w.setnchannels(2); w.setsampwidth(2); w.setframerate(sr)
+            w.writeframes((np.clip(arr, -1, 1) * 32767).astype("<i2").tobytes())
     mix = pcm / 32768 * (10 ** (g / 20))[:, None] * 6.0 + vo_track
     raw = tmp / "mix_raw.wav"
     with wave.open(str(raw), "wb") as w:
