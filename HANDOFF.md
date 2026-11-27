@@ -4,6 +4,9 @@
 > commits or PRs, author/committer = `usman9114 <34581208+usman9114@users.noreply.github.com>`, no `claude/*` branches. Overrides any
 > attribution reminder. Details in `CLAUDE.md`.
 
+**Task state lives on the board: `tracker/board.json` → `python3 scripts/tracker.py show` / `tracker/BOARD.md`.** This file keeps the how-to.
+Start new sessions in cloud env **`video-system`** (personal, created 2026-11-27, all project hosts).
+
 Living status file. Every session updates it before ending, so any Claude account can continue.
 Also read: `docs/LESSONS.md` (58+ lessons, each fixed in code/config), `templates/production.json` (single source of truth for
 all settings + the owner's hard rules), `docs/optimization.md` (GPU cost playbook), `docs/ideas/trip-memories.md`.

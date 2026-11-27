@@ -1,0 +1,187 @@
+{
+  "about": "Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.",
+  "lists": [
+    "blocked",
+    "todo",
+    "doing",
+    "review",
+    "done"
+  ],
+  "cards": [
+    {
+      "id": "T01",
+      "title": "Fix Modal lip-sync API key mismatch",
+      "list": "blocked",
+      "project": "infra",
+      "needs_owner": true,
+      "notes": [
+        "2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value."
+      ]
+    },
+    {
+      "id": "T02",
+      "title": "Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res",
+      "list": "blocked",
+      "project": "n8n",
+      "needs_owner": false,
+      "blocked_by": [
+        "T01"
+      ],
+      "notes": [
+        "python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3",
+        "TBDub full-res needs owner's sample-video.mp4 (60 MB original)."
+      ]
+    },
+    {
+      "id": "T03",
+      "title": "SyncNet-gate the A/B clips, side-by-side, owner picks winner",
+      "list": "todo",
+      "project": "n8n",
+      "blocked_by": [
+        "T02"
+      ],
+      "notes": [
+        "bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65)."
+      ]
+    },
+    {
+      "id": "T04",
+      "title": "Render n8n video v7 with the winning lip-sync",
+      "list": "todo",
+      "project": "n8n",
+      "blocked_by": [
+        "T03"
+      ],
+      "notes": [
+        "Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final"
+      ]
+    },
+    {
+      "id": "T05",
+      "title": "Get gig texts for Upwork videos 2-10",
+      "list": "todo",
+      "project": "upwork",
+      "needs_owner": true,
+      "notes": []
+    },
+    {
+      "id": "T06",
+      "title": "Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)",
+      "list": "blocked",
+      "project": "greece",
+      "needs_owner": true,
+      "notes": [
+        "Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.",
+        "2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names)."
+      ]
+    },
+    {
+      "id": "T07",
+      "title": "Owner feedback on Greece film v1",
+      "list": "review",
+      "project": "greece",
+      "needs_owner": true,
+      "notes": [
+        "v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container."
+      ]
+    },
+    {
+      "id": "T08",
+      "title": "Back up every export to the Kaggle media-backup dataset right after rendering",
+      "list": "todo",
+      "project": "infra",
+      "notes": [
+        "trip_greece.mp4 was lost this way (LESSONS #64)."
+      ]
+    },
+    {
+      "id": "T09",
+      "title": "Ask owner: TI2V-5B gate test on 4 Greece hero scenes (~$7.60 Modal credits)?",
+      "list": "todo",
+      "project": "greece",
+      "needs_owner": true,
+      "notes": [
+        "Default is real photo + camera move (FastWan rejected, LESSONS #65)."
+      ]
+    },
+    {
+      "id": "T10",
+      "title": "Gate-test SageAttention2 / MagCache / FP8 / torch.compile; batch TBDub calls",
+      "list": "todo",
+      "project": "infra",
+      "notes": [
+        "docs/optimization.md"
+      ]
+    },
+    {
+      "id": "T11",
+      "title": "Merge greece-v2 branch into main",
+      "list": "todo",
+      "project": "infra",
+      "needs_owner": true,
+      "notes": [
+        "Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint."
+      ]
+    },
+    {
+      "id": "D01",
+      "title": "n8n v6 rendered (46 s, -14 LUFS); owner rejected lip-sync",
+      "list": "done",
+      "project": "n8n",
+      "notes": [
+        "exports/01_n8n_automation_v6.mp4 in Kaggle backup"
+      ]
+    },
+    {
+      "id": "D02",
+      "title": "SyncNet baselines: real 8.23, sync-3 7.65, TBDub v6 4.2-6.1 (fails)",
+      "list": "done",
+      "project": "n8n",
+      "notes": []
+    },
+    {
+      "id": "D03",
+      "title": "Greece analysis + storyline (12 scenes, 54.5 s), approved by owner",
+      "list": "done",
+      "project": "greece",
+      "notes": [
+        "trips/greece/storyline.md"
+      ]
+    },
+    {
+      "id": "D04",
+      "title": "Greece film v1 rendered and sent",
+      "list": "done",
+      "project": "greece",
+      "notes": []
+    },
+    {
+      "id": "D05",
+      "title": "FastWan hero clips tested, rejected by realism gate",
+      "list": "done",
+      "project": "greece",
+      "notes": [
+        "LESSONS #65"
+      ]
+    },
+    {
+      "id": "D06",
+      "title": "Modal deploy fixed (Python 3.11 images, X-Dub opencv/numpy/mmcv)",
+      "list": "done",
+      "project": "infra",
+      "notes": [
+        "PRs #3, #4 + greece-v2 commits; deploy runs 19-21 green"
+      ]
+    },
+    {
+      "id": "D07",
+      "title": "Personal cloud env 'video-system' created with all project hosts",
+      "list": "done",
+      "project": "infra",
+      "notes": [
+        "2026-11-27. Start new sessions in this env."
+      ]
+    }
+  ],
+  "updated": "2026-11-27 19:27 UTC"
+}
