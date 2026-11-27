@@ -24,7 +24,7 @@ W = "/weights"
 L40S_USD_PER_S = 0.000542
 
 tbdub_image = (
-    modal.Image.debian_slim(python_version="3.10")
+    modal.Image.debian_slim(python_version="3.11")
     .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0", "curl")
     .run_commands("git clone --depth 1 https://github.com/TaoLiveAIGC/TBDub.git /opt/TBDub")
     .pip_install("torch==2.9.0", "torchvision==0.24.0", index_url="https://download.pytorch.org/whl/cu128")
