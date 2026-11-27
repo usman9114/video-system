@@ -106,6 +106,15 @@
     "cost_per_5s_clip_usd": {
       "ti2v-5B": 0.95,
       "i2v-A14B": 1.83
+    },
+    "owner_preference": "2026-11-27: owner judged TI2V-5B 'much better' than I2V-A14B (smoother 24 fps, cheaper ~$0.95 vs $1.83)",
+    "photo_to_video": {
+      "model": "ti2v-5B",
+      "native_fps": 24,
+      "target_fps": 30,
+      "interpolation": "RIFE (MIT) on Modal",
+      "seeds_per_photo": 2,
+      "why": "owner wants >=30 fps; TI2V-5B preferred"
     }
   }
 }
