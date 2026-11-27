@@ -193,5 +193,188 @@
       "animation_strength": "subtle, physically plausible only (light, crowd, water, flags, foliage, camera); no dramatic AI motion",
       "graphics": "recreations of real UIs/references only"
     }
+  },
+  "final_cut": {
+    "_doc": "Final-cut lab: every master (promo or trip film) goes through this on Kaggle's free 2x T4 before delivery. Run: python3 scripts/final_cut.py <master.mp4> --kind promo|trip [--spec ...|--expect ...]. Owner 2026-11-27: 'add a final cut review layer where a master final touch up lab works on kaggle'.",
+    "enabled": true,
+    "where": "kaggle 2x T4 (bin/kgpu, jobs/final-cut)",
+    "gpu_plan": {
+      "gpu0": "touch-up frames [0, 40%) -> Whisper large-v3 -> SyncNet on the master",
+      "gpu1": "touch-up frames [40%, 100%) -> join/encode/side-by-sides -> SyncNet on the touched cut",
+      "cpu": "technical QC in parallel (loudness, true peak, black, freeze, scene cuts vs speech, contact sheet)",
+      "why": "both T4s busy at once; Kaggle bills session time, not per GPU (LESSONS #43). First run with one lane per GPU left GPU0 at 3% mean util."
+    },
+    "timeout_min": 40,
+    "checks": {
+      "loudness": {
+        "target_lufs_from": "render.loudness_lufs",
+        "tolerance_lu": 1.0,
+        "true_peak_max_db_from": "render.true_peak_db"
+      },
+      "transcript": {
+        "model": "large-v3",
+        "max_wer": 0.08,
+        "low_confidence_below": 0.4,
+        "why": "catches dropped/garbled VO words and wrong captions before the owner sees them"
+      },
+      "lipsync": {
+        "applies_to": [
+          "promo"
+        ],
+        "min_lse_c_from": "lipsync.quality_gate (min_lse_c_vs_sync3 x sync3 baseline)",
+        "max_abs_offset_frames": 1,
+        "note": "tracks shorter than 100 frames (4 s @25 fps) can't be scored"
+      },
+      "cut_while_talking": {
+        "applies_to": [
+          "promo"
+        ],
+        "scene_threshold": 10.0,
+        "word_gap_s": 0.25,
+        "why": "hard rule no_cutaway_while_talking: a cut inside a spoken phrase next to a face shot = fail"
+      },
+      "black": {
+        "min_s": 0.12,
+        "ignore_head_tail_s": 1.0
+      },
+      "freeze": {
+        "noise": 0.001,
+        "min_s": 2.0,
+        "why": "1-1.3 s list holds are intentional (LESSONS #20)"
+      },
+      "contact_sheet": {
+        "frames": 12,
+        "why": "for the ChatGPT-vision AI-tell review + owner's eye (realism_gate)",
+        "gpt_review": true,
+        "gpt_why": "owner 2026-11-27: 'use gpt for feedback on generated content'. Runs here (CPU side) through lane/chatgpt.py on the owner's ChatGPT plan; skipped with a note if the Codex login isn't set up in this container."
+      }
+    },
+    "touchup": {
+      "face_detail": {
+        "enabled": true,
+        "applies_to": [
+          "promo"
+        ],
+        "not_for": [
+          "trip (photos of people: camera moves only, realism_gate.motion_rules.faces)"
+        ],
+        "model": "GFPGAN v1.4 (Apache-2.0) + facexlib RetinaFace (MIT)",
+        "blend": 0.35,
+        "why": "lip-synced mouths come out soft on the low-res plate; a LIGHT blend restores detail without the waxy GAN look",
+        "gate": {
+          "face_ssim_min_from": "inference_optimization.quality_gate.ssim_min",
+          "syncnet_lse_c_drop_max_pct_from": "inference_optimization.quality_gate.syncnet_lse_c_drop_max_pct",
+          "owner_eye": "required: the touched cut is a CANDIDATE (exports/<id>_touched.mp4 + side-by-side); it never replaces the master automatically"
+        },
+        "min_face_px": 120,
+        "protect_mouth": true,
+        "mouth_w": 1.0,
+        "mouth_h": 0.75,
+        "results": {
+          "01_n8n_v6_2026_11_27_full_face": "REJECTED by the gate: face SSIM p05 0.988 (ok) but SyncNet LSE-C dropped 3.2-6.4% on all 4 face shots (max 2%). Cause: GFPGAN redraws the lips. Fix: protect_mouth (mouth ellipse keeps the lip-synced pixels). 1,096 s on one T4 (1.3 fps) for 1,381 frames.",
+          "01_n8n_v6_2026_11_27_protect_mouth": "STILL REJECTED, close: face SSIM p05 0.994; SyncNet LSE-C drop 0.9 / 1.4 / 1.1 / 3.5 % (max 2 %) -> 3 of 4 shots pass. Next try: a bigger mouth ellipse (mouth_w 1.3, mouth_h 1.0). Split over both T4s: 534 s + 716 s, whole session 1,097 s."
+        }
+      },
+      "auto_replace_master": false,
+      "encode": {
+        "preset": "slow",
+        "crf": 14,
+        "why": "candidate for the owner's A/B; encoded in parallel with the GPU on Kaggle's 4 CPUs. If adopted, it is the delivered file (CRF 14 = visually lossless)."
+      },
+      "gpu0_share": 0.4
+    }
+  },
+  "fill_lab": {
+    "_doc": "Pre-render gap-filling passes on Kaggle 2x T4 (jobs/fill-lab, clips split across both GPUs). Run: python3 scripts/fill_lab.py <clip-dir-or-files> --preset lipsync|hero_clip. Owner 2026-11-27: 'boost kaggle and use it for upscale or more render edits filling in gaps'.",
+    "enabled": true,
+    "timeout_min": 40,
+    "presets": {
+      "lipsync": {
+        "ops": [
+          "interpolate"
+        ],
+        "target_fps": 30,
+        "why": "TBDub/LatentSync output 25 fps; the renderer's fps=30 filter repeats every 5th frame = judder on the talking face. RIFE makes real in-between frames.",
+        "status": "REJECTED for now (gate 2026-11-27)"
+      },
+      "hero_clip": {
+        "ops": [
+          "interpolate",
+          "upscale"
+        ],
+        "target_fps": 30,
+        "scale": 1.5,
+        "why": "Wan/FastWan clips are 24 fps 704x1280; trip films are 30 fps 1080x1920 (generative_video.photo_to_video.interpolation). Only for clips that already passed the realism gate."
+      }
+    },
+    "interpolate": {
+      "model": "RIFE 4.25 (Practical-RIFE, MIT)",
+      "gdrive_id": "1ZKjcbmt1hypiFprJPIKW0Tt0lr_2i7bg",
+      "source": "official link in github.com/hzwer/Practical-RIFE README (author recommends 4.25 by default)",
+      "scale": 1.0,
+      "fp16": true
+    },
+    "upscale": {
+      "model": "Real-ESRGAN x2plus (BSD-3)",
+      "weights_url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth",
+      "basicsr_sdist": "https://files.pythonhosted.org/packages/86/41/00a6b000f222f0fa4c6d9e1d6dcc9811a374cabb8abb9d408b77de39648c/basicsr-1.4.2.tar.gz",
+      "tile": 0,
+      "not_for": [
+        "owner's face (GAN upscalers paint skin; use final_cut face_detail, gated, instead)"
+      ],
+      "gate": "realism_gate + side-by-side; never auto-swapped into an edit"
+    },
+    "gate": {
+      "syncnet_lse_c_drop_max_pct_from": "inference_optimization.quality_gate.syncnet_lse_c_drop_max_pct",
+      "how": "for lip-sync clips: SyncNet before vs after (jobs/syncnet-eval on both dirs); interpolated clips are used only if LSE-C does not drop more than the max and the owner's eye agrees"
+    },
+    "encode": {
+      "preset": "slow",
+      "crf": 12,
+      "why": "intermediate clip that the renderer re-encodes; near-lossless"
+    },
+    "results": {
+      "01_n8n_v6_lipsync_rife_25to30_2026_11_27": {
+        "verdict": "REJECT: fails the SyncNet gate (max 2% LSE-C drop)",
+        "syncnet_orig25_vs_rife30": {
+          "02_pain": [
+            4.197,
+            3.964
+          ],
+          "03_who": [
+            6.125,
+            5.438
+          ],
+          "04_more": [
+            6.014,
+            5.628
+          ],
+          "05_value": [
+            5.03,
+            5.045
+          ]
+        },
+        "offset_frames_orig_vs_rife": {
+          "02_pain": [
+            1,
+            3
+          ],
+          "03_who": [
+            0,
+            2
+          ],
+          "04_more": [
+            0,
+            1
+          ],
+          "05_value": [
+            1,
+            2
+          ]
+        },
+        "cost": "113 s Kaggle session for 6 clips (both T4s), $0",
+        "why": "RIFE in-betweens blend mouth shapes; SyncNet confidence drops 4-11% and the offset moves 1-2 frames. Keep the renderer's frame repeat for lip-sync until a better candidate passes. Fill lab stays for no-face clips (hero_clip preset)."
+      }
+    }
   }
 }
