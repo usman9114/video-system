@@ -305,8 +305,19 @@
       "needs_owner": false,
       "blocked_by": [],
       "notes": []
+    },
+    {
+      "id": "T17",
+      "title": "Greece cinematic v4: Wan 2.2 I2V-A14B generated shots from real photos (owner approved 2026-11-27, ref = Gemini/Veo clip)",
+      "list": "doing",
+      "project": "greece",
+      "needs_owner": false,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-27: Pilot 3 shots (a0a41173 Caryatids, IMG_9282 Meteora, IMG_9451 driving) running on Modal H100; gate each for text/landmark/face. If pass: shot list for all 12 scenes (~2 shots each), budget ~$25-35 of Modal free credits, ask before going over."
+      ]
     }
   ],
-  "updated": "2026-11-27 20:55 UTC",
+  "updated": "2026-11-27 21:42 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

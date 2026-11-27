@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:55 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 21:42 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -24,8 +24,10 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: greece-v2 now also contains final-cut-lab.
 - **T15** Delete stale claude/project-thread-* branches (Rule 0; content already in greece-v2)  _(infra · needs owner)_
 
-## In progress (0)
+## In progress (1)
 
+- **T17** Greece cinematic v4: Wan 2.2 I2V-A14B generated shots from real photos (owner approved 2026-11-27, ref = Gemini/Veo clip)  _(greece)_
+  - 2026-11-27: Pilot 3 shots (a0a41173 Caryatids, IMG_9282 Meteora, IMG_9451 driving) running on Modal H100; gate each for text/landmark/face. If pass: shot list for all 12 scenes (~2 shots each), budget ~$25-35 of Modal free credits, ask before going over.
 
 ## Waiting on owner review (3)
 
