@@ -6,29 +6,207 @@
   "name": "Usman Qureshi",
   "title": "n8n & AI Automation",
   "segments": [
-    {"type": "face", "vo": "01_hook", "video": "kaggle/work/lipsync/hook_tbdub_teacher.mp4",
-     "zoom": [1.22, 1.16], "anchor": [432, 330], "headline": ["Same task,", "over and over?"], "tail": 0.35},
-    {"type": "face", "vo": "02_pain", "vo_to": 5.08, "video": "kaggle/work/lipsync/pain_tbdub_teacher.mp4", "zoom": [1.0, 1.05],
-     "chips": {"title": "Every single week", "icon": "x", "items": ["Chasing leads", "Sorting emails", "Updating your CRM", "Reports by hand"],
-               "item_words": ["leads", "emails", "CRM", "reports"]}},
-    {"type": "image", "vo": "02_pain", "vo_from": 5.08, "lead": 0.0, "tail": 0.15, "image": "broll/generated/pain_desk_01.png",
-     "zoom": [1.12, 1.22], "focus": [0.55, 0.5]},
-    {"type": "face", "vo": "03_who", "vo_to": 4.50, "video": "kaggle/work/lipsync/who_tbdub_teacher.mp4",
-     "zoom": [1.10, 1.16], "anchor": [432, 330], "lower_third": true},
-    {"type": "image", "vo": "03_who", "vo_from": 4.50, "vo_to": 5.80, "lead": 0.0, "tail": 0.0, "image": "broll/generated/laptop_n8n.png",
-     "zoom": [1.05, 1.18], "focus": [0.70, 0.48], "captions": true},
-    {"type": "image", "vo": "03_who", "vo_from": 5.80, "lead": 0.0, "tail": 0.2, "image": "broll/generated/n8n_canvas_wide.png",
-     "zoom": [1.0, 1.0], "focus": [0.52, 0.5], "pan": 0.56, "shade_from": 0.74, "kicker": "Built in n8n"},
-    {"type": "face", "vo": "04_more", "video": "kaggle/work/lipsync/more_tbdub_teacher.mp4", "zoom": [1.0, 1.05],
-     "chips": {"title": "Built around your business", "icon": "check", "items": ["AI chatbots", "AI agents", "API integrations"],
-               "item_words": ["chatbot", "agent", "API"]}},
-    {"type": "image", "vo": "05_value", "vo_to": 1.72, "lead": 0.0, "tail": 0.0, "image": "broll/generated/time_to_grow.png",
-     "zoom": [1.06, 1.0], "focus": [0.5, 0.5], "kicker": "The real goal"},
-    {"type": "face", "vo": "05_value", "vo_from": 1.72, "video": "kaggle/work/lipsync/value_tbdub_teacher.mp4", "zoom": [1.05, 1.10],
-     "chips": {"icon": "check", "items": ["Save hours", "Fewer errors", "Time to grow"], "item_words": ["hours", "errors", "grow"]}},
-    {"type": "face", "vo": "06_cta", "video": "kaggle/work/lipsync/cta_tbdub_teacher.mp4", "zoom": [1.02, 1.20], "ease_zoom": true,
-     "anchor": [432, 330], "tail": 0.15},
-    {"type": "end", "dur": 2.6, "headline": ["Send me", "your idea."], "sub": "Let's turn it into a workflow.",
-     "button": "Message me on Upwork", "photo_src_t": 47.2}
+    {
+      "type": "face",
+      "vo": "01_hook",
+      "video": "kaggle/work/lipsync/hook_tbdub_teacher.mp4",
+      "zoom": [
+        1.22,
+        1.16
+      ],
+      "anchor": [
+        432,
+        330
+      ],
+      "headline": [
+        "Same task,",
+        "over and over?"
+      ],
+      "tail": 0.35
+    },
+    {
+      "type": "face",
+      "vo": "02_pain",
+      "vo_to": 5.08,
+      "video": "kaggle/work/lipsync/pain_tbdub_teacher.mp4",
+      "zoom": [
+        1.0,
+        1.05
+      ],
+      "chips": {
+        "title": "Every single week",
+        "icon": "x",
+        "items": [
+          "Chasing leads",
+          "Sorting emails",
+          "Updating your CRM",
+          "Reports by hand"
+        ],
+        "item_words": [
+          "leads",
+          "emails",
+          "CRM",
+          "reports"
+        ]
+      }
+    },
+    {
+      "type": "image",
+      "vo": "02_pain",
+      "vo_from": 5.08,
+      "lead": 0.0,
+      "tail": 0.15,
+      "image": "broll/generated/pain_desk_01.png",
+      "zoom": [
+        1.12,
+        1.22
+      ],
+      "focus": [
+        0.55,
+        0.5
+      ]
+    },
+    {
+      "type": "face",
+      "vo": "03_who",
+      "vo_to": 4.5,
+      "video": "kaggle/work/lipsync/who_tbdub_teacher.mp4",
+      "zoom": [
+        1.1,
+        1.16
+      ],
+      "anchor": [
+        432,
+        330
+      ],
+      "lower_third": true
+    },
+    {
+      "type": "image",
+      "vo": "03_who",
+      "vo_from": 4.5,
+      "vo_to": 5.8,
+      "lead": 0.0,
+      "tail": 0.0,
+      "image": "broll/generated/laptop_n8n.png",
+      "zoom": [
+        1.05,
+        1.18
+      ],
+      "focus": [
+        0.7,
+        0.48
+      ],
+      "captions": true
+    },
+    {
+      "type": "image",
+      "vo": "03_who",
+      "vo_from": 5.8,
+      "lead": 0.0,
+      "tail": 0.2,
+      "image": "broll/generated/n8n_canvas_wide.png",
+      "zoom": [
+        1.0,
+        1.45
+      ],
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "pan": 0.6,
+      "kicker": "Built in n8n",
+      "fit": "contain",
+      "y_center": 0.47
+    },
+    {
+      "type": "face",
+      "vo": "04_more",
+      "video": "kaggle/work/lipsync/more_tbdub_teacher.mp4",
+      "zoom": [
+        1.0,
+        1.05
+      ],
+      "chips": {
+        "title": "Built around your business",
+        "icon": "check",
+        "items": [
+          "AI chatbots",
+          "AI agents",
+          "API integrations"
+        ],
+        "item_words": [
+          "chatbot",
+          "agent",
+          "API"
+        ]
+      }
+    },
+    {
+      "type": "image",
+      "vo": "05_value",
+      "vo_to": 1.72,
+      "lead": 0.0,
+      "tail": 0.0,
+      "image": "broll/generated/time_to_grow.png",
+      "zoom": [
+        1.06,
+        1.0
+      ],
+      "focus": [
+        0.5,
+        0.5
+      ],
+      "kicker": "The real goal"
+    },
+    {
+      "type": "face",
+      "vo": "05_value",
+      "vo_from": 1.72,
+      "video": "kaggle/work/lipsync/value_tbdub_teacher.mp4",
+      "zoom": [
+        1.05,
+        1.1
+      ],
+      "chips": {
+        "icon": "check",
+        "items": [
+          "Save hours",
+          "Fewer errors",
+          "Time to grow"
+        ],
+        "item_words": [
+          "hours",
+          "errors",
+          "grow"
+        ]
+      }
+    },
+    {
+      "type": "face",
+      "vo": "06_cta",
+      "video": "kaggle/work/lipsync/cta_tbdub_teacher.mp4",
+      "zoom": [
+        1.02,
+        1.2
+      ],
+      "ease_zoom": true,
+      "anchor": [
+        432,
+        330
+      ],
+      "tail": 0.15
+    },
+    {
+      "type": "end",
+      "dur": 2.6,
+      "headline": [
+        "Send me",
+        "your idea."
+      ],
+      "sub": "Let's turn it into a workflow.",
+      "button": "Message me on Upwork",
+      "photo_src_t": 47.2
+    }
   ]
 }
