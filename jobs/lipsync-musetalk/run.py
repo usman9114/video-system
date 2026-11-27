@@ -15,7 +15,9 @@ sh(f"cd {T} && uv venv -q -p 3.10 venv")
 sh(f"{UV} torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118")
 sh(f"cd {T}/repo && grep -v -E '^(tensorflow|tensorboard|gradio)' requirements.txt > /tmp/mt_req.txt && {UV} -r /tmp/mt_req.txt")
 sh(f"{UV} 'setuptools<70' openmim mmengine 'mmcv==2.0.1' -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.0/index.html")
-sh(f"{UV} 'mmdet==3.1.0' 'mmpose==1.1.0' gdown")
+# chumpy (pulled in by mmpose) has a legacy setup.py that imports pip: build it without isolation first
+sh(f"{UV} pip cython 'numpy==1.23.5' && {UV} --no-build-isolation chumpy==0.70")
+sh(f"{UV} --no-build-isolation 'mmdet==3.1.0' 'mmpose==1.1.0' gdown")
 # weights (same as download_weights.sh, without the hf-mirror endpoint)
 dl = ("from huggingface_hub import hf_hub_download as d\n"
       "M='/tmp/mt/repo/models'\n"
