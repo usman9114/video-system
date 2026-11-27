@@ -4,7 +4,7 @@ Living status file. Every session updates it before ending, so any Claude accoun
 Also read: `docs/LESSONS.md` (58+ lessons, each fixed in code/config), `templates/production.json` (single source of truth for
 all settings + the owner's hard rules), `docs/optimization.md` (GPU cost playbook), `docs/ideas/trip-memories.md`.
 
-_Last updated: 2026-11-27 ~16:45 UTC. Status below corrected to match the last 3 commits (SyncNet done, FastWan rejected)._
+_Last updated: 2026-11-27 ~17:20 UTC (Greece film v1 delivered; lip-sync A/B code in PR #2, waiting on merge + fresh session)._
 
 > **Session check first.** A session WITHOUT env `upwork-video-system` (and without the repo linked through the Claude GitHub
 > App) can't do anything that matters here: kaggle/modal/elevenlabs/chatgpt hosts → 000, `git push` → 403 "not in this
@@ -73,7 +73,11 @@ Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.g
 - [x] Stage 2 storyteller agent: `trips/greece/storyline.json` + **`trips/greece/storyline.md`** (12 scenes, 54.5 s,
       4 hero scenes = IMG_9270 Anafiotika, IMG_9282 Meteora, IMG_9444 Fiat, IMG_9268 graffiti lane; all others camera-move only;
       dropped 69a32a81 as near-duplicate).
-- [ ] **Owner must approve the storyline** (and answer: are the Acropolis photos from this trip? blur the Fiat's plate?).
+- [x] **Storyline APPROVED** (owner 2026-11-27): camera moves only on every scene, plate blurred, Acropolis photos kept, narration kept.
+- [x] **Greece film v1 rendered + sent** (2026-11-27 ~17:15 UTC): `exports/trip_greece.mp4` (53.5 s, 1080x1920 30 fps, -14 LUFS,
+      225 MB master; 39 MB crf22 share copy sent in chat). Frames checked by eye; fixes in `trips/greece/framing.json`
+      (IMG_9313 selfie EXIF mirror tag overridden, IMG_9451 pan). Narration = the 7 cached ElevenLabs takes extracted to
+      `trips/greece/work/vo/` (LESSONS #69). Re-render: photos from Drive → same command. Waiting for owner feedback.
 - [x] **FastWan hero clips: ran + REJECTED** by the realism gate (commit 7b6be72, LESSONS #65: repaints the scene, invents a
       readable number plate; $0.19 for 8 clips). Config default for trips is now **real photo + camera move**. So the
       storyline's 4 "hero (full AI animation)" scenes render as camera moves unless the owner OKs a full TI2V-5B gate test
@@ -89,7 +93,17 @@ Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.g
       cover-crop (no 4:3→16:9 squash) and EXIF transpose (the transpose fix is in the last commit → auto-deploy).
 - [ ] Gate-test SageAttention2 / MagCache / FP8 / torch.compile+snapshots (docs/optimization.md). Batch TBDub calls.
 
-## Next step for Claude (in order)
+## Next step for Claude (in order) — updated 2026-11-27 17:20 UTC
+A. Owner merges PR #2 (branch `greece-film`) → Modal redeploy with the new LIPSYNC_API_KEY + LatentSync 1.6 / X-Dub routes.
+   Needs a FRESH session (env secrets only load at session start). Then: `python3 -m lane.modal_lipsync health`,
+   `ab-download --model latentsync16` / `--model xdub`, then `ab --model ... --video <one line src> --audio <line mp3>`
+   (line 03_who: `kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4` + `assets/voice/01_n8n/03_who.mp3`).
+   TBDub full-res: owner drops `sample-video.mp4` into the linked Mac folder `/Users/Usman/Projects/Video-Editing` →
+   `device_stage_files` (no Kaggle upload needed). SyncNet-gate all (`bin/kgpu run jobs/syncnet-eval`, both T4s), side-by-side
+   of passing clips → owner picks → config `lipsync` → `make_faces.py` + `promo.py --final` → v7.
+B. Old list below (steps 0-3 done this session).
+
+## Previous next-step list
 0. Session check (top of file). Restore the media backup; copy the 13 Greece photos from Drive → `trips/greece/photos/`.
 1. Check the last Modal deploy succeeded (`gh run list --repo usman9114/video-system --limit 1`) and `python3 -m lane.modal_lipsync health`.
    Note: the owner has a NEW `LIPSYNC_API_KEY` value that is not active yet (GitHub secret + deploy workflow + env network
