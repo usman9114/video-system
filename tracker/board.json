@@ -231,12 +231,14 @@
     {
       "id": "T14",
       "title": "ChatGPT (Codex) sign-in on this container",
-      "list": "blocked",
+      "list": "done",
       "project": "infra",
       "needs_owner": true,
       "blocked_by": [],
       "notes": [
-        "2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device."
+        "2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device.",
+        "2026-11-27: Signed in; lane.chatgpt ask test returned ok. Auth at ~/.codex/auth.json (per container).",
+        "2026-11-27: blocked -> done"
       ]
     },
     {
@@ -249,6 +251,6 @@
       "notes": []
     }
   ],
-  "updated": "2026-11-27 19:31 UTC",
+  "updated": "2026-11-27 19:34 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

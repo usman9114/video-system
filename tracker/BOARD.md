@@ -1,10 +1,10 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:31 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:34 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
-## Blocked (5)
+## Blocked (4)
 
 - **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
   - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
@@ -17,8 +17,6 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
 - **T12** Re-render Greece v1 (master lost) once photos are uploaded  _(greece · needs owner)_
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
-- **T14** ChatGPT (Codex) sign-in on this container  _(infra · needs owner)_
-  - 2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device.
 
 ## To do (9)
 
@@ -47,7 +45,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
-## Done (9)
+## Done (10)
 
 - **D01** n8n v6 rendered (46 s, -14 LUFS); owner rejected lip-sync  _(n8n)_
   - exports/01_n8n_automation_v6.mp4 in Kaggle backup
@@ -65,3 +63,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Branch final-cut-lab, merged into greece-v2. Run before delivering any master: scripts/final_cut.py
 - **D09** Final-cut on n8n v6: FAIL lip-sync (LSE-C 3.9-6.05 vs min 6.887) + true peak -1.4 dB (max -1.5)  _(n8n)_
   - 2026-11-27: Face touch-up (GFPGAN) and RIFE on lip-sync clips both rejected by SyncNet gate (LESSONS 74-78). Report: reports/final-cut/01_n8n_automation_v6.md
+- **T14** ChatGPT (Codex) sign-in on this container  _(infra · needs owner)_
+  - 2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device.
+  - 2026-11-27: Signed in; lane.chatgpt ask test returned ok. Auth at ~/.codex/auth.json (per container).
+  - 2026-11-27: blocked -> done
