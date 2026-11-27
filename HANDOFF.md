@@ -54,8 +54,8 @@ _Last updated: 2026-11-27 ~16:00 UTC (session ran out of context; handoff writte
       dropped 69a32a81 as near-duplicate).
 - [ ] **Owner must approve the storyline** (and answer: are the Acropolis photos from this trip? blur the Fiat's plate?).
 - [ ] Then: `python3 -m lane.modal_lipsync fastwan --items <json>` for the 4 hero photos (items: image, prompt, out, seconds 3.5,
-      seed, orient portrait for 9:16, focus_x/y). 2 seeds each. FastWan weights download was started
-      (`fastwan-download`; re-run it to confirm, hf download skips existing files). Measure $ + quality vs TI2V-5B (gate).
+      seed, orient portrait for 9:16, focus_x/y). 2 seeds each. FastWan weights are DOWNLOADED on the Modal volume
+      (`/weights/fastwan/ti2v-5b`, 23 GB, 25 files, confirmed 2026-11-27). Measure $ + quality vs TI2V-5B (gate).
 - [ ] Realism gate on every hero clip (painted faces in IMG_9268 and plate text in IMG_9444 must not shimmer) → else camera move.
 - [ ] RIFE 24→30/60 fps (not built yet; Practical-RIFE MIT on Modal). Camera-move-only scenes render natively at 30 fps (no interpolation needed).
 - [ ] Trip renderer: new template in `scripts/promo.py` (or `scripts/trip/render.py`): **apply `ImageOps.exif_transpose`**
