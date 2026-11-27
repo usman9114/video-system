@@ -53,6 +53,12 @@ Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.g
 - [x] Script from the owner's gig text, ElevenLabs voice (`assets/voice/01_n8n/`), 6 TBDub-teacher lip-sync clips (≈$1.14).
 - [x] **v6 rendered**: `exports/01_n8n_automation_v6.mp4` (46 s, -14 LUFS, rule-compliant). Build:
       `python3 scripts/make_faces.py scripts/videos/01_n8n_v6.json` (lip-sync, already done) → `python3 scripts/promo.py scripts/videos/01_n8n_v6.json --final`.
+- [ ] **Owner 2026-11-27: v6 lip-sync "isn't good" (TBDub teacher via our Modal API).** Checked: timing is NOT the cause
+      (clip audio vs voice mp3 cross-correlation = 0 ms on all 6 lines; renderer resamples 25→30 fps by time). Likely cause =
+      model quality on a LOW-RES source (plate = compressed `original_small`, 864 px crop; the 60 MB original was never used).
+      Next: SyncNet scores (job re-launched), then A/B on ONE line: (a) TBDub teacher on the full-res original (owner must upload
+      `sample-video.mp4` as a private Kaggle dataset `source-video`), (b) LatentSync 1.6 on Modal L40S at full settings (the T4 test
+      was crippled to num_frames 6), (c) X-Dub. Owner picks by eye; config `lipsync` updated to the winner.
 - [ ] **v6 NOT yet approved by owner.** Sent to the owner in chat at handoff time with the caveat below.
 - [ ] **SyncNet gate** (`jobs/syncnet-eval`): fixed `scenedetect>=0.6.4` (repo needs `open_video`) and recursive input glob
       (inputs land in a subfolder). Re-run: put REAL_original_footage.mp4 (from the first run's build dir or cut from plate),
