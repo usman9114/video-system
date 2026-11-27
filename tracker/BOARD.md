@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:16 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:18 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -54,6 +54,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: blocked -> review
   - 2026-11-27: Owner 2026-11-27: Greece should feel like a Netflix documentary. Plain full render stopped. ChatGPT spec: trips/greece/doc_style.md (serif place+date captions at act starts, dark title card, 0.45 s dissolves, fades to black at act breaks, 1.045 slow zoom, piano/pad/drone ~80 bpm, sat 0.95 warm). Sonnet agent implementing; preview first.
   - 2026-11-27: Doc style implemented (preview OK by Claude; captions need a subtle bottom gradient for legibility on bright frames). Waiting owner OK on preview + music sample, then full render.
+  - 2026-11-27: Owner 2026-11-27: it's a real documentary, he is telling the story. New first-person narration draft (ChatGPT, 124 words, 907 chars): trips/greece/narration_v3.json. Owner to edit/approve before ElevenLabs (~907 credits of ~11k). Then scene timing driven by VO length.
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
