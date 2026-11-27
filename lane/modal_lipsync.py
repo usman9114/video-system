@@ -67,7 +67,35 @@ def main():
     l.add_argument("--audio", required=True)
     l.add_argument("--out", required=True)
     l.add_argument("--mode", default="student")
+    wn = sub.add_parser("wan", help="Wan 2.2 image/text-to-video")
+    wn.add_argument("--prompt", required=True)
+    wn.add_argument("--image")
+    wn.add_argument("--model", default="ti2v-5B", choices=["ti2v-5B", "i2v-A14B"])
+    wn.add_argument("--size")
+    wn.add_argument("--frame-num", type=int)
+    wn.add_argument("--steps", type=int)
+    wn.add_argument("--seed", type=int, default=42)
+    wn.add_argument("--out", required=True)
     a = ap.parse_args()
+    if a.cmd == "wan":
+        body = {"model": a.model, "prompt": a.prompt, "seed": a.seed}
+        if a.image:
+            body["image_b64"] = base64.b64encode(Path(a.image).read_bytes()).decode()
+        for k, v in (("size", a.size), ("frame_num", a.frame_num), ("steps", a.steps)):
+            if v:
+                body[k] = v
+        cid = call("POST", "/wan/generate", body, timeout=300)["call_id"]
+        print("call", cid, flush=True)
+        r = wait(cid, every=20, limit=3600)
+        log({"op": "wan", "model": a.model, "call_id": cid, "ok": r.get("ok"), "gpu_seconds": r.get("gpu_seconds"),
+             "usd": r.get("usd")})
+        if not r.get("ok"):
+            print(r.get("log", "")[-3000:])
+            sys.exit("wan failed")
+        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.out).write_bytes(base64.b64decode(r["video_b64"]))
+        print(f"wrote {a.out}  gpu {r.get('gpu_seconds')}s ≈ ${r.get('usd')}")
+        return
     if a.cmd == "health":
         print(call("GET", "/health"))
     elif a.cmd == "download":
