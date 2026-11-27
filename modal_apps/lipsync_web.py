@@ -218,6 +218,9 @@ xdub_image = (
     modal.Image.from_registry("nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04", add_python="3.11")
     .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0", "build-essential", "ninja-build")
     .run_commands("git clone --depth 1 https://github.com/KlingAIResearch/X-Dub.git /opt/X-Dub",
+                  # upstream pins opencv 4.13 (needs numpy>=2) next to numpy 1.26.4 (chumpy/mmcv need <2): use the last
+                  # numpy-1.x opencv instead (LESSONS #73)
+                  "sed -i 's/^opencv-python==.*/opencv-python==4.10.0.84/' /opt/X-Dub/requirements.txt",
                   "pip install -r /opt/X-Dub/requirements.txt", "pip install setuptools wheel cython 'numpy==1.26.4'")
     # OpenMMLab stack per the X-Dub README; mmcv compiled with CUDA ops for Ada (L40S) + Hopper (H100)
     .env({"FORCE_CUDA": "1", "MMCV_WITH_OPS": "1", "TORCH_CUDA_ARCH_LIST": "8.9;9.0", "MAX_JOBS": "8"})
