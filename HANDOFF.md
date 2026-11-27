@@ -29,6 +29,8 @@ _Last updated: 2026-11-27 ~17:20 UTC (Greece film v1 delivered; lip-sync A/B cod
 - Lip-sync must be good: TBDub **teacher** on Modal (owner's pick, "option C"). Gate: SyncNet.
 - **Always use config** (`templates/production.json`); change settings there, never ad hoc.
 - Visuals: find REAL references online → give to ChatGPT to redraw/upscale; never use web images as-is; no pure-AI UIs.
+- **Every graphic/diagram:** first search how it was done properly pre-AI (draw.io, Canva, Shutterstock-style), pass that reference
+  to ChatGPT (`--ref` + `--source-url`) and always add an explicit "take design inspiration from <reference>" line (LESSONS #72).
 - Resource-optimised always (distilled/quantized/cached/batched) but never at the cost of quality (gate in docs/optimization.md).
 - Use pip (not uv) on Kaggle — torch downloads were the slowness. Claude is the director.
 - No fabricated credentials/clients/results. Ask before installs or anything that costs money.
