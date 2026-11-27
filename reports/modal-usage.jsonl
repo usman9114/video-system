@@ -11,3 +11,5 @@
 {"op": "wan", "model": "ti2v-5B", "call_id": "fc-01M8EQ58C2AYG5BZBD3VN5VB3Z", "ok": false, "gpu_seconds": 225.8, "usd": 0.122, "at": "2026-11-27T14:43:45Z"}
 {"op": "wan", "model": "i2v-A14B", "call_id": "fc-01M8EQH3K7BV2G6GPQKZMHYRZE", "ok": true, "gpu_seconds": 1667.0, "usd": 1.829, "at": "2026-11-27T15:15:49Z"}
 {"op": "wan", "model": "ti2v-5B", "call_id": "fc-01M8EQH4HTTNMBJHSMDV99QX27", "ok": true, "gpu_seconds": 1746.0, "usd": 0.946, "at": "2026-11-27T15:16:35Z"}
+{"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ESAKF1B70T5XE36Q5VKEVQ", "ok": true, "gpu_seconds": 271.2, "usd": 0.147, "at": "2026-11-27T15:22:26Z"}
+{"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ESAMTZ3XZZRTQRRH5DF255", "ok": true, "gpu_seconds": 272.6, "usd": 0.148, "at": "2026-11-27T15:22:26Z"}
