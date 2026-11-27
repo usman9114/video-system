@@ -207,6 +207,109 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24, gpu: str = "L40S")
             "gpu": gpu, "usd": round(secs * (H100_USD_PER_S if gpu == "H100" else L40S_USD_PER_S), 3)}
 
 
+# ---------------- Lip-sync A/B candidates (owner 2026-11-27): LatentSync 1.6 full settings, X-Dub ----------------
+latentsync_image = (
+    modal.Image.debian_slim(python_version="3.10")
+    .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0")
+    .run_commands("git clone --depth 1 https://github.com/bytedance/LatentSync.git /opt/LatentSync",
+                  "pip install -r /opt/LatentSync/requirements.txt", "pip install 'huggingface_hub[cli]<1'")
+)
+xdub_image = (
+    modal.Image.from_registry("nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04", add_python="3.10")
+    .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0", "build-essential", "ninja-build")
+    .run_commands("git clone --depth 1 https://github.com/KlingAIResearch/X-Dub.git /opt/X-Dub",
+                  "pip install -r /opt/X-Dub/requirements.txt", "pip install setuptools wheel cython 'numpy==1.26.4'")
+    # OpenMMLab stack per the X-Dub README; mmcv compiled with CUDA ops for Ada (L40S) + Hopper (H100)
+    .env({"FORCE_CUDA": "1", "MMCV_WITH_OPS": "1", "TORCH_CUDA_ARCH_LIST": "8.9;9.0", "MAX_JOBS": "8"})
+    .run_commands("pip install chumpy==0.70 --no-build-isolation", "pip install mmengine==0.10.7",
+                  "pip install mmcv==2.1.0 --no-build-isolation", "pip install mmdet==3.2.0 mmpose==1.3.2",
+                  "cd /opt/X-Dub && pip install -e . --no-deps", gpu="L40S")
+)
+
+
+@app.function(image=latentsync_image, volumes={W: weights}, timeout=3600, cpu=4)
+def download_latentsync() -> dict:
+    import subprocess
+    ck = f"{W}/latentsync16"
+    r = subprocess.run(f"huggingface-cli download ByteDance/LatentSync-1.6 whisper/tiny.pt latentsync_unet.pt --local-dir {ck}",
+                       shell=True, capture_output=True, text=True)
+    weights.commit()
+    return {"ok": r.returncode == 0, "log": r.stderr[-1500:]}
+
+
+@app.function(image=xdub_image, volumes={W: weights}, timeout=7200, cpu=4)
+def download_xdub() -> dict:
+    import subprocess
+    r = subprocess.run(f"hf download KlingTeam/X-Dub --local-dir {W}/xdub --repo-type model", shell=True,
+                       capture_output=True, text=True)
+    weights.commit()
+    du = subprocess.run(f"du -sh {W}/xdub", shell=True, capture_output=True, text=True).stdout
+    return {"ok": r.returncode == 0, "log": r.stderr[-1500:], "du": du}
+
+
+def _prep_inputs(video: bytes, audio: bytes, fps: int | None = None):
+    import os
+    import subprocess
+    os.makedirs("/tmp/in", exist_ok=True)
+    Path("/tmp/in/face_src.mp4").write_bytes(video)
+    Path("/tmp/in/voice_src").write_bytes(audio)
+    vf = ["-r", str(fps)] if fps else []
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", "/tmp/in/face_src.mp4", *vf, "-c:v", "libx264", "-crf", "12",
+                    "-an", "/tmp/in/face.mp4"], check=True)
+    subprocess.run("ffmpeg -v error -y -i /tmp/in/voice_src -ac 1 -ar 16000 /tmp/in/voice.wav", shell=True, check=True)
+
+
+def _result(r, outs, t0, rate=L40S_USD_PER_S):
+    secs = time.time() - t0
+    return {"ok": r.returncode == 0 and bool(outs),
+            "video_b64": base64.b64encode(Path(outs[-1]).read_bytes()).decode() if outs else "",
+            "log": (r.stdout + r.stderr)[-4000:], "gpu_seconds": round(secs, 1), "usd": round(secs * rate, 3)}
+
+
+@app.function(image=latentsync_image, volumes={W: weights}, gpu="L40S", timeout=3600, scaledown_window=2)
+def latentsync16(video: bytes, audio: bytes, steps: int = 50, guidance: float = 1.5, deepcache: bool = False) -> dict:
+    """LatentSync 1.6 at full settings (512 px, stage2_512, num_frames 16; the T4 test was crippled to 6 frames)."""
+    import glob
+    import os
+    import subprocess
+    t0 = time.time()
+    _prep_inputs(video, audio, fps=25)                       # LatentSync is trained on 25 fps
+    os.makedirs("/opt/LatentSync/checkpoints", exist_ok=True)
+    for f in ("latentsync_unet.pt", "whisper"):
+        dst = f"/opt/LatentSync/checkpoints/{f}"
+        if not os.path.exists(dst):
+            os.symlink(f"{W}/latentsync16/{f}", dst)
+    args = ["python", "-m", "scripts.inference", "--unet_config_path", "configs/unet/stage2_512.yaml",
+            "--inference_ckpt_path", "checkpoints/latentsync_unet.pt", "--inference_steps", str(steps),
+            "--guidance_scale", str(guidance), "--video_path", "/tmp/in/face.mp4", "--audio_path", "/tmp/in/voice.wav",
+            "--video_out_path", "/tmp/out.mp4", "--seed", "1247"] + (["--enable_deepcache"] if deepcache else [])
+    r = subprocess.run(args, cwd="/opt/LatentSync", capture_output=True, text=True)
+    return _result(r, glob.glob("/tmp/out.mp4"), t0)
+
+
+@app.function(image=xdub_image, volumes={W: weights}, gpu="L40S", timeout=3600, scaledown_window=2)
+def xdub(video: bytes, audio: bytes, steps: int = 30, ref_cfg: float = 2.5, audio_cfg: float = 10.0) -> dict:
+    """X-Dub (Kling, Apache-2.0) with the README's recommended settings; auto face crop, pasted back on the full frame."""
+    import glob
+    import os
+    import subprocess
+    t0 = time.time()
+    _prep_inputs(video, audio)
+    ck, dw = "/opt/X-Dub/checkpoints", "/opt/X-Dub/dwpose_tools/models"
+    if not os.path.exists(ck):
+        os.symlink(f"{W}/xdub", ck)
+    os.makedirs(dw, exist_ok=True)
+    for f in glob.glob(f"{W}/xdub/dwpose_tools/models/*"):
+        dst = f"{dw}/{os.path.basename(f)}"
+        if not os.path.exists(dst):
+            os.symlink(f, dst)
+    args = ["python", "infer_lip_sync_pipeline.py", "--video_path", "/tmp/in/face.mp4", "--audio_path", "/tmp/in/voice.wav",
+            "--ref_cfg_scale", str(ref_cfg), "--audio_cfg_scale", str(audio_cfg), "--num_inference_steps", str(steps),
+            "--output_dir", "/tmp/out"]
+    r = subprocess.run(args, cwd="/opt/X-Dub", capture_output=True, text=True)
+    return _result(r, sorted(glob.glob("/tmp/out/**/*.mp4", recursive=True), key=os.path.getmtime), t0)
+
+
 @app.function(image=api_image, secrets=[modal.Secret.from_name("lipsync-api-key")])
 @modal.asgi_app()
 def api():
@@ -261,6 +364,19 @@ def api():
             return {"error": "gpu must be L40S or H100"}
         fn = fastwan_batch.with_options(gpu=gpu) if gpu != "L40S" else fastwan_batch
         return {"call_id": fn.spawn(body["items"], int(body.get("steps", 3)), int(body.get("fps", 24)), gpu).object_id}
+
+    @web.post("/ab/download")
+    def ab_download(body: dict):
+        fn = download_xdub if body.get("model") == "xdub" else download_latentsync
+        return {"call_id": fn.spawn().object_id}
+
+    @web.post("/ab/lipsync")
+    def ab_lipsync(body: dict):
+        """{"model": "latentsync16"|"xdub", "video_b64", "audio_b64", optional settings} → {"call_id"}"""
+        fn = xdub if body.get("model") == "xdub" else latentsync16
+        keys = ("steps", "ref_cfg", "audio_cfg") if fn is xdub else ("steps", "guidance", "deepcache")
+        kw = {k: body[k] for k in keys if k in body}
+        return {"call_id": fn.spawn(base64.b64decode(body["video_b64"]), base64.b64decode(body["audio_b64"]), **kw).object_id}
 
     @web.get("/result/{call_id}")
     def result(call_id: str):
