@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:10 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:11 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -19,6 +19,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final
 - **T05** Get gig texts for Upwork videos 2-10  _(upwork · needs owner)_
   - 2026-11-27: Questionnaire drafted by ChatGPT: docs/gig_questionnaire.md. Owner fills it per gig.
+  - 2026-11-27: ChatGPT drafted 9 gig briefs from known facts: docs/gigs_draft.md (proof/price/links marked OWNER TO CONFIRM). Owner to confirm/edit, then scripts.
 - **T08** Back up every export to the Kaggle media-backup dataset right after rendering  _(infra)_
   - trip_greece.mp4 was lost this way (LESSONS #64).
 - **T09** Ask owner: TI2V-5B gate test on 4 Greece hero scenes (~$7.60 Modal credits)?  _(greece · needs owner)_
