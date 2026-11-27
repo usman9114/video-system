@@ -13,3 +13,10 @@
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 99, "credits": 99.0, "line": "05_value", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:03Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 70, "credits": 70.0, "line": "06_cta", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:03Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 70, "credits": 70.0, "line": "06_cta", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:04Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 34, "credits": 34.0, "line": "01_IMG_9268", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:03Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 36, "credits": 36.0, "line": "02_IMG_9270", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:04Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 38, "credits": 38.0, "line": "04_IMG_9313", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:04Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 32, "credits": 32.0, "line": "05_a0a41173", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:05Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 44, "credits": 44.0, "line": "06_IMG_9444", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:05Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 43, "credits": 43.0, "line": "08_IMG_9359", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:05Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 31, "credits": 31.0, "line": "10_IMG_9423", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T16:17:06Z"}
