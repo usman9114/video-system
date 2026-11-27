@@ -1,0 +1,14 @@
+{
+  "prompt": "Formal system architecture diagram titled 'Trip Memories Pipeline'. Outer boundary labelled 'Video System (Claude = director)'. Left outside the boundary: a camera icon 'Trip photos (~10)' and a note icon 'One-line trip hint'. Components with step numbers: (1) dashed group 'source' with 'Google Drive' storage tile. (2) group 'Ingest' with tile 'EXIF orientation, date, GPS'. (3) group 'Photo analysis' with 'ChatGPT vision' tile, edge label 'analysis.json'. (4) 'Claude' tile 'Storyteller agent', edge label 'storyline.json'. (5) dashed group 'Owner approval' with tile 'Approve storyline'. (6) 'ElevenLabs' tile 'Narration (cloned voice)'. (7) group 'Film render' containing 'FFmpeg' tile 'render.py' with sub-labels 'camera moves on real photos', 'titles and captions', 'ducked music', 'colour grade + grain', 'plate blur'. (8) dashed group 'delivery' with output 'Trip film 9:16, 1080x1920, 30 fps'. Separate greyed-out dashed box above step 7 labelled 'Experimental (off): Modal GPU photo animation' with a small note 'blocked by realism gate'. Main arrows: photos -> 1 -> 2 -> 3 -> 4 -> 5 -> 7 -> 8 ; 4 -> 6 -> 7 ; hint -> 4. Edge labels in italic: 'upload', 'photos', 'approved', 'voice audio'. Take design inspiration from the reference image: the official AWS reference architecture diagram for 'Video on Demand on AWS' (https://docs.aws.amazon.com/images/solutions/latest/video-on-demand-on-aws/images/video-on-demand-architecture.png, page https://docs.aws.amazon.com/solutions/latest/video-on-demand-on-aws/architecture-overview.html), the formal enterprise style also used by IBM Cloud reference architectures. Match it closely: white background, one thin black outer boundary box with a dark tab label at top-left, dashed grey group boxes and solid coloured group boxes with a small icon in the top-left corner, square solid-colour service tiles with simple white line icons, label text under each tile, black filled circles with white step numbers next to each component, thin black orthogonal arrows with small italic edge labels, plain sans-serif font (like Arial/Helvetica). Formal and corporate, NOT playful: no emoji, no cartoon, no rounded bubbly cards, no gradients, no 3D, no people. Use only generic icons; do NOT draw any real company logos (no AWS, OpenAI, Kaggle logos). Landscape 16:9, high resolution. Text is required: every label must be legible and spelled exactly as given.",
+  "driver_model": "gpt-6-luna",
+  "image_model": "gpt-image via codex $imagegen",
+  "created": "2026-11-27T17:10:40",
+  "refs": [
+    {
+      "path": "aws-vod.png (style reference only, not committed)",
+      "source_url": "https://docs.aws.amazon.com/images/solutions/latest/video-on-demand-on-aws/images/video-on-demand-architecture.png"
+    }
+  ],
+  "tool": "scout.chatgpt (codex exec, ChatGPT plan)",
+  "note": "AI-generated. Not a product photo."
+}

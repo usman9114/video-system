@@ -2,6 +2,15 @@
 
 Plain-English driven pipeline (Claude Code + FFmpeg + free Kaggle 2×T4 GPUs). $0 so far.
 
+## Architecture
+Two production streams. Diagrams are drawn from the repo docs in the style of AWS reference architectures (see `docs/LESSONS.md` #72).
+
+### Upwork promo videos
+![Upwork promo video pipeline](docs/architecture/upwork-promo-architecture.png)
+
+### Trip Memories
+![Trip Memories pipeline](docs/architecture/trip-memories-architecture.png)
+
 ## Layout
 ```
 source/      original footage (read-only, gitignored; masters live in Google Drive upwork-video-system/source)

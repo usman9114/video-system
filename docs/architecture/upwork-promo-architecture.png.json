@@ -1,0 +1,14 @@
+{
+  "prompt": "Formal system architecture diagram titled 'Upwork Promo Video Pipeline'. Outer boundary labelled 'Video System (Claude = director)'. Left outside the boundary: a film icon 'Source video' (owner's talking-head recording) and a document icon 'Upwork gig text'. Components with step numbers: (1) 'Google Drive' storage tile, group 'source'. (2) group 'Clean master' containing 'Kaggle 2xT4 GPU' tile with sub-labels 'Whisper captions' and 'LaMa logo removal'. (3) 'Claude' tile 'Script writer' fed by the gig text. (4) 'ElevenLabs' tile 'Cloned voice'. (5) group 'Lip-sync' containing 'Modal L40S GPU' tile 'TBDub lip-sync API'. (6) dashed group 'Quality gate' containing 'Kaggle GPU' tile 'SyncNet score'; arrow back to (5) labelled 'fail: retry'. (7) group 'Edit & render' containing 'FFmpeg' tile 'promo.py renderer' (captions, B-roll between lines, music, -14 LUFS). (8) dashed group 'delivery' with 'Owner review' tile and output 'Promo video 4:5 MP4'. Above the main flow, a shared row: 'production.json config' tile and 'GitHub' tile with edge label 'push to main: auto-deploy' arrow to (5). Main arrows: source -> 2 -> 5 ; 3 -> 4 -> 5 ; 5 -> 6 -> 7 -> 8. Edge labels in italic: 'clean plate', 'script', 'voice audio', 'synced clips', 'pass'. Take design inspiration from the reference image: the official AWS reference architecture diagram for 'Video on Demand on AWS' (https://docs.aws.amazon.com/images/solutions/latest/video-on-demand-on-aws/images/video-on-demand-architecture.png, page https://docs.aws.amazon.com/solutions/latest/video-on-demand-on-aws/architecture-overview.html), the formal enterprise style also used by IBM Cloud reference architectures. Match it closely: white background, one thin black outer boundary box with a dark tab label at top-left, dashed grey group boxes and solid coloured group boxes with a small icon in the top-left corner, square solid-colour service tiles with simple white line icons, label text under each tile, black filled circles with white step numbers next to each component, thin black orthogonal arrows with small italic edge labels, plain sans-serif font (like Arial/Helvetica). Formal and corporate, NOT playful: no emoji, no cartoon, no rounded bubbly cards, no gradients, no 3D, no people. Use only generic icons; do NOT draw any real company logos (no AWS, OpenAI, Kaggle logos). Landscape 16:9, high resolution. Text is required: every label must be legible and spelled exactly as given.",
+  "driver_model": "gpt-6-luna",
+  "image_model": "gpt-image via codex $imagegen",
+  "created": "2026-11-27T17:10:46",
+  "refs": [
+    {
+      "path": "aws-vod.png (style reference only, not committed)",
+      "source_url": "https://docs.aws.amazon.com/images/solutions/latest/video-on-demand-on-aws/images/video-on-demand-architecture.png"
+    }
+  ],
+  "tool": "scout.chatgpt (codex exec, ChatGPT plan)",
+  "note": "AI-generated. Not a product photo."
+}
