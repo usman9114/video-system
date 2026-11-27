@@ -383,5 +383,16 @@
         "why": "RIFE in-betweens blend mouth shapes; SyncNet confidence drops 4-11% and the offset moves 1-2 frames. Keep the renderer's frame repeat for lip-sync until a better candidate passes. Fill lab stays for no-face clips (hero_clip preset)."
       }
     }
+  },
+  "lipsync_postfix": {
+    "_doc": "scripts/fix_lipsync.py: frozen-frame blend + hard punch-in at source-plate splices (owner approved 2026-11-27). promo.py uses <lipsync_dir>/fixed/<vo>.mp4 when enabled. frozen = diff<frozen_diff_max with both neighbour diffs > frozen_neighbour_ratio x clip median (0.06/0.4 catches the 4 confirmed 03_who freezes at 40/82/168/234 and nothing in still passages; 0.08/1.5 missed them all).",
+    "enabled": true,
+    "frozen_diff_max": 0.06,
+    "frozen_neighbour_ratio": 0.4,
+    "splice_min_diff": 4.0,
+    "splice_ratio": 8,
+    "splice_neighbour_max": 1.5,
+    "punch_scale": 1.05,
+    "mode": "hard_toggle"
   }
 }

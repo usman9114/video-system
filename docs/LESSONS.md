@@ -92,3 +92,4 @@
 83. **Modal API 401 after a key change**: compare `server_key_fp` from the 401 body with sha256(key)[:6] locally. Fix = GitHub secret LIPSYNC_API_KEY + re-run the deploy workflow; the session gets the key via the secure credential form (proxy injects `x-api-key`; client env var can be a placeholder).
 84. **Exports must be backed up the moment they render**: the Greece v1 master was lost with its container. Kaggle dataset `video-system-media-backup`.
 85. **Small serif captions vanish on bright frames**: add a faint bottom scrim (0.45 strength, bottom 30%) only while the caption shows (`style.caption.scrim`).
+86. **Render lip-sync promos at 25 fps, not 30**: TBDub clips are 25 fps; the 30 fps renderer repeated every 6th frame → a steady 5 Hz micro-stutter on the face (59 frozen frames in v7@30 vs 4 at the planned cuts in v7@25). `templates/promo_4x5.json fps 25`. Upwork has no fps requirement.

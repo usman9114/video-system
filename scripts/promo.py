@@ -596,7 +596,7 @@ def load_production() -> dict:
 
 def enforce_rules(spec: dict, prod: dict) -> None:
     """Hard owner rules. Violations stop the render; zoom is clamped with a warning."""
-    rules = {k: v["value"] for k, v in prod["rules"].items()}
+    rules = {k: v["value"] for k, v in prod["rules"].items() if isinstance(v, dict)}
     errors = []
     for i, seg in enumerate(spec["segments"]):
         talking = seg["type"] in ("face", "talk")
@@ -614,7 +614,17 @@ def enforce_rules(spec: dict, prod: dict) -> None:
         if not seg.get("vo") and seg["type"] not in ("end",) and seg.get("dur", 0) > rules["max_beat_between_lines_s"]:
             errors.append(f"segment {i}: beat of {seg['dur']}s exceeds max {rules['max_beat_between_lines_s']}s")
         if seg.get("video") == "auto":
-            seg["video"] = f"kaggle/work/lipsync/{spec['id']}/{seg['vo']}.mp4"
+            ldir = f"kaggle/work/lipsync/{spec.get('lipsync_id', spec['id'])}"
+            seg["video"] = f"{ldir}/{seg['vo']}.mp4"
+            if prod.get("lipsync_postfix", {}).get("enabled"):
+                fx = ROOT / ldir / "fixed" / f"{seg['vo']}.mp4"
+                if fx.exists():
+                    seg["video"] = f"{ldir}/fixed/{seg['vo']}.mp4"
+                    rep = ROOT / ldir / "fixed" / "report.json"
+                    spans = json.loads(rep.read_text()).get(seg["vo"], {}).get("punch_spans") if rep.exists() else None
+                    if spans:   # punch-in is up to 1.05 already: segment zoom must not stack on top (owner cap 1.05)
+                        print(f"  note: segment {i} ({seg['vo']}) has a 1.05 punch-in; segment zoom {seg.get('zoom')} -> [1.0, 1.0]", flush=True)
+                        seg["zoom"] = [1.0, 1.0]
     if errors:
         sys.exit("production rules violated:\n  - " + "\n  - ".join(errors))
 

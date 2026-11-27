@@ -59,13 +59,15 @@
     {
       "id": "T04",
       "title": "Render n8n video v7 with the winning lip-sync",
-      "list": "todo",
+      "list": "review",
       "project": "n8n",
       "blocked_by": [
         "T03"
       ],
       "notes": [
-        "Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final"
+        "Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final",
+        "2026-11-27: v7 rendered: exports/01_n8n_automation_v7_25fps.mp4 (46 s, 25 fps, -14.0 LUFS, TP -1.9). scripts/fix_lipsync.py on all 6 lines (frozen 3/10/14/5/8/2, punch-ins 03_who@90, 04_more@164). ChatGPT final review + motion scan: remaining jumps are planned cuts/punches; 30 fps frame-repeat stutter removed by 25 fps. Backed up to Kaggle video-system-exports. Open: small jump at 15.87 s inside 03_who.",
+        "2026-11-27: todo -> review"
       ]
     },
     {
@@ -94,7 +96,9 @@
         "2026-11-27: blocked -> review",
         "2026-11-27: Owner 2026-11-27: Greece should feel like a Netflix documentary. Plain full render stopped. ChatGPT spec: trips/greece/doc_style.md (serif place+date captions at act starts, dark title card, 0.45 s dissolves, fades to black at act breaks, 1.045 slow zoom, piano/pad/drone ~80 bpm, sat 0.95 warm). Sonnet agent implementing; preview first.",
         "2026-11-27: Doc style implemented (preview OK by Claude; captions need a subtle bottom gradient for legibility on bright frames). Waiting owner OK on preview + music sample, then full render.",
-        "2026-11-27: Owner 2026-11-27: it's a real documentary, he is telling the story. New first-person narration draft (ChatGPT, 124 words, 907 chars): trips/greece/narration_v3.json. Owner to edit/approve before ElevenLabs (~907 credits of ~11k). Then scene timing driven by VO length."
+        "2026-11-27: Owner 2026-11-27: it's a real documentary, he is telling the story. New first-person narration draft (ChatGPT, 124 words, 907 chars): trips/greece/narration_v3.json. Owner to edit/approve before ElevenLabs (~907 credits of ~11k). Then scene timing driven by VO length.",
+        "2026-11-27: review -> review",
+        "2026-11-27: v3 delivered: exports/trip_greece_v3_master.mp4 (83 s, -14.4 LUFS, TP -1.7), narrated documentary; share copy sent; backed up to Kaggle video-system-exports."
       ]
     },
     {
@@ -294,6 +298,6 @@
       "notes": []
     }
   ],
-  "updated": "2026-11-27 20:21 UTC",
+  "updated": "2026-11-27 20:55 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:21 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:55 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -10,13 +10,11 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 - **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
 
-## To do (8)
+## To do (7)
 
 - **T03** SyncNet-gate the A/B clips, side-by-side, owner picks winner  _(n8n · after T02)_
   - bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65).
   - 2026-11-27: Done for 03_who via bin/kgpu run jobs/syncnet-eval. Gate passed.
-- **T04** Render n8n video v7 with the winning lip-sync  _(n8n · after T03)_
-  - Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final
 - **T05** Get gig texts for Upwork videos 2-10  _(upwork · needs owner)_
   - 2026-11-27: Questionnaire drafted by ChatGPT: docs/gig_questionnaire.md. Owner fills it per gig.
   - 2026-11-27: ChatGPT drafted 9 gig briefs from known facts: docs/gigs_draft.md (proof/price/links marked OWNER TO CONFIRM). Owner to confirm/edit, then scripts.
@@ -34,7 +32,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 ## In progress (0)
 
 
-## Waiting on owner review (3)
+## Waiting on owner review (4)
 
 - **T02** Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res  _(n8n · after T01)_
   - python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3
@@ -46,6 +44,10 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7.
   - 2026-11-27: S2 result: frozen frames 39/81/167/233 replaced (blend). Fixed TBDub 03_who LSE-C 6.17 offset 0 (was 6.13) -> still below 6.89 gate; owner chose TBDub by eye anyway. f89 = real head lunge in the take (static background), left as is. Files: work/ab/03_who_tbdub_fixed.mp4, 03_who_compare.mp4, 03_who_mouth_slowmo.mp4.
   - 2026-11-27: Owner: jerk at ~4 s remains. Cause: one-frame jump cut in the SOURCE plate (03_who_src splice between frames 89/90), inherited by TBDub. ChatGPT: punch-in, not morph. Made work/ab/03_who_punch_hard.mp4 (instant 1.05 at the splice, my pick) and _ramp (eased). Owner to pick; then apply to every splice in all 6 lines (scan src clips for one-frame jumps).
+- **T04** Render n8n video v7 with the winning lip-sync  _(n8n · after T03)_
+  - Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final
+  - 2026-11-27: v7 rendered: exports/01_n8n_automation_v7_25fps.mp4 (46 s, 25 fps, -14.0 LUFS, TP -1.9). scripts/fix_lipsync.py on all 6 lines (frozen 3/10/14/5/8/2, punch-ins 03_who@90, 04_more@164). ChatGPT final review + motion scan: remaining jumps are planned cuts/punches; 30 fps frame-repeat stutter removed by 25 fps. Backed up to Kaggle video-system-exports. Open: small jump at 15.87 s inside 03_who.
+  - 2026-11-27: todo -> review
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
@@ -56,6 +58,8 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Owner 2026-11-27: Greece should feel like a Netflix documentary. Plain full render stopped. ChatGPT spec: trips/greece/doc_style.md (serif place+date captions at act starts, dark title card, 0.45 s dissolves, fades to black at act breaks, 1.045 slow zoom, piano/pad/drone ~80 bpm, sat 0.95 warm). Sonnet agent implementing; preview first.
   - 2026-11-27: Doc style implemented (preview OK by Claude; captions need a subtle bottom gradient for legibility on bright frames). Waiting owner OK on preview + music sample, then full render.
   - 2026-11-27: Owner 2026-11-27: it's a real documentary, he is telling the story. New first-person narration draft (ChatGPT, 124 words, 907 chars): trips/greece/narration_v3.json. Owner to edit/approve before ElevenLabs (~907 credits of ~11k). Then scene timing driven by VO length.
+  - 2026-11-27: review -> review
+  - 2026-11-27: v3 delivered: exports/trip_greece_v3_master.mp4 (83 s, -14.4 LUFS, TP -1.7), narrated documentary; share copy sent; backed up to Kaggle video-system-exports.
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 

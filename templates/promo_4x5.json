@@ -1,7 +1,10 @@
 {
   "_doc": "Design tokens for promo videos (4:5, 1080x1350). Used by scripts/promo.py. Change here = every video changes.",
-  "size": [1080, 1350],
-  "fps": 30,
+  "size": [
+    1080,
+    1350
+  ],
+  "fps": 25,
   "colors": {
     "bg": "#0C1220",
     "bg_grid": "#16203A",
@@ -20,11 +23,19 @@
     "medium": "/usr/share/fonts/opentype/inter/Inter-Medium.otf"
   },
   "talk": {
-    "source_crop": [0, 0, 864, 846],
+    "source_crop": [
+      0,
+      0,
+      864,
+      846
+    ],
     "frame_h": 1058,
     "zoom_from": 1.0,
     "zoom_to": 1.07,
-    "zoom_anchor": [432, 360],
+    "zoom_anchor": [
+      432,
+      360
+    ],
     "band_fade_px": 140
   },
   "captions": {
@@ -42,7 +53,14 @@
     "speech_fade_ms": 40
   },
   "encode": {
-    "preview": {"preset": "medium", "crf": 18},
-    "final": {"preset": "veryslow", "crf": 14}
-  }
+    "preview": {
+      "preset": "medium",
+      "crf": 18
+    },
+    "final": {
+      "preset": "veryslow",
+      "crf": 14
+    }
+  },
+  "_fps_why": "25 = TBDub native rate; 30 repeated every 6th frame (5 Hz stutter, LESSONS 86)"
 }
