@@ -1,0 +1,24 @@
+name: Deploy Modal lip-sync API
+
+# Deploys modal_apps/lipsync_web.py to Modal. Needed because the Claude cloud session's proxy can't speak gRPC.
+# Requires repo secrets MODAL_TOKEN_ID and MODAL_TOKEN_SECRET (Settings → Secrets and variables → Actions).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["modal_apps/lipsync_web.py", ".github/workflows/modal-deploy.yml"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install "modal==1.6.4"
+      - run: modal deploy modal_apps/lipsync_web.py
+        env:
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}

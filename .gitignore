@@ -27,3 +27,4 @@ kaggle/outputs/
 kaggle/work/
 __pycache__/
 *.pyc
+.env.modal
