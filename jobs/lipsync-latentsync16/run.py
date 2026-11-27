@@ -1,5 +1,5 @@
 """LatentSync 1.6 (512px, sharpest open model) squeezed onto a 16 GB T4 by shrinking the frame chunk.
-GPU0: num_frames=8, GPU1: num_frames=12 (+ expandable_segments). Both 20 steps, guidance 1.5, DeepCache, fp16.
+GPU0: num_frames=8, GPU1: num_frames=6 (12 OOMed at 14.2 GiB) (+ expandable_segments). Both 20 steps, guidance 1.5, DeepCache, fp16.
 Inputs: face.mp4, voice.(mp3|wav). Outputs: ls16_f8.mp4, ls16_f12.mp4 (+logs). Env in /tmp."""
 import os, subprocess, sys, time, glob, json
 INP, OUT = os.environ["KGPU_INPUT"], os.environ["KGPU_OUTPUT"]
@@ -18,9 +18,10 @@ face = glob.glob(f"{INP}/face.*")[0]; voice = glob.glob(f"{INP}/voice.*")[0]
 sh(f"ffmpeg -v error -y -i {voice} -ac 1 -ar 16000 {T}/voice.wav")
 print("setup", round(time.time() - t0), "s", flush=True)
 procs = {}
-for gpu, nf in enumerate((8, 12)):
+for gpu, nf in enumerate((8, 6)):
     rd = f"{T}/run_f{nf}"
-    sh(f"cp -r {T}/repo {rd} && rm -rf {rd}/checkpoints && ln -s {T}/ckpt16 {rd}/checkpoints && "
+    # separate checkpoint COPIES per run: both runs download insightface aux models into checkpoints/ (race → FileExistsError)
+    sh(f"cp -r {T}/repo {rd} && rm -rf {rd}/checkpoints && cp -r {T}/ckpt16 {rd}/checkpoints && "
        f"sed -i 's/^  num_frames: 16/  num_frames: {nf}/' {rd}/configs/unet/stage2_512.yaml && grep -n 'num_frames' {rd}/configs/unet/stage2_512.yaml")
     env = f"CUDA_VISIBLE_DEVICES={gpu} PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True"
     cmd = (f"cd {rd} && {env} {PY} -m scripts.inference --unet_config_path configs/unet/stage2_512.yaml "
