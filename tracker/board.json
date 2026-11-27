@@ -234,14 +234,16 @@
     {
       "id": "T13",
       "title": "Fix true peak 0.1 dB over limit in promo master (v7)",
-      "list": "todo",
+      "list": "done",
       "project": "n8n",
       "needs_owner": false,
       "blocked_by": [
         "T04"
       ],
       "notes": [
-        "2026-11-27: S3 agent producing audio-only fix at -2.0 dBTP ceiling."
+        "2026-11-27: S3 agent producing audio-only fix at -2.0 dBTP ceiling.",
+        "2026-11-27: Done for v6: audio-only re-encode exports/01_n8n_automation_v6_tp.mp4 = -14.0 LUFS, TP -1.9 dBTP (pass). Config templates/promo_4x5.json audio.true_peak -1.5 -> -2.0 so v7 renders pass.",
+        "2026-11-27: todo -> done"
       ]
     },
     {

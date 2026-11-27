@@ -37,7 +37,7 @@
   },
   "audio": {
     "lufs": -14,
-    "true_peak": -1.5,
+    "true_peak": -2.0,
     "music_db": -27,
     "speech_fade_ms": 40
   },

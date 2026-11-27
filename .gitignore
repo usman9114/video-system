@@ -32,3 +32,4 @@ __pycache__/
 # personal trip photos (keep in Drive only)
 trips/*/photos/
 trips/*/work/
+work/

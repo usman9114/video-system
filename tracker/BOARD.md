@@ -10,7 +10,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 - **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
 
-## To do (9)
+## To do (8)
 
 - **T03** SyncNet-gate the A/B clips, side-by-side, owner picks winner  _(n8n · after T02)_
   - bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65).
@@ -28,8 +28,6 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T11** Merge greece-v2 branch into main  _(infra · needs owner)_
   - Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint.
   - 2026-11-27: greece-v2 now also contains final-cut-lab.
-- **T13** Fix true peak 0.1 dB over limit in promo master (v7)  _(n8n · after T04)_
-  - 2026-11-27: S3 agent producing audio-only fix at -2.0 dBTP ceiling.
 - **T15** Delete stale claude/project-thread-* branches (Rule 0; content already in greece-v2)  _(infra · needs owner)_
 
 ## In progress (0)
@@ -54,7 +52,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
-## Done (12)
+## Done (13)
 
 - **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
   - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
@@ -78,6 +76,10 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Branch final-cut-lab, merged into greece-v2. Run before delivering any master: scripts/final_cut.py
 - **D09** Final-cut on n8n v6: FAIL lip-sync (LSE-C 3.9-6.05 vs min 6.887) + true peak -1.4 dB (max -1.5)  _(n8n)_
   - 2026-11-27: Face touch-up (GFPGAN) and RIFE on lip-sync clips both rejected by SyncNet gate (LESSONS 74-78). Report: reports/final-cut/01_n8n_automation_v6.md
+- **T13** Fix true peak 0.1 dB over limit in promo master (v7)  _(n8n · after T04)_
+  - 2026-11-27: S3 agent producing audio-only fix at -2.0 dBTP ceiling.
+  - 2026-11-27: Done for v6: audio-only re-encode exports/01_n8n_automation_v6_tp.mp4 = -14.0 LUFS, TP -1.9 dBTP (pass). Config templates/promo_4x5.json audio.true_peak -1.5 -> -2.0 so v7 renders pass.
+  - 2026-11-27: todo -> done
 - **T14** ChatGPT (Codex) sign-in on this container  _(infra · needs owner)_
   - 2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device.
   - 2026-11-27: Signed in; lane.chatgpt ask test returned ok. Auth at ~/.codex/auth.json (per container).
