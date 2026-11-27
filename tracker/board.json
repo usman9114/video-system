@@ -15,7 +15,8 @@
       "project": "infra",
       "needs_owner": true,
       "notes": [
-        "2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value."
+        "2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.",
+        "2026-11-27: Re-checked: still 401, same fingerprints. Kaggle OK (usmanqureshi94), ElevenLabs OK (Starter, 28,969 of 40,000 chars used), GitHub push OK."
       ]
     },
     {
@@ -120,7 +121,8 @@
       "project": "infra",
       "needs_owner": true,
       "notes": [
-        "Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint."
+        "Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint.",
+        "2026-11-27: greece-v2 now also contains final-cut-lab."
       ]
     },
     {
@@ -192,8 +194,61 @@
       "notes": [
         "2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder."
       ]
+    },
+    {
+      "id": "D08",
+      "title": "Final-cut lab built: Whisper script check, SyncNet per face shot, loudness, cut rules, contact sheet, touch-up gate",
+      "list": "done",
+      "project": "infra",
+      "needs_owner": false,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-27: Branch final-cut-lab, merged into greece-v2. Run before delivering any master: scripts/final_cut.py"
+      ]
+    },
+    {
+      "id": "D09",
+      "title": "Final-cut on n8n v6: FAIL lip-sync (LSE-C 3.9-6.05 vs min 6.887) + true peak -1.4 dB (max -1.5)",
+      "list": "done",
+      "project": "n8n",
+      "needs_owner": false,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-27: Face touch-up (GFPGAN) and RIFE on lip-sync clips both rejected by SyncNet gate (LESSONS 74-78). Report: reports/final-cut/01_n8n_automation_v6.md"
+      ]
+    },
+    {
+      "id": "T13",
+      "title": "Fix true peak 0.1 dB over limit in promo master (v7)",
+      "list": "todo",
+      "project": "n8n",
+      "needs_owner": false,
+      "blocked_by": [
+        "T04"
+      ],
+      "notes": []
+    },
+    {
+      "id": "T14",
+      "title": "ChatGPT (Codex) sign-in on this container",
+      "list": "blocked",
+      "project": "infra",
+      "needs_owner": true,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-27: Codex 0.169.0 installed. Owner enters the device code at auth.openai.com/codex/device."
+      ]
+    },
+    {
+      "id": "T15",
+      "title": "Delete stale claude/project-thread-* branches (Rule 0; content already in greece-v2)",
+      "list": "todo",
+      "project": "infra",
+      "needs_owner": true,
+      "blocked_by": [],
+      "notes": []
     }
   ],
-  "updated": "2026-11-27 19:28 UTC",
+  "updated": "2026-11-27 19:31 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }
