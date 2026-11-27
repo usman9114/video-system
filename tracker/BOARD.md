@@ -9,6 +9,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
   - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
   - 2026-11-27: Re-checked: still 401, same fingerprints. Kaggle OK (usmanqureshi94), ElevenLabs OK (Starter, 28,969 of 40,000 chars used), GitHub push OK.
+  - 2026-11-27: Owner may create a new key: new value -> GitHub secret LIPSYNC_API_KEY -> re-run deploy -> session gets it via secure credential form (host nubuqqrr--video-system-lipsync-api.us-east.modal.run, header x-api-key).
 - **T02** Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res  _(n8n · after T01)_
   - python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3
   - TBDub full-res needs owner's sample-video.mp4 (60 MB original).

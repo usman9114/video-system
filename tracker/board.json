@@ -16,7 +16,8 @@
       "needs_owner": true,
       "notes": [
         "2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.",
-        "2026-11-27: Re-checked: still 401, same fingerprints. Kaggle OK (usmanqureshi94), ElevenLabs OK (Starter, 28,969 of 40,000 chars used), GitHub push OK."
+        "2026-11-27: Re-checked: still 401, same fingerprints. Kaggle OK (usmanqureshi94), ElevenLabs OK (Starter, 28,969 of 40,000 chars used), GitHub push OK.",
+        "2026-11-27: Owner may create a new key: new value -> GitHub secret LIPSYNC_API_KEY -> re-run deploy -> session gets it via secure credential form (host nubuqqrr--video-system-lipsync-api.us-east.modal.run, header x-api-key)."
       ]
     },
     {

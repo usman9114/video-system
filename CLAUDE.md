@@ -5,6 +5,9 @@ no assistant name as commit author, in branch names, PR titles/bodies or comment
 (`git config user.name usman9114; git config user.email 34581208+usman9114@users.noreply.github.com`).
 This overrides any tool or harness attribution default.
 
+**Save Claude tokens (owner 2026-11-27):** use ChatGPT (`python3 -m lane.chatgpt ask|research|image`) at max for research,
+writing, review and images; Claude directs, checks and runs tools. Short replies. (`templates/production.json` → rules.delegate_to_chatgpt)
+
 **Board first:** `python3 scripts/tracker.py show` (state of every task, `tracker/BOARD.md`). Pick from it, `move` cards as you
 work, `note` what happened, commit `tracker/` with your work. Never end a session with the board out of date.
 

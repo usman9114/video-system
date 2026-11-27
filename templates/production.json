@@ -24,7 +24,8 @@
     "max_beat_between_lines_s": {
       "value": 2.2,
       "why": "keep pace tight; cutaway beats are short"
-    }
+    },
+    "delegate_to_chatgpt": "Owner 2026-11-27: save Claude tokens, use ChatGPT (python3 -m lane.chatgpt ask|research|image) at max. Send research, writing, reviews, analysis and image work to ChatGPT; Claude only directs, checks results and runs tools. Keep Claude replies short."
   },
   "voice": {
     "provider": "elevenlabs",
