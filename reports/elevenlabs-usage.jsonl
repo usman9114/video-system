@@ -39,3 +39,4 @@
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 61, "credits": 61.0, "line": "10_IMG_9423", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:43Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 129, "credits": 129.0, "line": "11_IMG_9421", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:43Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 122, "credits": 122.0, "line": "sample_zeus", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T22:16:45Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 184, "credits": 184.0, "line": "sample_caryatids", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T22:20:20Z"}
