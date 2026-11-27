@@ -480,6 +480,8 @@ class Renderer:
             seg["_img"] = Image.open(ROOT / seg["image"]).convert("RGB")
         im = seg["_img"]
         u = clamp01(t / max(seg["dur"], 0.1))
+        if seg.get("fit") == "contain":
+            return self._image_card(seg, im, u, t)
         z0, z1 = seg.get("zoom", [1.0, 1.10])
         z = z0 + (z1 - z0) * u
         scale = max(self.W / im.width, self.H / im.height) * z
@@ -511,6 +513,37 @@ class Renderer:
             self.text_center(layer, seg["kicker"].upper(), fk, 133, self.C["accent"], a)
         if seg.get("headline"):
             self.headline(layer, seg["headline"], t, y0=seg.get("headline_y", 230))
+        canvas.alpha_composite(layer)
+        return canvas
+
+    def _image_card(self, seg, im, u, t):
+        """Wide graphic (e.g. the n8n canvas) shown WHOLE as a rounded card on the dark background, then a slow
+        push-in that pans along it (focus + pan). Keeps captions on the dark band (readable)."""
+        canvas = self.bg_at(self.T)
+        cw = self.W - 2 * seg.get("margin", 40)
+        z0, z1 = seg.get("zoom", [1.0, 1.35])
+        z = z0 + (z1 - z0) * ease(u)
+        ch = round(cw * im.height / im.width)
+        scale = cw / im.width * z
+        vw, vh = cw / scale, ch / scale
+        fx, fy = seg.get("focus", [0.5, 0.5])
+        dx = seg.get("pan", 0.0) * (ease(u) - 0.5)
+        x0 = min(max(im.width * (fx + dx) - vw / 2, 0), im.width - vw)
+        y0 = min(max(im.height * fy - vh / 2, 0), im.height - vh)
+        card = im.transform((cw, ch), Image.AFFINE, (1 / scale, 0, x0, 0, 1 / scale, y0), resample=Image.BICUBIC)
+        a = ease(t / 0.25)
+        cx, cy = (self.W - cw) // 2, int(self.H * seg.get("y_center", 0.44) - ch / 2)
+        sh = Image.new("RGBA", (self.W, self.H), (0, 0, 0, 0))
+        ImageDraw.Draw(sh).rounded_rectangle([cx - 4, cy + 10, cx + cw + 4, cy + ch + 18], radius=34, fill=(0, 0, 0, int(140 * a)))
+        canvas.alpha_composite(sh.filter(ImageFilter.GaussianBlur(18)))
+        m = Image.new("L", (cw, ch), 0)
+        ImageDraw.Draw(m).rounded_rectangle([0, 0, cw - 1, ch - 1], radius=30, fill=int(255 * a))
+        canvas.paste(card.convert("RGBA"), (cx, cy), m)
+        layer = Image.new("RGBA", (self.W, self.H), (0, 0, 0, 0))
+        if seg.get("kicker"):
+            fk = self.F("bold", 38)
+            ka = ease((t - 0.2) / 0.35)
+            self.text_center(layer, seg["kicker"].upper(), fk, cy - 80, self.C["accent"], ka, (1 - ka) * 16)
         canvas.alpha_composite(layer)
         return canvas
 

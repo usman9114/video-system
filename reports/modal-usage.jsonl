@@ -2,3 +2,6 @@
 {"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8EM1JDR3DZ4V6RN8DR9HANW", "ok": true, "gpu_seconds": 536.8, "usd": 0.291, "at": "2026-11-27T13:54:19Z"}
 {"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ENCPZ1VTKEY5MK6BGDSK25", "ok": true, "gpu_seconds": 245.4, "usd": 0.133, "at": "2026-11-27T14:18:03Z"}
 {"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ENCQ9ME8GEQMXTDNJQSS4B", "ok": true, "gpu_seconds": 274.0, "usd": 0.148, "at": "2026-11-27T14:18:59Z"}
+{"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ENCQJQK25ATT14YFBEKEZ9", "ok": true, "gpu_seconds": 379.8, "usd": 0.206, "at": "2026-11-27T14:20:50Z"}
+{"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ENCR9TTSDAGKVGPG8869GP", "ok": true, "gpu_seconds": 258.9, "usd": 0.14, "at": "2026-11-27T14:22:02Z"}
+{"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ENCQXEYK1RJZTKVY670MFV", "ok": true, "gpu_seconds": 397.6, "usd": 0.215, "at": "2026-11-27T14:22:04Z"}
