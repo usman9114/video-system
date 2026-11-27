@@ -42,3 +42,4 @@
 {"job": "kgpu-lipsync-latentsync16", "event": "start", "gpu": true, "at": "2026-11-27T02:43:37Z"}
 {"job": "kgpu-lipsync-latentsync16", "event": "end", "status": "error", "wall_s": 276, "at": "2026-11-27T02:48:21Z"}
 {"job": "kgpu-lipsync-latentsync16", "event": "start", "gpu": true, "at": "2026-11-27T02:49:04Z"}
+{"job": "kgpu-lipsync-latentsync16", "event": "end", "status": "complete", "wall_s": 2651, "at": "2026-11-27T03:33:22Z"}
