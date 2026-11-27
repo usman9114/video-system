@@ -26,6 +26,7 @@ import argparse
 import base64
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
@@ -38,7 +39,7 @@ ROOT = Path(__file__).resolve().parent.parent
 VOICE_FILE = ROOT / "assets" / "voice" / "elevenlabs_voice.json"
 CACHE = ROOT / "kaggle" / "cache" / "elevenlabs"
 USAGE = ROOT / "reports" / "elevenlabs-usage.jsonl"
-HDR = {"xi-api-key": "proxy-injected"}
+HDR = {"xi-api-key": os.environ.get("ELEVENLABS_API_KEY", "proxy-injected")}  # env var on newer envs, proxy-injected on older
 
 MODELS = {
     "final": "eleven_multilingual_v2",   # most stable with instant clones (ElevenLabs guidance)
