@@ -1,0 +1,23 @@
+{
+  "_doc": "Video 01 v2: n8n automation, NEW script in the owner's ElevenLabs-cloned voice (assets/voice/01_n8n). Face shots get lip-synced later (sync.so); this version is voice-led with B-roll and graphics. Script: scripts/videos/01_n8n_v2_script.md",
+  "id": "01_n8n_automation_v2",
+  "template": "templates/promo_4x5.json",
+  "vo_dir": "assets/voice/01_n8n",
+  "name": "Usman Qureshi",
+  "title": "n8n & AI Automation",
+  "segments": [
+    {"type": "image", "vo": "01_hook", "image": "broll/generated/crm_manual.png", "headline": ["Same task,", "over and over?"],
+     "headline_y": 200, "zoom": [1.04, 1.14], "focus": [0.5, 0.55], "lead": 0.05},
+    {"type": "list", "vo": "02_pain", "kicker": "Every single week", "kicker_y": 250, "icon": "x", "y0": 360, "step_y": 175,
+     "items": ["Chasing leads", "Sorting emails", "Updating your CRM", "Reports by hand"],
+     "item_words": ["leads", "emails", "CRM", "reports"]},
+    {"type": "workflow", "vo": "03_who", "headline": ["n8n + AI workflows", "that run themselves"], "progress": [0.0, 1.0], "done": true,
+     "labels": ["Lead form", "AI qualifies", "CRM synced", "Follow-up sent"], "done_text": "Leads captured. Data in sync."},
+    {"type": "list", "vo": "04_more", "kicker": "Need more?", "kicker_y": 300, "icon": "check", "y0": 430,
+     "items": ["AI chatbots", "AI agents", "Custom API integrations"], "item_words": ["chatbot", "agent", "API"]},
+    {"type": "image", "vo": "05_value", "image": "broll/generated/time_to_grow.png", "kicker": "The real goal",
+     "zoom": [1.10, 1.0], "focus": [0.5, 0.5]},
+    {"type": "end", "vo": "06_cta", "captions": false, "tail": 1.6, "headline": ["Send me", "your idea."],
+     "sub": "Let's turn it into a workflow.", "button": "Message me on Upwork", "photo_src_t": 47.2}
+  ]
+}
