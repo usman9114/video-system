@@ -78,6 +78,67 @@ def tbdub(video: bytes, audio: bytes, mode: str = "student") -> dict:
             "log": (r.stdout + r.stderr)[-4000:], "gpu_seconds": round(secs, 1), "usd": round(secs * L40S_USD_PER_S, 3)}
 
 
+# ---------------- Wan 2.2 (Alibaba, Apache-2.0): image/text → video, task 2 exploration ----------------
+WAN_REPOS = {"ti2v-5B": "Wan-AI/Wan2.2-TI2V-5B", "i2v-A14B": "Wan-AI/Wan2.2-I2V-A14B"}
+H100_USD_PER_S = 0.001097
+
+wan_image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0")
+    .run_commands("git clone --depth 1 https://github.com/Wan-Video/Wan2.2.git /opt/Wan2.2")
+    .pip_install("torch==2.6.0", "torchvision==0.21.0", "torchaudio==2.6.0")
+    # flash_attn skipped on purpose: wan/modules/attention.py falls back to torch SDPA
+    .run_commands("grep -v -E '^flash_attn' /opt/Wan2.2/requirements.txt > /tmp/req.txt && pip install -r /tmp/req.txt",
+                  "pip install 'huggingface_hub[cli]'")
+)
+
+
+@app.function(image=wan_image, volumes={W: weights}, timeout=7200, cpu=4)
+def download_wan(model: str = "ti2v-5B") -> dict:
+    import subprocess
+    dst = f"{W}/wan/{model}"
+    r = subprocess.run(f"hf download {WAN_REPOS[model]} --local-dir {dst}", shell=True, capture_output=True, text=True)
+    weights.commit()
+    du = subprocess.run(f"du -sh {dst}", shell=True, capture_output=True, text=True).stdout
+    return {"ok": r.returncode == 0, "log": r.stderr[-1500:], "du": du}
+
+
+def _wan_generate(task: str, model: str, prompt: str, image: bytes, size: str, frame_num: int, steps: int,
+                  seed: int, extra: list, rate: float) -> dict:
+    import glob
+    import os
+    import subprocess
+    t0 = time.time()
+    args = ["python", "/opt/Wan2.2/generate.py", "--task", task, "--size", size, "--ckpt_dir", f"{W}/wan/{model}",
+            "--prompt", prompt, "--base_seed", str(seed), "--save_file", "/tmp/wan_out.mp4", *extra]
+    if frame_num:
+        args += ["--frame_num", str(frame_num)]
+    if steps:
+        args += ["--sample_steps", str(steps)]
+    if image:
+        Path("/tmp/wan_in.png").write_bytes(image)
+        args += ["--image", "/tmp/wan_in.png"]
+    r = subprocess.run(args, capture_output=True, text=True, cwd="/opt/Wan2.2")
+    secs = time.time() - t0
+    ok = r.returncode == 0 and os.path.exists("/tmp/wan_out.mp4")
+    return {"ok": ok, "video_b64": base64.b64encode(Path("/tmp/wan_out.mp4").read_bytes()).decode() if ok else "",
+            "log": (r.stdout + r.stderr)[-4000:], "gpu_seconds": round(secs, 1), "usd": round(secs * rate, 3)}
+
+
+@app.function(image=wan_image, volumes={W: weights}, gpu="L40S", timeout=3600, scaledown_window=2)
+def wan_ti2v_5b(prompt: str, image: bytes = b"", size: str = "1280*704", frame_num: int = 121, steps: int = 50,
+                seed: int = 42) -> dict:
+    return _wan_generate("ti2v-5B", "ti2v-5B", prompt, image, size, frame_num, steps, seed,
+                         ["--offload_model", "True", "--convert_model_dtype", "--t5_cpu"], L40S_USD_PER_S)
+
+
+@app.function(image=wan_image, volumes={W: weights}, gpu="H100", timeout=3600, scaledown_window=2)
+def wan_i2v_a14b(prompt: str, image: bytes = b"", size: str = "1280*720", frame_num: int = 81, steps: int = 40,
+                 seed: int = 42) -> dict:
+    return _wan_generate("i2v-A14B", "i2v-A14B", prompt, image, size, frame_num, steps, seed,
+                         ["--offload_model", "True", "--convert_model_dtype"], H100_USD_PER_S)
+
+
 @app.function(image=api_image, secrets=[modal.Secret.from_name("lipsync-api-key")])
 @modal.asgi_app()
 def api():
@@ -109,6 +170,17 @@ def api():
         call = tbdub.spawn(base64.b64decode(body["video_b64"]), base64.b64decode(body["audio_b64"]),
                            body.get("mode", "student"))
         return {"call_id": call.object_id}
+
+    @web.post("/wan/download")
+    def wan_download(body: dict):
+        return {"call_id": download_wan.spawn(body.get("model", "ti2v-5B")).object_id}
+
+    @web.post("/wan/generate")
+    def wan_generate(body: dict):
+        fn = wan_i2v_a14b if body.get("model") == "i2v-A14B" else wan_ti2v_5b
+        kw = {k: body[k] for k in ("size", "frame_num", "steps", "seed") if k in body}
+        img = base64.b64decode(body["image_b64"]) if body.get("image_b64") else b""
+        return {"call_id": fn.spawn(body["prompt"], img, **kw).object_id}
 
     @web.get("/result/{call_id}")
     def result(call_id: str):
