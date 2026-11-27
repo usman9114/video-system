@@ -205,7 +205,14 @@ class Renderer:
         grad = grad.resize((self.W, fade))
         band = Image.new("RGBA", (self.W, fade), self.C["bg"])
         canvas.paste(band, (0, fh - fade), grad)
+        if seg.get("headline"):
+            g = Image.new("L", (1, 520))
+            for yy in range(520):
+                g.putpixel((0, yy), int(215 * (1 - yy / 520) ** 1.3))
+            canvas.paste(Image.new("RGBA", (self.W, 520), self.C["bg"]), (0, 0), g.resize((self.W, 520)))
         layer = Image.new("RGBA", (self.W, self.H), (0, 0, 0, 0))
+        if seg.get("headline"):
+            self.headline(layer, seg["headline"], t, y0=seg.get("headline_y", 110))
         if seg.get("lower_third"):
             self.lower_third(layer, t)
         self.captions(layer, seg, seg["_vin"] + t)
@@ -477,9 +484,11 @@ def build_timeline(spec, r: Renderer):
             dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                                                   "-of", "csv=p=0", str(mp3)]))
             al = json.loads((vd / f"{seg['vo']}.align.json").read_text())["words"]
-            lead = seg.get("lead", 0.12)
-            seg["_vo_mp3"], seg["_lead"] = str(mp3), lead
-            seg["dur"] = round(lead + dur + seg.get("tail", 0.18), 3)
+            f0, f1 = seg.get("vo_from", 0.0), seg.get("vo_to", dur)
+            al = [dict(w, s=w["s"] - f0, e=w["e"] - f0) for w in al if f0 - 0.01 <= w["s"] < f1]
+            lead = seg.get("lead", 0.0 if seg["type"] == "face" else 0.12)
+            seg["_vo_mp3"], seg["_lead"], seg["_vo_from"], seg["_vo_to"] = str(mp3), lead, f0, f1
+            seg["dur"] = round(lead + (f1 - f0) + seg.get("tail", 0.0 if seg["type"] == "face" else 0.18), 3)
             seg["_vin"] = -lead                       # captions use t + _vin == time inside the VO line
             seg["_cards"] = card_words(al, cp["max_chars_per_line"], cp["max_lines"])
             if seg.get("item_words"):
@@ -548,7 +557,8 @@ def build_audio(spec, src_audio: str, total: float, tmp: Path, tpl: dict, final:
     for seg in spec["segments"]:
         if seg.get("vo"):
             inputs += ["-i", seg["_vo_mp3"]]
-            parts.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,adelay={int((seg['_t0'] + seg['_lead']) * 1000)}:all=1[s{k}]")
+            parts.append(f"[{k}:a]atrim={seg['_vo_from']}:{seg['_vo_to']},asetpts=PTS-STARTPTS,afade=t=in:d=0.01,"
+                         f"aresample=48000,aformat=channel_layouts=stereo,adelay={int((seg['_t0'] + seg['_lead']) * 1000)}:all=1[s{k}]")
             k += 1
             continue
         if seg["type"] != "talk":
@@ -604,10 +614,20 @@ def main():
     fps = r.fps
     print(f"{spec['id']}: {len(spec['segments'])} segments, {total:.2f}s", flush=True)
 
+    def seg_frames(seg):
+        if seg["type"] == "talk":
+            return read_frames(str(plate), seg["_vin"], seg["_vin"] + seg["dur"], tpl["talk"]["source_crop"], fps)
+        if seg["type"] == "face":   # lip-synced clip (already cropped to source_crop size), aligned with the VO line
+            v = str(ROOT / seg["video"])
+            w, h = tpl["talk"]["source_crop"][2:]
+            t0 = seg.get("video_off", 0.0) + seg.get("_vo_from", 0.0)
+            return read_frames(v, t0, t0 + seg["dur"] + 0.1, [0, 0, w, h], fps)
+        return None
+
     def frame_at(seg, i, frames):
         t = i / fps
         r.T = seg["_t0"] + t
-        if seg["type"] == "talk":
+        if seg["type"] in ("talk", "face"):
             return r.seg_talk(seg, frames, min(i, len(frames) - 1), t)
         fr = getattr(r, "seg_" + seg["type"])(seg, i, t)
         if seg.get("vo") and seg.get("captions", True):
@@ -622,8 +642,7 @@ def main():
         for ts in map(float, a.still.split(",")):
             seg = next(s for s in spec["segments"] if s["_t0"] <= ts < s["_t0"] + s["dur"])
             i = int((ts - seg["_t0"]) * fps)
-            frames = read_frames(str(plate), seg["_vin"], seg["_vin"] + seg["dur"], tpl["talk"]["source_crop"], fps) \
-                if seg["type"] == "talk" else None
+            frames = seg_frames(seg)
             frame_at(seg, i, frames).convert("RGB").save(outdir / f"t{ts:05.2f}.png")
         print("stills ->", outdir)
         return
@@ -639,8 +658,7 @@ def main():
                           "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", str(out)], stdin=subprocess.PIPE)
     nframes = 0
     for seg in spec["segments"]:
-        frames = read_frames(str(plate), seg["_vin"], seg["_vin"] + seg["dur"], tpl["talk"]["source_crop"], fps) \
-            if seg["type"] == "talk" else None
+        frames = seg_frames(seg)
         n = round((seg["_t0"] + seg["dur"]) * fps) - round(seg["_t0"] * fps)
         for i in range(n):
             p.stdin.write(frame_at(seg, i, frames).convert("RGB").tobytes())
