@@ -9,6 +9,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
+  - 2026-11-27: 2026-11-27: prepared without photos: 7 narration mp3s extracted to trips/greece/work/vo/ (gitignored, from paid ElevenLabs cache), upbeat music generator tested OK. ONLY missing input: the 13 photos in trips/greece/photos/. Then: render.py trips/greece (preview first) -> scripts/trip/finish.py -> final_cut.py --kind trip -> back up to Kaggle (T08).
 - **T12** Re-render Greece v1 (master lost) once photos are uploaded  _(greece · needs owner)_
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 - **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
