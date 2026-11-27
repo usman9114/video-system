@@ -50,3 +50,35 @@
 {"job": "kgpu-syncnet-eval", "event": "end", "status": "complete", "wall_s": 62, "at": "2026-11-27T15:52:46Z"}
 {"job": "kgpu-syncnet-eval", "event": "start", "gpu": true, "at": "2026-11-27T15:57:56Z"}
 {"job": "kgpu-syncnet-eval", "event": "end", "status": "complete", "wall_s": 245, "at": "2026-11-27T16:02:00Z"}
+{"job": "kgpu-final-cut", "event": "start", "gpu": true, "at": "2026-11-27T17:12:13Z"}
+{"job": "kgpu-final-cut", "event": "end", "status": "error", "wall_s": 557, "at": "2026-11-27T17:21:30Z"}
+{"job": "kgpu-final-cut", "event": "start", "gpu": true, "at": "2026-11-27T17:22:22Z"}
+{"job": "kgpu-final-cut", "event": "end", "status": "error", "wall_s": 283, "at": "2026-11-27T17:27:05Z"}
+{"job": "kgpu-final-cut", "event": "start", "gpu": true, "at": "2026-11-27T17:27:38Z"}
+{"job": "kgpu-final-cut", "event": "end", "status": "complete", "wall_s": 1415, "at": "2026-11-27T17:51:13Z"}
+{"job": "kgpu-fill-lab", "event": "start", "gpu": true, "at": "2026-11-27T17:52:03Z"}
+{"job": "kgpu-fill-lab", "event": "end", "status": "cancel_acknowledged", "wall_s": 31, "at": "2026-11-27T17:52:35Z"}
+{"job": "kgpu-fill-lab", "event": "start", "gpu": true, "at": "2026-11-27T17:54:08Z"}
+{"job": "kgpu-fill-lab", "event": "end", "status": "cancel_acknowledged", "wall_s": 305, "at": "2026-11-27T17:59:13Z"}
+{"job": "kgpu-fill-lab", "event": "start", "gpu": true, "at": "2026-11-27T17:59:42Z"}
+{"job": "kgpu-fill-lab", "event": "end", "status": "cancel_acknowledged", "wall_s": 62, "at": "2026-11-27T18:00:44Z"}
+{"job": "kgpu-fill-lab", "event": "start", "gpu": true, "at": "2026-11-27T18:01:43Z"}
+{"job": "kgpu-fill-lab", "event": "end", "status": "cancel_acknowledged", "wall_s": 31, "at": "2026-11-27T18:02:14Z"}
+{"job": "kgpu-fill-lab", "event": "start", "gpu": true, "at": "2026-11-27T18:02:48Z"}
+{"job": "kgpu-fill-lab", "event": "end", "status": "cancel_acknowledged", "wall_s": 31, "at": "2026-11-27T18:03:19Z"}
+{"job": "kgpu-fill-dbg", "event": "start", "gpu": true, "at": "2026-11-27T18:04:07Z"}
+{"job": "kgpu-fill-dbg", "event": "end", "status": "cancel_acknowledged", "wall_s": 62, "at": "2026-11-27T18:05:09Z"}
+{"job": "kgpu-sleep-test", "event": "start", "gpu": true, "at": "2026-11-27T18:05:42Z"}
+{"job": "kgpu-sleep-test", "event": "end", "status": "complete", "wall_s": 153, "at": "2026-11-27T18:08:15Z"}
+{"job": "kgpu-fill-dbg", "event": "start", "gpu": true, "at": "2026-11-27T18:08:53Z"}
+{"job": "kgpu-fill-dbg", "event": "end", "status": "cancel_acknowledged", "wall_s": 62, "at": "2026-11-27T18:09:55Z"}
+{"job": "kgpu-fill-dbg", "event": "start", "gpu": true, "at": "2026-11-27T18:10:31Z"}
+{"job": "kgpu-fill-dbg", "event": "end", "status": "complete", "wall_s": 184, "at": "2026-11-27T18:13:35Z"}
+{"job": "kgpu-fill-dbg", "event": "start", "gpu": true, "at": "2026-11-27T18:14:26Z"}
+{"job": "kgpu-fill-dbg", "event": "end", "status": "complete", "wall_s": 185, "at": "2026-11-27T18:17:31Z"}
+{"job": "kgpu-fill-lab", "event": "start", "gpu": true, "at": "2026-11-27T18:18:42Z"}
+{"job": "kgpu-fill-lab", "event": "end", "status": "complete", "wall_s": 158, "at": "2026-11-27T18:21:20Z"}
+{"job": "kgpu-syncnet-eval", "event": "start", "gpu": true, "at": "2026-11-27T18:21:51Z"}
+{"job": "kgpu-syncnet-eval", "event": "end", "status": "complete", "wall_s": 336, "at": "2026-11-27T18:27:27Z"}
+{"job": "kgpu-final-cut", "event": "start", "gpu": true, "at": "2026-11-27T18:28:08Z"}
+{"job": "kgpu-final-cut", "event": "end", "status": "complete", "wall_s": 1142, "at": "2026-11-27T18:47:11Z"}
