@@ -191,7 +191,7 @@ def usage():
     tot = sum(v[1] for v in by.values())
     for m, (c, cr) in by.items():
         print(f"{m:<26} {c:>7} chars  {cr:>8.0f} credits")
-    print(f"{'TOTAL':<26} {'':>7}        {tot:>8.0f} credits  (Starter plan = 30,000/month)")
+    print(f"{'TOTAL':<26} {'':>7}        {tot:>8.0f} credits  (Starter plan = 40,000/month)")
 
 
 def main():
