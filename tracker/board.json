@@ -38,7 +38,8 @@
         "2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).",
         "2026-11-27: blocked -> review",
         "2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md.",
-        "2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7."
+        "2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7.",
+        "2026-11-27: S2 result: frozen frames 39/81/167/233 replaced (blend). Fixed TBDub 03_who LSE-C 6.17 offset 0 (was 6.13) -> still below 6.89 gate; owner chose TBDub by eye anyway. f89 = real head lunge in the take (static background), left as is. Files: work/ab/03_who_tbdub_fixed.mp4, 03_who_compare.mp4, 03_who_mouth_slowmo.mp4."
       ]
     },
     {
@@ -290,6 +291,6 @@
       "notes": []
     }
   ],
-  "updated": "2026-11-27 20:13 UTC",
+  "updated": "2026-11-27 20:14 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }
