@@ -37,7 +37,8 @@
         "2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.",
         "2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).",
         "2026-11-27: blocked -> review",
-        "2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md."
+        "2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md.",
+        "2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7."
       ]
     },
     {
@@ -287,6 +288,6 @@
       "notes": []
     }
   ],
-  "updated": "2026-11-27 20:09 UTC",
+  "updated": "2026-11-27 20:10 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

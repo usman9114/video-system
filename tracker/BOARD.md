@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:09 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:10 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -42,6 +42,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).
   - 2026-11-27: blocked -> review
   - 2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md.
+  - 2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7.
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
