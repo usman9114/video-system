@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 22:29 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 23:05 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -10,6 +10,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 - **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
   - 2026-11-27: Owner idea 2026-11-27: (1) every scene opens on the REAL photo (hold ~0.7 s, full-res, same 9:16 crop) then dissolves into the Wan motion; (2) presenter-style first-person narration with verified landmark facts ('Behind me is the Erechtheion...'). Facts must match his real places (ref clip's Zeus temple is not one he visited). ChatGPT research -> trips/greece/landmark_facts.md; narration v4 after pilot review.
+  - 2026-11-27: Wan I2V-A14B pilot done: 3 clips, 26 min/clip on H100, $5.36 total ($1.79/clip), call fc-01M8FFC9MEA18K1GA5ZJXXE52D. Claude visual check: landmark correct, natural head turns, shirt text readable, no morphing. Raw 16 fps (needs smooth retime to 24/30, no-lipsync so RIFE OK). Owner to judge quality vs Kling/Veo.
 
 ## To do (6)
 
