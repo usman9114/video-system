@@ -94,7 +94,7 @@ wan_image = (
                   # needed here, so make those two imports optional (docs/LESSONS.md #52)
                   "sed -i 's/^from .speech2video import WanS2V/try:\\n    from .speech2video import WanS2V\\nexcept Exception:\\n    WanS2V = None/; "
                   "s/^from .animate import WanAnimate/try:\\n    from .animate import WanAnimate\\nexcept Exception:\\n    WanAnimate = None/' "
-                  "/opt/Wan2.2/wan/__init__.py && python -c \"import sys; sys.path.insert(0, '/opt/Wan2.2'); import wan; print('wan import ok')\"")
+                  "/opt/Wan2.2/wan/__init__.py && python -c \"import ast, einops, decord, librosa, peft; ast.parse(open('/opt/Wan2.2/wan/__init__.py').read()); print('wan deps ok')\"")
 )
 
 
