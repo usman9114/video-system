@@ -26,3 +26,15 @@
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 94, "credits": 94.0, "line": "04_meteora", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T17:31:30Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 105, "credits": 105.0, "line": "05_santorini", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T17:31:31Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 113, "credits": 113.0, "line": "06_close", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T17:31:31Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 48, "credits": 48.0, "line": "00_89499c09", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:38Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 65, "credits": 65.0, "line": "01_IMG_9268", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:39Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 70, "credits": 70.0, "line": "02_IMG_9270", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:39Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 115, "credits": 115.0, "line": "03_IMG_9282", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:40Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 62, "credits": 62.0, "line": "04_IMG_9313", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:40Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 75, "credits": 75.0, "line": "05_a0a41173", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:41Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 64, "credits": 64.0, "line": "06_IMG_9444", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:41Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 70, "credits": 70.0, "line": "07_IMG_9451", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:41Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 72, "credits": 72.0, "line": "08_IMG_9359", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:42Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 76, "credits": 76.0, "line": "09_IMG_9404", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:42Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 61, "credits": 61.0, "line": "10_IMG_9423", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:43Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 129, "credits": 129.0, "line": "11_IMG_9421", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:43Z"}
