@@ -28,3 +28,6 @@ kaggle/work/
 __pycache__/
 *.pyc
 .env.modal
+
+# personal trip photos (keep in Drive only)
+trips/*/photos/

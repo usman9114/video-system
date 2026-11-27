@@ -1,0 +1,480 @@
+{
+ "hint": "My trip to Greece, November 2026: Athens (Acropolis, Plaka/Anafiotika streets), Meteora, and Santorini (Oia, Akrotiri lighthouse, drove a Fiat 500 around the island). The man in the white hoodie / sunglasses is me (the traveller).",
+ "photos": [
+  {
+   "photo": "trips/greece/photos/69a32a81.jpeg",
+   "exif": {
+    "datetime": "",
+    "gps": null,
+    "size": [
+     3120,
+     4160
+    ]
+   },
+   "analysis": {
+    "place_guess": "Erechtheion on the Acropolis of Athens, Greece",
+    "confidence": "high",
+    "what_we_see": "A close selfie frames a person in blue sunglasses and a dark T-shirt beside the Erechtheion\u2019s Caryatid Porch. The pale stone temple wall and sculpted female figures catch strong sunlight beneath a clear blue sky.",
+    "people": "One person stands in the foreground facing the camera with arms folded. No other people are clearly visible.",
+    "time_of_day": "Bright daytime, likely late morning or afternoon",
+    "mood": "sunlit, proud, memorable, relaxed",
+    "story_beat_ideas": [
+     "A first close-up encounter with the Acropolis",
+     "Pausing for a keepsake beside the Caryatids",
+     "Taking in the scale of ancient Athens"
+    ],
+    "camera_move": "Slow, gentle push-in with slight upward tilt toward the Caryatid Porch",
+    "animation_prompt": "Animate as a restrained travel-documentary shot. Make a very slow push-in with a slight upward tilt toward the Caryatid Porch, keeping the framing and perspective natural. Let sunlight shift subtly across the stone and allow only faint atmospheric movement in the distant sky. Keep the person\u2019s face, expression, hair, clothing, pose, and body completely unchanged; preserve the architecture and figures without warping or adding details.",
+    "caption_options": [
+     "A pause beside the Caryatids",
+     "The Acropolis in bright daylight",
+     "Athens, framed in ancient stone"
+    ],
+    "facts_to_verify": [
+     "The temple shown is the Erechtheion on the Acropolis of Athens.",
+     "The porch figures are Caryatids; verify their historical role and which originals are displayed at the site.",
+     "Verify the Erechtheion\u2019s construction date and its connection to the cults of Athena and Poseidon."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/89499c09.jpeg",
+   "exif": {
+    "datetime": "",
+    "gps": null,
+    "size": [
+     3120,
+     4160
+    ]
+   },
+   "analysis": {
+    "place_guess": "Oia, Santorini, Greece",
+    "confidence": "high",
+    "what_we_see": "A man in a white hoodie, beige shorts, sunglasses, and sneakers stands on a white terrace above a densely packed hillside of whitewashed buildings and blue-domed churches. The sea and the volcanic caldera cliffs stretch across the background under a bright, lightly clouded sky.",
+    "people": "One man stands facing slightly to the side with his hands in his pockets, looking out across the view. A few tiny figures are visible on terraces in the distance.",
+    "time_of_day": "Bright daytime",
+    "mood": "sunlit, scenic, relaxed, expansive",
+    "story_beat_ideas": [
+     "A first full view of the caldera",
+     "Pausing above Oia\u2019s rooftops",
+     "A quiet moment during an island drive"
+    ],
+    "camera_move": "Slow lateral parallax, keeping the traveller steady while the rooftops and caldera shift gently behind him.",
+    "animation_prompt": "Create a subtle, realistic documentary-style animation from this still. Keep the traveller\u2019s face, body, clothing, pose, and proportions completely unchanged. Use a very slow lateral camera drift to reveal gentle parallax between him, the white rooftops, and the distant caldera. Let sunlight and thin clouds shift almost imperceptibly, with only faint natural movement in the sea. Preserve the composition and calm daytime atmosphere.",
+    "caption_options": [
+     "Above the Santorini caldera",
+     "Oia in the afternoon light",
+     "A pause above the rooftops"
+    ],
+    "facts_to_verify": [
+     "Confirm the viewpoint is in Oia, Santorini, rather than another caldera village.",
+     "Identify the specific church or blue-domed building visible near the center of the frame."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9268.jpeg",
+   "exif": {
+    "datetime": "2026:11:09 16:11:07",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Unknown \u2014 possibly an overgrown urban path in Athens",
+    "confidence": "low",
+    "what_we_see": "A narrow concrete path runs beside a tall, weathered wall covered in colorful graffiti, including large cartoon-like faces. Above the wall are rusted metal railings and an older concrete structure, partly hidden by dense trees and foliage.",
+    "people": "No people are visible.",
+    "time_of_day": "Late afternoon, overcast daylight",
+    "mood": "Overgrown, gritty, quietly curious",
+    "story_beat_ideas": [
+     "A side-street discovery",
+     "A pause to notice local street art",
+     "An unexpected turn on a city walk"
+    ],
+    "camera_move": "Slow lateral track along the wall",
+    "animation_prompt": "Animate the still photograph with a very slow lateral camera drift along the graffiti-covered wall, keeping the framing and perspective natural. Let a few leaves and thin branches shift gently in a light breeze, with soft daylight fluctuating slightly through the canopy. Preserve all graffiti, structures, and textures; do not add people or alter any faces or bodies.",
+    "caption_options": [
+     "A quieter side of the city",
+     "Color on weathered concrete",
+     "An unexpected turn on foot"
+    ],
+    "facts_to_verify": [
+     "Whether this path or wall is in Athens, and its neighborhood or street name.",
+     "Whether the graffiti is part of a recognized local street-art area or project.",
+     "Whether the visible concrete structure has a known historical or public use."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9270.jpeg",
+   "exif": {
+    "datetime": "2026:11:09 16:13:04",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Acropolis of Athens, viewed from Anafiotika",
+    "confidence": "high",
+    "what_we_see": "A steep, weathered stone wall of the Acropolis rises above pale houses and a narrow, uneven lane. A Greek flag flies from the ridge beneath a bright overcast sky; potted plants and climbing greenery edge the foreground.",
+    "people": "No people are visible.",
+    "time_of_day": "Late afternoon, overcast",
+    "mood": "Quiet, atmospheric, historic",
+    "story_beat_ideas": [
+     "Wandering through Anafiotika",
+     "Looking up toward the Acropolis",
+     "A quiet pause between sights"
+    ],
+    "camera_move": "Slow upward tilt from the lane to the Acropolis wall and flag",
+    "animation_prompt": "Create a restrained documentary shot from this still. Slowly tilt upward from the uneven lane and potted plants toward the stone Acropolis wall and Greek flag. Let the flag move gently in a light breeze, with only the faintest natural stirring in nearby leaves and subtle shifts in the cloud-bright light. Keep all buildings, stones, plants, and any people unchanged in form; add no new elements.",
+    "caption_options": [
+     "Above Anafiotika",
+     "The Acropolis overhead",
+     "A quiet climb through Athens"
+    ],
+    "facts_to_verify": [
+     "Whether the photo was taken in Anafiotika beneath the north side of the Acropolis",
+     "Which visible section of the Acropolis fortification is shown",
+     "Whether the Greek flag shown marks a particular historic or ceremonial point on the Acropolis"
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9282.jpeg",
+   "exif": {
+    "datetime": "2026:11:10 15:06:18",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Meteora, Greece",
+    "confidence": "high",
+    "what_we_see": "A broad view across Meteora\u2019s dramatic sandstone rock pillars, with a few monasteries perched high on the cliffs and a green valley below. Heavy layered clouds fill most of the sky, with a pale band of late-day light near the horizon.",
+    "people": "A few very small figures are visible near vehicles on a winding road at the bottom of the frame; no one is prominent.",
+    "time_of_day": "Late afternoon",
+    "mood": "Awe-filled, moody, vast, contemplative",
+    "story_beat_ideas": [
+     "First panoramic view of Meteora",
+     "Pausing to take in the scale",
+     "A dramatic weather shift during the visit"
+    ],
+    "camera_move": "Slow, subtle push-in toward the rock pillars and monastery on the right",
+    "animation_prompt": "Create a restrained, realistic image-to-video animation. Slowly push in toward the towering rock formations, keeping the framing and landscape faithful to the photo. Let cloud layers drift almost imperceptibly and the foreground foliage move gently in a light breeze. Preserve all rock shapes, buildings, vehicles, and tiny figures exactly; do not alter or invent people, faces, or bodies.",
+    "caption_options": [
+     "Meteora beneath storm clouds",
+     "Monasteries above the valley",
+     "A pause among the pillars"
+    ],
+    "facts_to_verify": [
+     "Which Meteora monastery is visible on the right side of the frame?",
+     "When was that monastery founded, and what is its history?",
+     "What is the name of the road or viewpoint from which this panorama was photographed?"
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9313.jpeg",
+   "exif": {
+    "datetime": "2026:11:12 10:43:01",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Athens, Greece (likely an open-top sightseeing bus; exact location unknown)",
+    "confidence": "medium",
+    "what_we_see": "A close selfie on the upper deck of a red open-top sightseeing bus, with rows of gray seats and the red canopy visible behind the group. Through the windows are closely packed city buildings with shutters, balconies, terracotta roof tiles, and graffiti.",
+    "people": "Two people in the foreground face the camera wearing sunglasses and wired earbuds. A seated passenger behind them looks down while holding a blue cable.",
+    "time_of_day": "Late morning",
+    "mood": "Casual, urban, on-the-go",
+    "story_beat_ideas": [
+     "Starting a city sightseeing loop",
+     "Taking a quick bus-top selfie",
+     "Settling in for a day of exploring Athens"
+    ],
+    "camera_move": "Very slow push-in with slight lateral parallax across the bus seats and street-side buildings.",
+    "animation_prompt": "Animate this photo as a brief, realistic travel moment. Keep every face, expression, body, clothing, and pose unchanged. Use a very slow camera push-in with subtle parallax between the foreground passengers, bus seats, and buildings outside. Let daylight shift faintly across the windows and allow only barely perceptible movement in the street reflections; do not add people or alter the scene.",
+    "caption_options": [
+     "Athens from the upper deck",
+     "A city tour begins",
+     "First stop: the streets"
+    ],
+    "facts_to_verify": [
+     "Whether the bus route shown was an Athens sightseeing tour and which route it followed.",
+     "Whether the visible street or buildings can be identified from the original photo location or trip notes."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9359.jpeg",
+   "exif": {
+    "datetime": "2026:11:13 10:45:10",
+    "gps": null,
+    "size": [
+     3024,
+     4032
+    ]
+   },
+   "analysis": {
+    "place_guess": "Akrotiri Lighthouse, Santorini, Greece",
+    "confidence": "medium",
+    "what_we_see": "A white lighthouse with dark stone trim and a glass lantern room stands on a rocky hillside beneath a bright, cloud-streaked sky. A Greek flag waves beside it, while a person in sunglasses and a navy shirt points up toward the building.",
+    "people": "One person stands on the rocky path, smiling and pointing toward the lighthouse.",
+    "time_of_day": "Late morning",
+    "mood": "Bright, adventurous, windswept",
+    "story_beat_ideas": [
+     "Reaching the island\u2019s far edge",
+     "A quick lighthouse viewpoint stop",
+     "Pointing out a landmark on a drive"
+    ],
+    "camera_move": "Slow upward tilt from the rocky path and traveller to the lighthouse and flag.",
+    "animation_prompt": "Create a subtle, realistic documentary-style animation from this still. Slowly tilt the camera upward from the rocky foreground toward the lighthouse, keeping the framing and perspective natural. Let the Greek flag ripple gently in a light breeze, with faint movement in the sparse plants and soft clouds drifting across the sky. Keep the person\u2019s face, pose, clothing, and body completely unchanged; do not add or remove anything.",
+    "caption_options": [
+     "Santorini\u2019s lighthouse stop",
+     "A flag in the island wind",
+     "The road\u2019s southern edge"
+    ],
+    "facts_to_verify": [
+     "Confirm that this is Akrotiri Lighthouse on Santorini.",
+     "Verify the lighthouse\u2019s construction date and architectural history.",
+     "Check whether visitors can enter the lighthouse grounds or lantern room."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9404.jpeg",
+   "exif": {
+    "datetime": "2026:11:14 14:26:17",
+    "gps": null,
+    "size": [
+     3024,
+     4032
+    ]
+   },
+   "analysis": {
+    "place_guess": "Akrotiri Lighthouse area, Santorini",
+    "confidence": "medium",
+    "what_we_see": "A man in a white hoodie leans toward a tall, weathered metal viewing device mounted beside a pale stucco wall. A nearby information panel is labeled \u201cSantorini\u201d and depicts the island, suggesting this is an interpretive or visitor site on the island.",
+    "people": "One man leans in and looks through the mounted viewing device, holding its adjustment knob.",
+    "time_of_day": "Afternoon",
+    "mood": "Curious, playful, sunlit, exploratory",
+    "story_beat_ideas": [
+     "A hands-on stop during a Santorini island drive",
+     "Pausing to explore a local viewing station",
+     "A candid moment between scenic destinations"
+    ],
+    "camera_move": "Slow push-in toward the visitor and viewing device",
+    "animation_prompt": "Make a gentle, realistic push-in toward the man and the metal viewing device. Keep the man\u2019s face, expression, pose, clothing, and body completely unchanged. Let the warm daylight shift subtly across the stucco and worn metal, with only faint leaf movement at the frame edge. Preserve the wall, signs, doorway, and all scene details; add no new objects or people.",
+    "caption_options": [
+     "A closer look at Santorini",
+     "A pause along the island drive",
+     "Finding the view together"
+    ],
+    "facts_to_verify": [
+     "Whether this viewing device and information panel are at Akrotiri Lighthouse or another Santorini visitor site",
+     "What landmark or coastline the mounted viewing device is intended to show"
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9421.jpeg",
+   "exif": {
+    "datetime": "2026:11:14 16:27:45",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Oia, Santorini, Greece",
+    "confidence": "medium",
+    "what_we_see": "A person reclines on a red-and-white striped terrace lounger beside whitewashed buildings and small domed church towers. Beyond the rooftops, a calm bay and dark volcanic headlands catch warm late-afternoon light; the cross-topped domes suggest Santorini, though the exact viewpoint is uncertain.",
+    "people": "One person is reclining on the lounger, looking toward the view. No other people are visible.",
+    "time_of_day": "Late afternoon, near sunset",
+    "mood": "Leisurely, sunlit, contemplative",
+    "story_beat_ideas": [
+     "A slow pause between island drives",
+     "Taking in the caldera after exploring Oia",
+     "An unplanned rest on a rooftop terrace"
+    ],
+    "camera_move": "Slow, gentle push-in toward the domes and bay",
+    "animation_prompt": "Create a subtle, realistic image-to-video moment. Slowly push the camera toward the white domes and distant bay while preserving the original framing and all architectural details. Let the warm light shift almost imperceptibly, with faint natural shimmer on the water and slight movement in the palm fronds. Keep the person\u2019s face, body, pose, clothing, and every object unchanged; add no new elements.",
+    "caption_options": [
+     "A pause above the Aegean",
+     "Late light over Santorini",
+     "Between island drives"
+    ],
+    "facts_to_verify": [
+     "Whether this terrace viewpoint is in Oia, Santorini.",
+     "The name of the church or chapel with the cross-topped white domes visible here.",
+     "Whether the bay view is over the Santorini caldera."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9423.jpeg",
+   "exif": {
+    "datetime": "2026:11:14 16:30:04",
+    "gps": null,
+    "size": [
+     3088,
+     2316
+    ]
+   },
+   "analysis": {
+    "place_guess": "Oia, Santorini, Greece",
+    "confidence": "medium",
+    "what_we_see": "A man sits on a striped outdoor cushion beside whitewashed Cycladic architecture, with a small palm and a cross-topped dome nearby. Behind him, the sea and volcanic caldera islands glow in low golden sunlight; the view is consistent with Oia, though the exact spot is uncertain.",
+    "people": "One man sits in the foreground, facing the camera with a relaxed expression.",
+    "time_of_day": "Late afternoon, near sunset",
+    "mood": "Serene, warm, reflective",
+    "story_beat_ideas": [
+     "A quiet pause after exploring the island",
+     "Settling in to watch the caldera light change",
+     "A personal moment at the end of the day"
+    ],
+    "camera_move": "Slow, gentle push-in with subtle parallax between the seated man, palm, and distant caldera.",
+    "animation_prompt": "Create a short, realistic documentary-style motion from this still. Use a very slow push-in with slight parallax across the terrace, palm, and distant islands. Let the sea surface shimmer gently and the warm sunset light shift almost imperceptibly across the scene. Keep the seated man\u2019s face, expression, pose, clothing, and body completely unchanged; introduce no new objects or movement from him.",
+    "caption_options": [
+     "A quiet hour over the caldera",
+     "Santorini in the late light",
+     "Pausing above the Aegean"
+    ],
+    "facts_to_verify": [
+     "Whether the terrace viewpoint is in Oia, Santorini.",
+     "Whether the visible islands are part of the Santorini caldera."
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9444.jpeg",
+   "exif": {
+    "datetime": "2026:11:15 12:03:31",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Santorini, Greece (exact location unknown)",
+    "confidence": "medium",
+    "what_we_see": "A white Fiat 500 with a Greek license plate is parked beside a whitewashed building and blue railing. Tall trees, overhead utility wires, and a partly cloudy sky fill the background; no person is clearly visible.",
+    "people": "No people are clearly visible.",
+    "time_of_day": "Midday",
+    "mood": "Bright, ordinary travel pause",
+    "story_beat_ideas": [
+     "Picking up or parking the island rental car",
+     "A brief roadside pause between Santorini stops",
+     "Setting out to explore the island"
+    ],
+    "camera_move": "Slow, subtle push-in toward the parked Fiat",
+    "animation_prompt": "Create a short, realistic animation from this still. Keep the Fiat, building, railing, and all other objects fixed in place; preserve every face and body unchanged. Use a very gentle camera push-in, with slight natural movement in the tree foliage and clouds and soft shifts in sunlight across the car and pavement. Keep the parked scene calm, with no added people or vehicles.",
+    "caption_options": [
+     "A Fiat for the island roads",
+     "Santorini, between stops",
+     "The day\u2019s drive begins"
+    ],
+    "facts_to_verify": [
+     "Which part of Santorini was the car parked in?",
+     "Was this Fiat 500 the traveller\u2019s rental car?"
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/IMG_9451.jpeg",
+   "exif": {
+    "datetime": "2026:11:15 14:33:06",
+    "gps": null,
+    "size": [
+     4032,
+     3024
+    ]
+   },
+   "analysis": {
+    "place_guess": "Santorini, Greece (island coastline; exact spot unknown)",
+    "confidence": "medium",
+    "what_we_see": "A man in sunglasses drives a Fiat 500 beside bright blue water, with a rocky shoreline and pale island terrain visible through the window. The high, cropped framing includes much of the car roof and dashboard, while the sea and distant coast fill a narrow strip outside.",
+    "people": "One man is visible in the driver's seat, holding the steering wheel and looking ahead. No other people are clearly visible.",
+    "time_of_day": "Afternoon, in bright daylight",
+    "mood": "Casual, sunlit, road-trip calm",
+    "story_beat_ideas": [
+     "Driving between stops on Santorini",
+     "A quiet view from the road",
+     "Taking in the island coastline"
+    ],
+    "camera_move": "Slow lateral parallax toward the window, keeping the driver and car interior steady while the sea shifts gently in the background.",
+    "animation_prompt": "Create a short, realistic motion from this still. Keep the driver's face, body, clothing, pose, hands, and all car details unchanged. Use a very subtle lateral camera drift toward the window; let sunlight and reflections shift softly across the glass, and add faint natural movement to the distant water. Preserve the cropped composition and avoid adding objects or people.",
+    "caption_options": [
+     "A drive along the coast",
+     "Santorini, seen from the road",
+     "Island miles in a Fiat 500"
+    ],
+    "facts_to_verify": [
+     "Which Santorini road or coastal area appears in the photo?",
+     "Can the distant coastline be matched to a known Santorini landmark or nearby island?"
+    ]
+   },
+   "error": null
+  },
+  {
+   "photo": "trips/greece/photos/a0a41173.jpeg",
+   "exif": {
+    "datetime": "",
+    "gps": null,
+    "size": [
+     3120,
+     4160
+    ]
+   },
+   "analysis": {
+    "place_guess": "Erechtheion on the Acropolis of Athens, likely the Porch of the Caryatids",
+    "confidence": "high",
+    "what_we_see": "A close view of the pale stone Erechtheion and its sculpted Caryatid porch, with the Acropolis ruins and Athens visible beyond. In the foreground, a man wearing sunglasses and a black T-shirt stands among scattered stone blocks in bright sunshine.",
+    "people": "One man stands facing the camera with his hands in his pockets.",
+    "time_of_day": "Bright daytime, likely late morning or afternoon",
+    "mood": "sunlit, historic, relaxed",
+    "story_beat_ideas": [
+     "A first close look at the Acropolis",
+     "Pausing for a portrait among ancient ruins",
+     "Taking in the city from the hilltop"
+    ],
+    "camera_move": "Slow, gentle push-in with slight lateral parallax across the stone porch",
+    "animation_prompt": "Create a subtle documentary-style animation from this still. Use a very slow push-in with slight parallax between the foreground man, the Caryatid porch, and the distant city. Let sunlight shift almost imperceptibly across the pale stone and allow a faint breeze to stir small patches of grass. Keep the man\u2019s face, body, clothing, and pose completely unchanged; do not add people or alter the ruins.",
+    "caption_options": [
+     "A pause on the Acropolis",
+     "Among the Caryatids",
+     "Athens in the distance"
+    ],
+    "facts_to_verify": [
+     "Confirm that the porch shown is the Erechtheion\u2019s south porch, commonly called the Porch of the Caryatids.",
+     "Verify the date and major phases of construction of the Erechtheion.",
+     "Check which figures currently visible on the porch are casts and where the original Caryatids are kept."
+    ]
+   },
+   "error": null
+  }
+ ]
+}

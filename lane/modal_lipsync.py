@@ -76,7 +76,40 @@ def main():
     wn.add_argument("--steps", type=int)
     wn.add_argument("--seed", type=int, default=42)
     wn.add_argument("--out", required=True)
+    sub.add_parser("fastwan-download", help="one-time: FastWan2.2-TI2V-5B weights → Modal volume")
+    fw = sub.add_parser("fastwan", help="FastWan batch: one GPU session animates every item")
+    fw.add_argument("--items", required=True,
+                    help='JSON file: [{"image","prompt","out","seconds"?,"seed"?,"orient"?,"focus_x"?,"focus_y"?}]')
+    fw.add_argument("--steps", type=int, default=3)
+    fw.add_argument("--fps", type=int, default=24)
     a = ap.parse_args()
+    if a.cmd == "fastwan-download":
+        cid = call("POST", "/fastwan/download", {})["call_id"]
+        print("call", cid, flush=True)
+        r = wait(cid, every=20, limit=3600)
+        print(json.dumps(r, indent=1)[:2000])
+        return
+    if a.cmd == "fastwan":
+        items = json.loads(Path(a.items).read_text())
+        body = {"steps": a.steps, "fps": a.fps, "items": []}
+        for it in items:
+            b = {k: v for k, v in it.items() if k not in ("image", "out")}
+            b["image_b64"] = base64.b64encode(Path(it["image"]).read_bytes()).decode()
+            body["items"].append(b)
+        cid = call("POST", "/fastwan/batch", body, timeout=300)["call_id"]
+        print("call", cid, flush=True)
+        r = wait(cid, every=20, limit=3600)
+        log({"op": "fastwan", "n": len(items), "steps": a.steps, "call_id": cid, "ok": r.get("ok"),
+             "load_seconds": r.get("load_seconds"), "gpu_seconds": r.get("gpu_seconds"), "usd": r.get("usd")})
+        if not r.get("ok"):
+            print(str(r.get("log", r))[-3000:])
+            sys.exit("fastwan failed")
+        for it, res in zip(items, r["items"]):
+            Path(it["out"]).parent.mkdir(parents=True, exist_ok=True)
+            Path(it["out"]).write_bytes(base64.b64decode(res["video_b64"]))
+            print(f"wrote {it['out']}  {res['frames']} frames  {res['seconds']}s")
+        print(f"batch: load {r.get('load_seconds')}s, gpu {r.get('gpu_seconds')}s ≈ ${r.get('usd')}")
+        return
     if a.cmd == "wan":
         body = {"model": a.model, "prompt": a.prompt, "seed": a.seed}
         if a.image:
