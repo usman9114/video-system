@@ -89,7 +89,12 @@ wan_image = (
     .pip_install("torch==2.6.0", "torchvision==0.21.0", "torchaudio==2.6.0")
     # flash_attn skipped on purpose: wan/modules/attention.py falls back to torch SDPA
     .run_commands("grep -v -E '^flash_attn' /opt/Wan2.2/requirements.txt > /tmp/req.txt && pip install -r /tmp/req.txt",
-                  "pip install 'huggingface_hub[cli]'")
+                  "pip install 'huggingface_hub[cli]' einops decord librosa peft loguru omegaconf onnxruntime matplotlib",
+                  # wan/__init__.py imports speech2video + animate even for i2v/ti2v; their extra deps (SAM etc.) aren't
+                  # needed here, so make those two imports optional (docs/LESSONS.md #52)
+                  "sed -i 's/^from .speech2video import WanS2V/try:\\n    from .speech2video import WanS2V\\nexcept Exception:\\n    WanS2V = None/; "
+                  "s/^from .animate import WanAnimate/try:\\n    from .animate import WanAnimate\\nexcept Exception:\\n    WanAnimate = None/' "
+                  "/opt/Wan2.2/wan/__init__.py && python -c \"import sys; sys.path.insert(0, '/opt/Wan2.2'); import wan; print('wan import ok')\"")
 )
 
 
