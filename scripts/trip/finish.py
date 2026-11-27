@@ -40,8 +40,11 @@ def main():
     work = trip / "work"
     lut = film_lut(work / "film.cube")
     # v2 critic: LUT at ~40% strength, saturation ~1.0, vignette 5-8%, mild unsharp
-    vf = (f"split[o][g];[g]lut3d=file={lut}:interp=tetrahedral[l];[o][l]blend=all_mode=normal:all_opacity=0.4,"
-          "eq=saturation=0.98,vignette=angle=PI/9:mode=forward,unsharp=3:3:0.3:3:3:0.0,format=yuv420p")
+    import json
+    sf = trip / "storyline.json"
+    gr = (json.loads(sf.read_text()).get("style", {}).get("grade", {}) if sf.exists() else {})   # style.grade overrides
+    vf = (f"split[o][g];[g]lut3d=file={lut}:interp=tetrahedral[l];[o][l]blend=all_mode=normal:all_opacity={gr.get('lut_strength', 0.4)},"
+          f"eq=saturation={gr.get('saturation', 0.98)},vignette=angle=PI/9:mode=forward,unsharp=3:3:0.3:3:3:0.0,format=yuv420p")
     af = ("[2:a]highpass=f=80,equalizer=f=3200:t=q:w=1.2:g=2,asplit=2[vo][key];"
           "[1:a][key]sidechaincompress=threshold=0.05:ratio=3:attack=150:release=500:makeup=1[duck];"
           "[duck][vo]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.79:level=false[a]")

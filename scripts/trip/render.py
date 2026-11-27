@@ -27,6 +27,9 @@ DUCK_DB = -31.0
 ZOOM = 1.08            # max zoom change of push/pull moves; storyline "max_zoom" overrides (v2 critic: <= 1.06)
 CAP_FADE = (0.4, 0.3)  # caption fade in/out seconds; storyline "caption_fade" overrides
 TITLE_BLUR, TITLE_DIM = 14, 0.45
+ST: dict = {}          # storyline "style" object (documentary look); empty = original look, so other trips are unaffected
+FONT_DOC = [str(ROOT / "assets/fonts/CormorantGaramond-SemiBold.ttf"), "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf"]
+FONT_DOC_TITLE = [str(ROOT / "assets/fonts/CormorantGaramond-Medium.ttf"), "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf"]
 
 
 def ease(x: float) -> float:          # gentle ease-in-out, like a slider/gimbal move
@@ -59,7 +62,7 @@ def load_photo(path: Path, max_h: int = 3840, boxes=None, orientation=None) -> I
     return im
 
 
-def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5, pan=None):
+def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5, pan=None, zoom=None):
     """Start/end crop boxes (x0,y0,w,h) with 9:16 aspect, derived from the storyline's camera_move text."""
     m = move.lower()
     full_h = min(ih, iw * 16 / 9)
@@ -77,10 +80,16 @@ def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5, pan=None):
         a, b = pan if pan else (0.5 - travel / 2, 0.5 + travel / 2)
         if "right-to-left" in m and not pan:
             a, b = b, a
+        if zoom:                                          # documentary style: pan + 1.00 -> zoom push
+            return box(1.0, a, 0.5), box(zoom, b, 0.5)
         s = 1.03
         return box(s, a, 0.5), box(s * (1.03 if "push" in m else 1.0), b, 0.5)
     if "tilt-up" in m or "tilt up" in m:
+        if zoom:
+            return box(1.12, focus_x, 0.62), box(1.12 * zoom, focus_x, 0.40)
         return box(1.12, focus_x, 0.62), box(1.12, focus_x, 0.40)
+    if zoom:
+        return box(1.0, focus_x, 0.5), box(zoom, focus_x, 0.5)     # every other move: slow push 1.00 -> zoom
     if "pull-out" in m or "pull out" in m:
         return box(1.0 + (ZOOM - 1) * 1.5, focus_x, 0.45), box(1.0, focus_x, 0.5)
     return box(1.0, focus_x, 0.5), box(ZOOM, focus_x, 0.5)      # push-in (default)
@@ -116,8 +125,12 @@ class Clip:
 
 def grade(im: Image.Image, rng) -> np.ndarray:
     a = np.asarray(im).astype(np.float32)
-    a = (a - 128) * 1.04 + 128 + np.array([2.5, 1.0, -2.0])      # touch of contrast + warmth, same for all shots
-    a += rng.normal(0, 2.2, (H, W, 1))                            # light luma grain unifies stills and clips
+    g = ST.get("grade", {})
+    a = (a - 128) * g.get("contrast", 1.04) + 128 + np.array(g.get("warmth", [2.5, 1.0, -2.0]))   # contrast + warmth
+    lift = g.get("black_lift", 0)
+    if lift:                                                      # lifted but not grey blacks
+        a = a * (1 - lift / 255) + lift
+    a += rng.normal(0, g.get("grain", 2.2), (H, W, 1))            # light luma grain unifies stills and clips
     return np.clip(a, 0, 255).astype(np.uint8)
 
 
@@ -140,6 +153,44 @@ def draw_caption(fr: Image.Image, txt: str, alpha: float, big=False, y=None):
     return out.convert("RGB")
 
 
+def _font(chain, size):
+    for f in chain:
+        if Path(f).exists():
+            return ImageFont.truetype(f, size)
+    return ImageFont.load_default()
+
+
+def draw_spaced(fr, txt, size, alpha, y, x=None, track=0.0, small_caps=False, chain=None, color=(242, 235, 221),
+                shadow=True):
+    """Letter-spaced serif text on baseline y; x=None centres it. small_caps: first letter of each word full size, rest 0.8."""
+    if not txt or alpha <= 0:
+        return fr
+    chain = chain or FONT_DOC
+    big, small = _font(chain, size), _font(chain, round(size * 0.8))
+    glyphs = []
+    for wi, word in enumerate(txt.split(" ")):
+        if wi:
+            glyphs.append((" ", big))
+        for ci, ch in enumerate(word):
+            glyphs.append((ch, big if (ci == 0 or not small_caps or not ch.isalpha()) else small))
+    tr = track * size
+    total = sum(f.getlength(c) + tr for c, f in glyphs) - tr
+    x0 = (W - total) / 2 if x is None else x
+    lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    cx = x0
+    for c, f in glyphs:
+        ImageDraw.Draw(lay).text((cx, y), c, font=f, fill=color + (int(255 * alpha),), anchor="ls")
+        if shadow:
+            ImageDraw.Draw(sh).text((cx + 1.5, y + 2.5), c, font=f, fill=(0, 0, 0, int(235 * alpha)), anchor="ls")
+        cx += f.getlength(c) + tr
+    out = fr.convert("RGBA")
+    if shadow:
+        out.alpha_composite(sh.filter(ImageFilter.GaussianBlur(5)))
+    out.alpha_composite(lay)
+    return out.convert("RGB")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("trip")
@@ -156,11 +207,13 @@ def main():
     vo_dir = trip / "work/vo"
     acts = {x["name"]: x for x in sl["acts"]}
     music_cfg = sl.get("music", {})
-    global DISSOLVE, TITLE_S, ZOOM, CAP_FADE, TITLE_BLUR, TITLE_DIM
+    global DISSOLVE, TITLE_S, ZOOM, CAP_FADE, TITLE_BLUR, TITLE_DIM, ST
+    ST = sl.get("style", {})
+    DISSOLVE, TITLE_S = ST.get("dissolve_s", DISSOLVE), ST.get("title", {}).get("seconds", TITLE_S)
     ZOOM = sl.get("max_zoom", ZOOM)
     CAP_FADE = tuple(sl.get("caption_fade", CAP_FADE))
     TITLE_BLUR, TITLE_DIM = sl.get("title_blur", TITLE_BLUR), sl.get("title_dim", TITLE_DIM)
-    if music_cfg.get("bpm"):                         # cut on the beat: scene lengths, dissolve and title in beats
+    if music_cfg.get("bpm") and not ST:                         # cut on the beat: scene lengths, dissolve and title in beats
         from music_upbeat import beat
         bt = beat(music_cfg["bpm"])
         DISSOLVE, TITLE_S = bt, 5 * bt
@@ -171,21 +224,39 @@ def main():
     # ---- timeline -------------------------------------------------------------------------------------------
     scenes = []
     t = 0.0
+    breaks = []                                        # times of act breaks (dip to black), documentary style
     for i, sc in enumerate(sl["scenes"]):
         name = Path(sc["photo"]).stem
         dur = sc["seconds"] + (sl["ending"]["seconds"] if i == len(sl["scenes"]) - 1 else 0)
         dis = sc.get("transition_in") == "dissolve" and i > 0
+        new_act = i > 0 and sc["act"] != sl["scenes"][i - 1]["act"]
+        if ST and new_act:
+            dis = False                                # act break = dip to black, not a dissolve
         start = t - (DISSOLVE if dis else 0)
-        if i == 1:                                     # title card between cold open and act 1
+        if ST and i == 1:                              # clean title card between cold open and act 1
+            title = (t, t + TITLE_S)
+            start = t + TITLE_S
+            breaks += [t, start]
+        elif ST and new_act:
+            breaks.append(start)
+        elif i == 1:                                     # title card between cold open and act 1
             start = t + TITLE_S - DISSOLVE
             title = (t - DISSOLVE, start + DISSOLVE)
             scenes[0]["end"] = start + DISSOLVE        # cold open keeps moving (blurred) under the title
             scenes[0]["dur"] = scenes[0]["end"] - scenes[0]["start"]
         vo = next(iter(sorted(vo_dir.glob(f"{i:02d}_{name}_t*.mp3"))), None)
         scenes.append(dict(sc=sc, name=name, start=start, end=start + dur, dur=dur, dissolve=dis or i == 1,
-                           vo=vo, act=sc["act"], ending=i == len(sl["scenes"]) - 1))
+                           vo=vo, act=sc["act"], ending=i == len(sl["scenes"]) - 1,
+                           lead=0.9 if (dis or i == 1 or (ST and new_act)) else 0.5,
+                           first_of_act=i == 0 or new_act))
         t = start + dur
     total = t
+    if ST:                                             # ending: last image fades to black, then the GREECE card, then silence
+        en = ST.get("ending", {})
+        fade_s, card_s = en.get("fade_to_black_s", 1.2), en.get("card_s", 2.0)
+        fade_black = (total - fade_s, total)
+        card = (total, total + card_s)
+        total += card_s
     print(f"timeline {total:.2f}s, {len(scenes)} scenes, title {title[0]:.2f}-{title[1]:.2f}s")
 
     # ---- per-scene sources -----------------------------------------------------------------------------------
@@ -199,7 +270,7 @@ def main():
             s["b0"], s["b1"] = (0, 0, cw, ch), (cw * 0.025, ch * 0.025, cw * 0.95, ch * 0.95)
         else:
             s["b0"], s["b1"] = move_boxes(s["sc"]["camera_move"], *s["im"].size, focus.get(s["name"], 0.5),
-                                          framing.get("pan_x", {}).get(s["name"]))
+                                          framing.get("pan_x", {}).get(s["name"]), ST.get("zoom"))
         print(f"  {s['start']:6.2f}-{s['end']:6.2f}  {s['name']:10s} {'HERO' if s['clip'] is not None else 'move'}"
               f"  vo={'y' if s['vo'] else '-'}  {s['sc']['caption']}")
 
@@ -217,7 +288,47 @@ def main():
         a0, a1 = s["start"] + (0.9 if s["dissolve"] else 0.5), s["start"] + min(s["sc"]["seconds"], s["dur"]) - 0.35
         return min(max((tt - a0) / CAP_FADE[0], 0), 1) * min(max((a1 - tt) / CAP_FADE[1], 0), 1)
 
+    def doc_caption_alpha(s, tt):
+        a0, a1 = s["start"] + s["lead"] - 0.1, s["start"] + min(s["sc"]["seconds"], s["dur"]) - 0.3
+        return min(max((tt - a0) / 0.5, 0), 1) * min(max((a1 - tt) / 0.4, 0), 1)
+
+    def doc_frame(tt):
+        cs, ts = ST.get("caption", {}), ST.get("title", {})
+        if card[0] <= tt:                                   # ending card on black, same type as the title
+            k = min(max((tt - card[0]) / 0.5, 0), 1) * min(max((total - tt) / 0.4, 0), 1)
+            img = Image.new("RGB", (W, H), tuple(ts.get("bg", [8, 8, 9])))
+            return draw_spaced(img, sl["title"].upper(), ts.get("size", 104), k, H // 2, track=ts.get("track", 0.42),
+                               small_caps=True, chain=FONT_DOC_TITLE, shadow=False)
+        if title[0] <= tt < title[1]:
+            k = min(max((tt - title[0]) / 0.35, 0), 1) * min(max((title[1] - tt) / 0.35, 0), 1)
+            img = Image.new("RGB", (W, H), tuple(ts.get("bg", [8, 8, 9])))
+            img = draw_spaced(img, sl["title"].upper(), ts.get("size", 104), k, H // 2, track=ts.get("track", 0.42),
+                              small_caps=True, chain=FONT_DOC_TITLE, shadow=False)
+            return draw_spaced(img, sl.get("subtitle", ""), ts.get("sub_size", 42), k * 0.85, H // 2 + 90,
+                               track=ts.get("sub_track", 0.16), chain=FONT_DOC_TITLE, shadow=False)
+        live = [s for s in scenes if s["start"] <= tt < s["end"]] or [scenes[-1]]
+        img = None
+        for s in live:
+            fr = scene_frame(s, tt)
+            txt = ST.get("captions", {}).get(s["act"]) if s["first_of_act"] else None
+            if txt:
+                fr = draw_spaced(fr, txt, cs.get("size", 60), doc_caption_alpha(s, tt), H - cs.get("bottom", 300),
+                                 x=cs.get("left", 84), track=cs.get("track", 0.16), small_caps=True)
+            if img is None:
+                img = fr
+            else:
+                img = Image.blend(img, fr, ease(min(max((tt - s["start"]) / DISSOLVE, 0), 1)))
+        f = 1.0
+        for b in breaks:                                    # dip to black around each act break (total = act_fade_s)
+            f = min(f, min(abs(tt - b) / (ST.get("act_fade_s", 0.35) / 2), 1.0))
+        if tt > fade_black[0]:
+            f = min(f, ease((fade_black[1] - tt) / (fade_black[1] - fade_black[0])))
+        f = min(f, min(tt / 0.5, 1))
+        return img if f >= 1 else Image.blend(Image.new("RGB", (W, H)), img, f)
+
     def frame(tt):
+        if ST:
+            return doc_frame(tt)
         live = [s for s in scenes if s["start"] <= tt < s["end"]] or [scenes[-1]]
         img = None
         for s in live:
@@ -251,6 +362,16 @@ def main():
     if a.preview:
         pv = out.with_suffix("")
         pv.mkdir(parents=True, exist_ok=True)
+        if ST:
+            for f in pv.glob("*.jpg"):
+                f.unlink()
+            shots = [(scenes[0]["name"], (scenes[0]["start"] + scenes[0]["end"]) / 2)]
+            shots += [("title", (title[0] + title[1]) / 2)]
+            shots += [(s["name"], (s["start"] + s["end"]) / 2) for s in scenes[1:]] + [("end_card", card[0] + 1.0)]
+            for j, (nm, m) in enumerate(shots):
+                Image.fromarray(grade(frame(m), rng)).save(pv / f"{j:02d}_{m:05.2f}_{nm}.jpg", quality=88)
+            print("previews →", pv)
+            return
         for s in scenes:
             m = (s["start"] + s["end"]) / 2
             Image.fromarray(grade(frame(m), rng)).save(pv / f"{m:05.2f}_{s['name']}.jpg", quality=88)
@@ -262,7 +383,11 @@ def main():
     from promo import make_music
     tmp = trip / "work"
     mus = tmp / "music.wav"
-    if music_cfg.get("style") == "upbeat":            # original strummed-guitar bed, act energy baked in
+    if music_cfg.get("style") == "doc":                # sparse piano + pad + string drone, act energy baked in
+        from music_doc import make_doc
+        make_doc(total, [(s["start"], s["end"], acts[s["act"]]["music_energy"]) for s in scenes], mus,
+                 bpm=music_cfg.get("bpm", 80), silence_from=card[0] if ST else None)
+    elif music_cfg.get("style") == "upbeat":            # original strummed-guitar bed, act energy baked in
         from music_upbeat import make_upbeat
         make_upbeat(total, [(s["start"], s["end"], acts[s["act"]]["music_energy"]) for s in scenes], mus,
                     bpm=music_cfg.get("bpm", 112))
@@ -284,7 +409,7 @@ def main():
         v = subprocess.run(["ffmpeg", "-v", "error", "-i", str(s["vo"]), "-ac", "1", "-ar", str(sr), "-f", "f32le", "-"],
                            capture_output=True, check=True).stdout
         v = np.frombuffer(v, np.float32)
-        s["vo_t"] = s["start"] + (0.9 if s["dissolve"] else 0.5)
+        s["vo_t"] = s["start"] + s["lead"]
         i0 = int(s["vo_t"] * sr)
         i1 = min(i0 + len(v), n)
         vo_track[i0:i1] += v[: i1 - i0, None]

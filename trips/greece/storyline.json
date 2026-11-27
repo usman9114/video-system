@@ -176,5 +176,7 @@
     "IMG_9404 caption 'A closer look at Santorini': the photo was taken on Santorini (the sign reads Σαντορίνη / Santorini; EXIF 14 Nov). No venue is named.",
     "IMG_9423 caption 'Golden hour on Santorini': the photo was taken on Santorini (EXIF 14 Nov 16:30, near sunset).",
     "IMG_9421 caption 'Late light over the Aegean': the sea in view is the Aegean (Santorini; the exact viewpoint, Oia or otherwise, is not claimed)."
-  ]
+  ],
+  "music": {"style": "doc", "bpm": 80},
+  "style": {"dissolve_s": 0.45, "act_fade_s": 0.35, "zoom": 1.045, "ending": {"fade_to_black_s": 1.2, "card_s": 2.0}, "captions": {"Cold open": "OIA, SANTORINI", "Below the Rock": "ATHENS · 9 NOVEMBER", "Stone Towers": "METEORA · 10 NOVEMBER", "Up Top": "ATHENS · 12 NOVEMBER", "The Island": "SANTORINI", "Last Light": "SANTORINI"}, "caption": {"font": "assets/fonts/CormorantGaramond-SemiBold.ttf (OFL); fallback Liberation Serif", "color": "#F2EBDD", "size": 60, "track": 0.16, "left": 84, "bottom": 300}, "title": {"seconds": 2.6, "bg": [8, 8, 9], "size": 104, "track": 0.42, "sub_size": 42, "sub_track": 0.16}, "grade": {"contrast": 1.03, "warmth": [3.0, 1.0, -2.5], "black_lift": 5, "grain": 2.0, "saturation": 0.95, "lut_strength": 0.4}}
 }
