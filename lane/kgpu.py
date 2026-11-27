@@ -157,6 +157,7 @@ def cmd_run(a) -> None:
     # version, or none at all). docs/LESSONS.md #36
     run_id = format(int(time.time()) % 36 ** 5, "x")
     ds = _upload_bundle(api, user, job_dir, a.input, f"{slug}-d{run_id}")
+    (WORK / "build" / slug).mkdir(parents=True, exist_ok=True)
     (WORK / "build" / slug / "last_dataset.txt").write_text(ds)
     k = WORK / "build" / slug / "kernel"
     shutil.rmtree(k, ignore_errors=True)

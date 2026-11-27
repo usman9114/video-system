@@ -213,11 +213,99 @@ class Renderer:
         layer = Image.new("RGBA", (self.W, self.H), (0, 0, 0, 0))
         if seg.get("headline"):
             self.headline(layer, seg["headline"], t, y0=seg.get("headline_y", 110))
+        if seg.get("chips"):
+            self.chips(layer, seg, t)
+        if seg.get("strip"):
+            self.strip(layer, seg, t)
         if seg.get("lower_third"):
             self.lower_third(layer, t)
         self.captions(layer, seg, seg["_vin"] + t)
         canvas.alpha_composite(layer)
         return canvas
+
+    def chips(self, layer, seg, t):
+        """Pain/feature chips beside the head (left column), each popping on its spoken word."""
+        c = seg["chips"]
+        d = ImageDraw.Draw(layer)
+        f = self.F("bold", c.get("size", 34))
+        good = c.get("icon", "check") == "check"
+        ic = self.C["accent"] if good else self.C["bad"]
+        x, y = c.get("x", 34), c.get("y", 150)
+        if c.get("title"):
+            a = ease((t - 0.1) / 0.3)
+            ft = self.F("bold", 26)
+            tw = text_w(ft, c["title"].upper())
+            d.rounded_rectangle([x, y - 54, x + tw + 36, y - 10], radius=22, fill=self.C["bg"][:3] + (int(215 * a),))
+            d.text((x + 18, y - 47), c["title"].upper(), font=ft, fill=self.C["accent"][:3] + (int(255 * a),))
+        for k, item in enumerate(c["items"]):
+            at = seg["_chip_t"][k] if seg.get("_chip_t") else 0.3 + 0.6 * k
+            p = ease((t - at) / 0.28)
+            if p <= 0:
+                y += 96
+                continue
+            w = text_w(f, item) + 104
+            xx = x - (1 - p) * 60
+            d.rounded_rectangle([xx, y, xx + w, y + 80], radius=22, fill=self.C["bg"][:3] + (int(215 * p),),
+                                outline=ic[:3] + (int(160 * p),), width=2)
+            d.ellipse([xx + 18, y + 20, xx + 58, y + 60], fill=ic[:3] + (int(255 * p),))
+            (self.check if good else self.cross)(d, xx + 38, y + 40, 10, self.C["bg"][:3] + (int(255 * p),))
+            d.text((xx + 74, y + 18), item, font=f, fill=self.C["text"][:3] + (int(255 * p),))
+            y += 96
+
+    def strip(self, layer, seg, t):
+        """Compact workflow panel over the torso: nodes light up across the segment (or on spoken words)."""
+        st = seg["strip"]
+        labels = st["labels"]
+        n = len(labels)
+        a = ease((t - st.get("at", 0.2)) / 0.35)
+        if a <= 0:
+            return
+        top = st.get("y", 820)
+        pan = Image.new("RGBA", (self.W, self.H), (0, 0, 0, 0))
+        dp = ImageDraw.Draw(pan)
+        dp.rounded_rectangle([40, top, self.W - 40, top + 210], radius=30, fill=self.C["bg"][:3] + (int(225 * a),),
+                             outline=self.C["card_edge"][:3] + (int(255 * a),), width=2)
+        layer.alpha_composite(pan)
+        d = ImageDraw.Draw(layer)
+        size, gap = 104, (self.W - 80) / n
+        xs = [40 + gap * (k + 0.5) for k in range(n)]
+        cy = top + 78
+        u = clamp01((t - st.get("at", 0.2)) / max(seg["dur"] - st.get("at", 0.2) - 0.6, 0.5))
+        c = u * n
+        for k in range(n - 1):
+            xa, xb = xs[k] + size / 2, xs[k + 1] - size / 2
+            d.line([(xa, cy), (xb, cy)], fill=self.C["card_edge"][:3] + (int(255 * a),), width=4)
+            fl = clamp01(c - k - 0.7) / 0.3 if c - k > 0.7 else 0
+            if fl > 0:
+                d.line([(xa, cy), (xa + (xb - xa) * clamp01(fl), cy)], fill=self.C["accent"], width=4)
+        fl_ = self.F("semibold", 24)
+        for k, x in enumerate(xs):
+            lit = c >= k
+            box = [x - size / 2, cy - size / 2, x + size / 2, cy + size / 2]
+            d.rounded_rectangle(box, radius=24, fill=self.C["card"][:3] + (int(255 * a),),
+                                outline=(self.C["accent"] if lit else self.C["card_edge"])[:3] + (int(255 * a),), width=4)
+            col = (self.C["text"] if lit else self.C["muted"])[:3] + (int(255 * a),)
+            self.icon_small(d, st.get("icons", [0, 1, 2, 3])[k % 4], x, cy, col)
+            lab = labels[k]
+            d.text((x - text_w(fl_, lab) / 2, cy + size / 2 + 8), lab, font=fl_, fill=col)
+
+    def icon_small(self, d, k, x, y, col):
+        s = 0.55
+        if k == 0:
+            d.rounded_rectangle([x - 26, y - 18, x + 26, y + 18], radius=5, outline=col, width=4)
+            d.line([(x - 23, y - 14), (x, y + 4), (x + 23, y - 14)], fill=col, width=4)
+        elif k == 1:
+            f = self.F("black", 34)
+            d.text((x - text_w(f, "AI") / 2, y - 22), "AI", font=f, fill=col)
+        elif k == 2:
+            d.ellipse([x - 22, y - 26, x + 22, y - 10], outline=col, width=4)
+            d.arc([x - 22, y - 8, x + 22, y + 8], 0, 180, fill=col, width=4)
+            d.arc([x - 22, y + 10, x + 22, y + 26], 0, 180, fill=col, width=4)
+            d.line([(x - 22, y - 18), (x - 22, y + 18)], fill=col, width=4)
+            d.line([(x + 22, y - 18), (x + 22, y + 18)], fill=col, width=4)
+        else:
+            d.rounded_rectangle([x - 26, y - 20, x + 26, y + 14], radius=10, outline=col, width=4)
+            d.polygon([(x - 10, y + 13), (x - 16, y + 26), (x, y + 13)], fill=col)
 
     def lower_third(self, layer, t):
         a = ease(t / 0.35) * (1 - ease((t - 3.4) / 0.3))
@@ -491,6 +579,11 @@ def build_timeline(spec, r: Renderer):
             seg["dur"] = round(lead + (f1 - f0) + seg.get("tail", 0.0 if seg["type"] == "face" else 0.18), 3)
             seg["_vin"] = -lead                       # captions use t + _vin == time inside the VO line
             seg["_cards"] = card_words(al, cp["max_chars_per_line"], cp["max_lines"])
+            if seg.get("chips") and seg["chips"].get("item_words"):
+                def findc(word):
+                    return next((w["s"] for w in al if word.lower() in w["w"].lower()), None)
+                seg["_chip_t"] = [(findc(x) if findc(x) is not None else 0.3 + 0.6 * k) + lead - 0.06
+                                  for k, x in enumerate(seg["chips"]["item_words"])]
             if seg.get("item_words"):
                 def find(word):
                     return next((w["s"] for w in al if word.lower() in w["w"].lower()), None)
