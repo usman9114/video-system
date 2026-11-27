@@ -15,7 +15,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
 - **T12** Re-render Greece v1 (master lost) once photos are uploaded  _(greece · needs owner)_
-  - 2026-11-27: Owner chose re-render: upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
+  - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 
 ## To do (7)
 
