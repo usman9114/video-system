@@ -1,0 +1,16 @@
+{
+ "lines": {
+  "00_same": "We focus on practical application, not technology for its own sake. We test what works, understand the risks, and help WFP prepare for the future.",
+  "01_hook": "Doing the same task over and over again? Let's automate it.",
+  "02_pain": "Chasing leads, sorting emails, updating your CRM, building reports by hand... it eats your week.",
+  "03_who": "I'm Usman. I build n8n automations and AI-powered workflows that connect your apps, capture leads from every source, follow up with customers, and keep your data in sync, automatically.",
+  "04_more": "Need an AI chatbot, an AI agent, or a custom API integration? I'll build it around how your business actually works.",
+  "05_value": "The goal isn't just automation. It's saving you hours, cutting errors, and giving you time to grow.",
+  "06_cta": "Send me your idea, and let's turn it into a workflow that runs itself."
+ },
+ "settings": {
+  "stability": 0.45,
+  "similarity_boost": 0.85,
+  "style": 0.0
+ }
+}
