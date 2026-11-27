@@ -74,6 +74,20 @@ def log_usage(rec: dict) -> None:
 
 
 # ---------------- commands ----------------
+RESERVE = 2000   # never let a run take the account below this (owner lost about 27k credits to an accidental app click)
+
+
+def remaining_credits() -> int | None:
+    """Live balance from the API (needs the User→Read key permission). None if unavailable."""
+    req = request.Request(API + "/v1/user/subscription", headers=dict(HDR, Accept="application/json"))
+    try:
+        with request.urlopen(req, timeout=30) as r:
+            d = json.loads(r.read())
+        return int(d["character_limit"]) - int(d["character_count"])
+    except Exception:
+        return None
+
+
 def whoami():
     raw, _ = call("GET", "/v1/user/subscription")
     d = json.loads(raw)
@@ -143,6 +157,11 @@ def say(voice: str, lines: dict, out: str, model: str, settings: dict, takes: in
     print(f"{len(lines)} lines × {takes} take(s) = {need} chars ≈ {need * rate:.0f} credits on {model}")
     if need > max_chars:
         sys.exit(f"refusing: {need} chars > --max-chars {max_chars} (raise it deliberately)")
+    left = remaining_credits()
+    if left is not None:
+        print(f"account: {left} credits left; reserve {RESERVE}")
+        if left - need * rate < RESERVE:
+            sys.exit(f"refusing: this run (~{need * rate:.0f}) would leave < {RESERVE} credits. Use --takes 1, --draft, or fewer lines.")
     if dry:
         return
     prev_ids: list[str] = []
@@ -214,7 +233,7 @@ def main():
     s.add_argument("--out", required=True)
     s.add_argument("--model")
     s.add_argument("--draft", action="store_true", help="Flash v2.5 at half the credits")
-    s.add_argument("--takes", type=int, default=1)
+    s.add_argument("--takes", type=int, default=1, help="1 by default (credits are tight; see SKILL.md)")
     s.add_argument("--seed", type=int, default=42)
     s.add_argument("--max-chars", type=int, default=4000)
     s.add_argument("--no-stitch", action="store_true")
