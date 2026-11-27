@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Modal CLI wrapper for this cloud environment (see docs/LESSONS.md):
+#  - token: ID from .env.modal (git-ignored); the SECRET is injected by the network proxy as x-modal-token-secret
+#  - proxy: needs modal[api-proxy-support] (python-socks)
+#  - TLS: grpclib trusts certifi's bundle only → point certifi at the environment CA bundle (verification stays ON)
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+set -a; . "$ROOT/.env.modal"; set +a
+export SSL_CERT_FILE=/root/.ccr/ca-bundle.crt
+exec "$ROOT/.venv/bin/python" -c '
+import sys, certifi
+certifi.where = lambda: "/root/.ccr/ca-bundle.crt"
+from modal.__main__ import main
+sys.argv[0] = "modal"
+main()
+' "$@"
