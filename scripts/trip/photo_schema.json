@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["place_guess", "confidence", "what_we_see", "people", "time_of_day", "mood", "story_beat_ideas",
+               "camera_move", "animation_prompt", "caption_options", "facts_to_verify"],
+  "properties": {
+    "place_guess": {"type": "string", "description": "Most likely place/landmark name, or 'unknown'"},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "what_we_see": {"type": "string", "description": "2-3 sentences, concrete visual description"},
+    "people": {"type": "string", "description": "who is in frame and what they're doing (no names, no guesses about identity)"},
+    "time_of_day": {"type": "string"},
+    "mood": {"type": "string", "description": "emotional tone in 3-6 words"},
+    "story_beat_ideas": {"type": "array", "items": {"type": "string"}, "maxItems": 3,
+                         "description": "what moment of a trip story this photo could be (arrival, awe, quiet reflection...)"},
+    "camera_move": {"type": "string", "description": "best cinematic camera move to animate this photo (e.g. slow push-in, lateral parallax, tilt up)"},
+    "animation_prompt": {"type": "string", "description": "a 40-70 word image-to-video prompt describing subtle, realistic motion consistent with the photo; never change faces"},
+    "caption_options": {"type": "array", "items": {"type": "string"}, "maxItems": 3, "description": "short documentary on-screen captions, max 7 words each"},
+    "facts_to_verify": {"type": "array", "items": {"type": "string"}, "maxItems": 3,
+                        "description": "historical/place facts that would enrich narration, each phrased so it can be checked"}
+  }
+}
