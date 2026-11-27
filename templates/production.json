@@ -1,6 +1,10 @@
 {
   "_doc": "SINGLE SOURCE OF TRUTH for production settings. Every tool reads this (promo.py enforces the rules, make_faces.py uses the lip-sync/footage settings). Change a setting HERE, never ad hoc. Each value records why/who decided.",
   "rules": {
+    "realism_first": {
+      "value": true,
+      "why": "owner 2026-11-27: only do what is possible and realistic; nothing may give away that it's AI. Realism outranks cost, speed and effects. If a technique can't pass as real, we don't use it."
+    },
     "no_cutaway_while_talking": {
       "value": true,
       "why": "owner 2026-11-27: unnecessary cuts while talking not allowed"
@@ -145,6 +149,21 @@
     ],
     "not_possible": {
       "overclocking": "no clock/driver control on cloud GPUs; per-second billing, so gains come from doing less work"
+    }
+  },
+  "realism_gate": {
+    "applies_to": "every AI-touched shot (lip-sync, Wan/FastWan animation, ChatGPT images) before it goes into any edit",
+    "checks": [
+      "face identity vs the real source \u2265 baseline (no drift, no 'different person' look)",
+      "lip-sync SyncNet LSE-C within 10% of the real-footage baseline; offset 0 \u00b1 1 frame",
+      "AI-tell review: ChatGPT vision inspects 6 sampled frames per shot for tells (warped hands/text, waxy skin, melting background, flicker, identity change) \u2192 any 'likely AI' = reject",
+      "owner's eye is final; 'feels fake' = reject even if numbers pass"
+    ],
+    "on_fail": "drop the AI version and use the real footage/photo (plain or with a gentle real-camera-style move) instead; never ship a borderline shot",
+    "motion_rules": {
+      "faces": "never generated or re-animated beyond lip-sync; photos of people get camera moves (parallax/push), not invented body/face motion, unless the shot passes the gate",
+      "animation_strength": "subtle, physically plausible only (light, crowd, water, flags, foliage, camera); no dramatic AI motion",
+      "graphics": "recreations of real UIs/references only"
     }
   }
 }
