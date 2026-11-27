@@ -69,7 +69,13 @@
           "05_value": 5.03
         },
         "verdict": "TBDub teacher on the small plate = 55-80% of sync-3 -> FAILS the 0.9 gate; owner also rejected by eye. Next: A/B on full-res original, LatentSync 1.6 on L40S full settings, X-Dub.",
-        "note": "syncnet needs >= 100 frames (4 s at 25 fps): pad/loop clips shorter than 4 s before scoring"
+        "note": "syncnet needs >= 100 frames (4 s at 25 fps): pad/loop clips shorter than 4 s before scoring",
+        "latentsync16_modal_l40s_03_who": {
+          "lse_c": 8.454,
+          "lse_d": 7.242,
+          "offset": 0,
+          "note": "PASSES gate (>=6.89); same line TBDub 6.125. Clip: Modal ab --model latentsync16, 491 s GPU, ~$0.27. Awaiting owner's eye before switching config."
+        }
       }
     }
   },

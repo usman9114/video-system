@@ -25,7 +25,7 @@
     {
       "id": "T02",
       "title": "Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res",
-      "list": "blocked",
+      "list": "review",
       "project": "n8n",
       "needs_owner": false,
       "blocked_by": [
@@ -34,7 +34,9 @@
       "notes": [
         "python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3",
         "TBDub full-res needs owner's sample-video.mp4 (60 MB original).",
-        "2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach."
+        "2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.",
+        "2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).",
+        "2026-11-27: blocked -> review"
       ]
     },
     {
@@ -46,7 +48,8 @@
         "T02"
       ],
       "notes": [
-        "bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65)."
+        "bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65).",
+        "2026-11-27: Done for 03_who via bin/kgpu run jobs/syncnet-eval. Gate passed."
       ]
     },
     {
@@ -264,6 +267,6 @@
       "notes": []
     }
   ],
-  "updated": "2026-11-27 19:58 UTC",
+  "updated": "2026-11-27 20:01 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

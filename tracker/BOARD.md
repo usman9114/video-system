@@ -1,15 +1,11 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:58 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:01 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
-## Blocked (4)
+## Blocked (3)
 
-- **T02** Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res  _(n8n · after T01)_
-  - python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3
-  - TBDub full-res needs owner's sample-video.mp4 (60 MB original).
-  - 2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
@@ -21,6 +17,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 
 - **T03** SyncNet-gate the A/B clips, side-by-side, owner picks winner  _(n8n · after T02)_
   - bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65).
+  - 2026-11-27: Done for 03_who via bin/kgpu run jobs/syncnet-eval. Gate passed.
 - **T04** Render n8n video v7 with the winning lip-sync  _(n8n · after T03)_
   - Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final
 - **T05** Get gig texts for Upwork videos 2-10  _(upwork · needs owner)_
@@ -39,8 +36,14 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 ## In progress (0)
 
 
-## Waiting on owner review (1)
+## Waiting on owner review (2)
 
+- **T02** Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res  _(n8n · after T01)_
+  - python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3
+  - TBDub full-res needs owner's sample-video.mp4 (60 MB original).
+  - 2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.
+  - 2026-11-27: RESULT: LatentSync 1.6 (Modal L40S) on 03_who: LSE-C 8.454, offset 0 (TBDub same line 6.125; real 8.23; gate 6.89) -> PASSES. Owner to confirm by eye; then run other 5 lines (~$1.6) and render v7. X-Dub skipped (image lacks click; not needed).
+  - 2026-11-27: blocked -> review
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
