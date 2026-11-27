@@ -146,6 +146,61 @@ def wan_i2v_a14b(prompt: str, image: bytes = b"", size: str = "1280*720", frame_
                          ["--offload_model", "True", "--convert_model_dtype"], H100_USD_PER_S)
 
 
+# ---------------- FastWan2.2-TI2V-5B (FastVideo, Apache-2.0): 3-step distilled TI2V-5B, BATCHED (cost-optimised) --------
+FASTWAN_REPO = "FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers"
+fastwan_image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .apt_install("ffmpeg", "libgl1", "libglib2.0-0")
+    .pip_install("torch==2.6.0", "torchvision==0.21.0")
+    .pip_install("diffusers==0.35.1", "transformers==4.51.3", "accelerate", "ftfy", "imageio[ffmpeg]", "pillow",
+                 "huggingface_hub[cli]", "sentencepiece")
+)
+
+
+@app.function(image=fastwan_image, volumes={W: weights}, timeout=3600, cpu=4)
+def download_fastwan() -> dict:
+    import subprocess
+    dst = f"{W}/fastwan/ti2v-5b"
+    r = subprocess.run(f"hf download {FASTWAN_REPO} --local-dir {dst}", shell=True, capture_output=True, text=True)
+    weights.commit()
+    du = subprocess.run(f"du -sh {dst}", shell=True, capture_output=True, text=True).stdout
+    return {"ok": r.returncode == 0, "log": r.stderr[-1200:], "du": du}
+
+
+@app.function(image=fastwan_image, volumes={W: weights}, gpu="L40S", timeout=3600, scaledown_window=2)
+def fastwan_batch(items: list, steps: int = 3, fps: int = 24) -> dict:
+    """items: [{"image_b64", "prompt", "seconds"(3.5), "seed"}]. Loads the model ONCE, animates every photo.
+    Returns per-item mp4 (b64) + timing. Distilled → guidance 1.0 (no CFG pass)."""
+    import io
+    import torch
+    from diffusers import AutoencoderKLWan, WanImageToVideoPipeline
+    from diffusers.utils import export_to_video
+    from PIL import Image
+    t0 = time.time()
+    path = f"{W}/fastwan/ti2v-5b"
+    vae = AutoencoderKLWan.from_pretrained(path, subfolder="vae", torch_dtype=torch.float32)
+    pipe = WanImageToVideoPipeline.from_pretrained(path, vae=vae, torch_dtype=torch.bfloat16).to("cuda")
+    load_s = time.time() - t0
+    out = []
+    for it in items:
+        t1 = time.time()
+        img = Image.open(io.BytesIO(base64.b64decode(it["image_b64"]))).convert("RGB")
+        w, h = img.size
+        # TI2V-5B native 1280x704 / 704x1280 (multiples of 32); keep orientation
+        W_, H_ = (1280, 704) if w >= h else (704, 1280)
+        img = img.resize((W_, H_))
+        n = int(round(it.get("seconds", 3.5) * fps / 4)) * 4 + 1
+        g = torch.Generator("cuda").manual_seed(int(it.get("seed", 42)))
+        frames = pipe(image=img, prompt=it["prompt"], height=H_, width=W_, num_frames=n, num_inference_steps=steps,
+                      guidance_scale=1.0, generator=g).frames[0]
+        export_to_video(frames, "/tmp/clip.mp4", fps=fps)
+        out.append({"video_b64": base64.b64encode(Path("/tmp/clip.mp4").read_bytes()).decode(), "frames": n,
+                    "seconds": round(time.time() - t1, 1)})
+    secs = time.time() - t0
+    return {"ok": True, "items": out, "load_seconds": round(load_s, 1), "gpu_seconds": round(secs, 1),
+            "usd": round(secs * L40S_USD_PER_S, 3)}
+
+
 @app.function(image=api_image, secrets=[modal.Secret.from_name("lipsync-api-key")])
 @modal.asgi_app()
 def api():
@@ -188,6 +243,14 @@ def api():
         kw = {k: body[k] for k in ("size", "frame_num", "steps", "seed") if k in body}
         img = base64.b64decode(body["image_b64"]) if body.get("image_b64") else b""
         return {"call_id": fn.spawn(body["prompt"], img, **kw).object_id}
+
+    @web.post("/fastwan/download")
+    def fastwan_download(body: dict):
+        return {"call_id": download_fastwan.spawn().object_id}
+
+    @web.post("/fastwan/batch")
+    def fastwan_run(body: dict):
+        return {"call_id": fastwan_batch.spawn(body["items"], int(body.get("steps", 3)), int(body.get("fps", 24))).object_id}
 
     @web.get("/result/{call_id}")
     def result(call_id: str):
