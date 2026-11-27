@@ -116,6 +116,9 @@ def main():
             body["items"].append(b)
         cid = call("POST", "/wan/batch", body, timeout=300)["call_id"]
         print("call", cid, flush=True)
+        # record the call id at once (LESSONS 88): lets anyone re-attach with `wait <call_id>` if this client dies
+        with open(ROOT / "reports" / "modal-calls.jsonl", "a") as f:
+            f.write(json.dumps({"op": "wan-batch", "call_id": cid, "n": len(items), "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}) + "\n")
         r = wait(cid, every=30, limit=6 * 3600)
         log({"op": "wan-batch", "model": "i2v-A14B", "n": len(items), "steps": a.steps, "call_id": cid,
              "ok": r.get("ok"), "load_seconds": r.get("load_seconds"), "gpu_seconds": r.get("gpu_seconds"),
