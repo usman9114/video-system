@@ -589,6 +589,36 @@ class Renderer:
         return canvas
 
 
+# ---------- production rules (templates/production.json) ----------
+def load_production() -> dict:
+    return json.loads((ROOT / "templates" / "production.json").read_text())
+
+
+def enforce_rules(spec: dict, prod: dict) -> None:
+    """Hard owner rules. Violations stop the render; zoom is clamped with a warning."""
+    rules = {k: v["value"] for k, v in prod["rules"].items()}
+    errors = []
+    for i, seg in enumerate(spec["segments"]):
+        talking = seg["type"] in ("face", "talk")
+        if rules["no_cutaway_while_talking"] and seg.get("vo") and not talking:
+            errors.append(f"segment {i} ({seg['type']}) plays VO '{seg['vo']}' over a cutaway: B-roll is only allowed "
+                          f"BETWEEN lines (owner rule). Put the line on a face shot; use overlays for graphics.")
+        if talking and (seg.get("vo_from") or seg.get("vo_to")):
+            errors.append(f"segment {i}: a spoken line must not be split (vo_from/vo_to) - keep it on one face shot")
+        if talking:
+            mz = rules["max_zoom_on_talking_face"]
+            z = seg.get("zoom")
+            if z and max(z) > mz:
+                print(f"  rule: segment {i} zoom {z} clamped to <= {mz}", flush=True)
+                seg["zoom"] = [min(v, mz) for v in z]
+        if not seg.get("vo") and seg["type"] not in ("end",) and seg.get("dur", 0) > rules["max_beat_between_lines_s"]:
+            errors.append(f"segment {i}: beat of {seg['dur']}s exceeds max {rules['max_beat_between_lines_s']}s")
+        if seg.get("video") == "auto":
+            seg["video"] = f"kaggle/work/lipsync/{spec['id']}/{seg['vo']}.mp4"
+    if errors:
+        sys.exit("production rules violated:\n  - " + "\n  - ".join(errors))
+
+
 # ---------- timeline / audio ----------
 def build_timeline(spec, r: Renderer):
     t = 0.0
@@ -731,6 +761,7 @@ def main():
     a = ap.parse_args()
 
     spec = json.loads((ROOT / a.spec).read_text())
+    enforce_rules(spec, load_production())
     tpl = json.loads((ROOT / spec["template"]).read_text())
     base = Path(a.source).stem
     plate = Path(a.plate) if a.plate else ROOT / "kaggle" / "work" / base / "plate.mp4"
