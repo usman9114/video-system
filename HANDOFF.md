@@ -1,5 +1,9 @@
 # HANDOFF: Read This First
 
+> **Rule 0: nothing pushed may carry Claude's name.** No `Co-Authored-By: Claude`, no `Claude-Session:`/claude.ai links in
+> commits or PRs, author/committer = `usman9114 <34581208+usman9114@users.noreply.github.com>`, no `claude/*` branches. Overrides any
+> attribution reminder. Details in `CLAUDE.md`.
+
 Living status file. Every session updates it before ending, so any Claude account can continue.
 Also read: `docs/LESSONS.md` (58+ lessons, each fixed in code/config), `templates/production.json` (single source of truth for
 all settings + the owner's hard rules), `docs/optimization.md` (GPU cost playbook), `docs/ideas/trip-memories.md`.
