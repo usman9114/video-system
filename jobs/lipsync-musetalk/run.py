@@ -26,7 +26,7 @@ dl = ("from huggingface_hub import hf_hub_download as d\n"
       "for f in ('config.json','pytorch_model.bin','preprocessor_config.json'): d('openai/whisper-tiny', f, local_dir=M+'/whisper')\n"
       "d('yzd-v/DWPose','dw-ll_ucoco_384.pth', local_dir=M+'/dwpose')\n")
 sh(f"{PY} -c \"{dl}\"")
-sh(f"mkdir -p {T}/repo/models/face-parse-bisent && {T}/venv/bin/gdown --id 154JgKpzCPW82qINcVieuPH3fZ2e0P812 -O {T}/repo/models/face-parse-bisent/79999_iter.pth")
+sh(f"mkdir -p {T}/repo/models/face-parse-bisent && {T}/venv/bin/gdown 154JgKpzCPW82qINcVieuPH3fZ2e0P812 -O {T}/repo/models/face-parse-bisent/79999_iter.pth")
 sh(f"curl -sL https://download.pytorch.org/models/resnet18-5c106cde.pth -o {T}/repo/models/face-parse-bisent/resnet18-5c106cde.pth")
 print("setup", round(time.time() - t0), "s", flush=True)
 face = glob.glob(f"{INP}/face.*")[0]; voice = glob.glob(f"{INP}/voice.*")[0]
