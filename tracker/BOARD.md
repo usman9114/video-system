@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:18 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:21 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -45,6 +45,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Owner prefers TBDub look but it jerks. Measured 4 frozen frames (39,81,167,233). S2 agent fixing (blend neighbours, no RIFE) + SyncNet all three. Plan: docs/PLAN.md.
   - 2026-11-27: M2 DECIDED by owner 2026-11-27: TBDub look is better -> keep TBDub teacher; no LatentSync spend. Next: apply S2 frame fix to all 6 TBDub lines, re-score, render v7.
   - 2026-11-27: S2 result: frozen frames 39/81/167/233 replaced (blend). Fixed TBDub 03_who LSE-C 6.17 offset 0 (was 6.13) -> still below 6.89 gate; owner chose TBDub by eye anyway. f89 = real head lunge in the take (static background), left as is. Files: work/ab/03_who_tbdub_fixed.mp4, 03_who_compare.mp4, 03_who_mouth_slowmo.mp4.
+  - 2026-11-27: Owner: jerk at ~4 s remains. Cause: one-frame jump cut in the SOURCE plate (03_who_src splice between frames 89/90), inherited by TBDub. ChatGPT: punch-in, not morph. Made work/ab/03_who_punch_hard.mp4 (instant 1.05 at the splice, my pick) and _ramp (eased). Owner to pick; then apply to every splice in all 6 lines (scan src clips for one-frame jumps).
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
