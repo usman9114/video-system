@@ -13,3 +13,4 @@
 {"job": "kgpu-transcribe", "event": "start", "gpu": true, "at": "2026-11-27T00:22:20Z"}
 {"job": "kgpu-transcribe", "event": "end", "status": "complete", "wall_s": 125, "at": "2026-11-27T00:24:25Z"}
 {"job": "kgpu-voice-chatterbox", "event": "start", "gpu": true, "at": "2026-11-27T00:28:01Z"}
+{"job": "kgpu-voice-chatterbox", "event": "end", "status": "complete", "wall_s": 406, "at": "2026-11-27T00:34:54Z"}
