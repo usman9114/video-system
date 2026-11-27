@@ -1,0 +1,27 @@
+{
+  "_doc": "Video 01 v4: face-heavy. Owner's real footage lip-synced with TBDub Teacher (open source, Modal L40S, free credits) to the ElevenLabs-cloned voice. Graphics are overlays (chips, workflow strip).",
+  "id": "01_n8n_automation_v4",
+  "template": "templates/promo_4x5.json",
+  "vo_dir": "assets/voice/01_n8n",
+  "name": "Usman Qureshi",
+  "title": "n8n & AI Automation",
+  "segments": [
+    {"type": "face", "vo": "01_hook", "video": "kaggle/work/lipsync/hook_tbdub_teacher.mp4",
+     "headline": ["Same task,", "over and over?"], "tail": 0.1},
+    {"type": "face", "vo": "02_pain", "video": "kaggle/work/lipsync/pain_tbdub_teacher.mp4",
+     "chips": {"title": "Every single week", "icon": "x", "items": ["Chasing leads", "Sorting emails", "Updating your CRM", "Reports by hand"],
+               "item_words": ["leads", "emails", "CRM", "reports"]}},
+    {"type": "face", "vo": "03_who", "vo_to": 4.50, "video": "kaggle/work/lipsync/who_tbdub_teacher.mp4", "lower_third": true},
+    {"type": "face", "vo": "03_who", "vo_from": 4.50, "video": "kaggle/work/lipsync/who_tbdub_teacher.mp4",
+     "strip": {"labels": ["Lead form", "AI qualifies", "CRM synced", "Follow-up"], "at": 0.15}},
+    {"type": "face", "vo": "04_more", "video": "kaggle/work/lipsync/more_tbdub_teacher.mp4",
+     "chips": {"title": "Built around your business", "icon": "check", "items": ["AI chatbots", "AI agents", "API integrations"],
+               "item_words": ["chatbot", "agent", "API"]}},
+    {"type": "face", "vo": "05_value", "video": "kaggle/work/lipsync/value_tbdub_teacher.mp4",
+     "chips": {"title": "The real goal", "icon": "check", "items": ["Save hours", "Fewer errors", "Time to grow"],
+               "item_words": ["hours", "errors", "grow"]}},
+    {"type": "face", "vo": "06_cta", "video": "kaggle/work/lipsync/cta_tbdub_teacher.mp4", "tail": 0.1},
+    {"type": "end", "dur": 2.6, "headline": ["Send me", "your idea."], "sub": "Let's turn it into a workflow.",
+     "button": "Message me on Upwork", "photo_src_t": 47.2}
+  ]
+}
