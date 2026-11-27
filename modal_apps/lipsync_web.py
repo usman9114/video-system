@@ -87,7 +87,9 @@ wan_image = (
     .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0")
     .run_commands("git clone --depth 1 https://github.com/Wan-Video/Wan2.2.git /opt/Wan2.2")
     .pip_install("torch==2.6.0", "torchvision==0.21.0", "torchaudio==2.6.0")
-    # flash_attn skipped on purpose: wan/modules/attention.py falls back to torch SDPA
+    # flash-attn REQUIRED: Wan's model.py calls flash_attention() directly (varlen), no SDPA fallback there.
+    # Official prebuilt wheel for torch 2.6 / CUDA 12 / py3.11 (no hour-long compile). docs/LESSONS.md #54
+    .pip_install("https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp311-cp311-linux_x86_64.whl")
     .run_commands("grep -v -E '^flash_attn' /opt/Wan2.2/requirements.txt > /tmp/req.txt && pip install -r /tmp/req.txt",
                   "pip install 'huggingface_hub[cli]' einops decord librosa peft loguru omegaconf onnxruntime matplotlib",
                   # wan/__init__.py imports speech2video + animate even for i2v/ti2v; their extra deps (SAM etc.) aren't
