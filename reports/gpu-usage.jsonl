@@ -34,3 +34,5 @@
 {"job": "kgpu-lipsync-musetalk", "event": "start", "gpu": true, "at": "2026-11-27T02:02:59Z"}
 {"job": "kgpu-lipsync-musetalk", "event": "end", "status": "error", "wall_s": 92, "at": "2026-11-27T02:04:38Z"}
 {"job": "kgpu-lipsync-musetalk", "event": "start", "gpu": true, "at": "2026-11-27T02:05:19Z"}
+{"job": "kgpu-lipsync-musetalk", "event": "end", "status": "error", "wall_s": 123, "at": "2026-11-27T02:07:25Z"}
+{"job": "kgpu-lipsync-musetalk", "event": "start", "gpu": true, "at": "2026-11-27T02:07:56Z"}
