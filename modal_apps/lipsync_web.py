@@ -209,13 +209,13 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24, gpu: str = "L40S")
 
 # ---------------- Lip-sync A/B candidates (owner 2026-11-27): LatentSync 1.6 full settings, X-Dub ----------------
 latentsync_image = (
-    modal.Image.debian_slim(python_version="3.10")
-    .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0")
+    modal.Image.debian_slim(python_version="3.11")          # Modal's 2026.10 builder dropped 3.10 (LESSONS #72)
+    .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0", "build-essential")   # insightface builds from source on 3.11
     .run_commands("git clone --depth 1 https://github.com/bytedance/LatentSync.git /opt/LatentSync",
                   "pip install -r /opt/LatentSync/requirements.txt", "pip install 'huggingface_hub[cli]<1'")
 )
 xdub_image = (
-    modal.Image.from_registry("nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04", add_python="3.10")
+    modal.Image.from_registry("nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04", add_python="3.11")
     .apt_install("git", "ffmpeg", "libgl1", "libglib2.0-0", "build-essential", "ninja-build")
     .run_commands("git clone --depth 1 https://github.com/KlingAIResearch/X-Dub.git /opt/X-Dub",
                   "pip install -r /opt/X-Dub/requirements.txt", "pip install setuptools wheel cython 'numpy==1.26.4'")
