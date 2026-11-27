@@ -492,7 +492,8 @@ class Renderer:
         canvas = frame.convert("RGBA")
         g = Image.new("L", (1, self.H))
         for yy in range(self.H):
-            g.putpixel((0, yy), int(235 * clamp01((yy - self.H * 0.55) / (self.H * 0.42)) ** 1.3))
+            sf = seg.get("shade_from", 0.55)   # where the caption-band darkening starts (fraction of height)
+            g.putpixel((0, yy), int(235 * clamp01((yy - self.H * sf) / (self.H * (0.97 - sf))) ** 1.3))
         if seg.get("headline"):   # top scrim so headlines stay readable on bright photos
             for yy in range(int(self.H * 0.45)):
                 v = int(225 * (1 - yy / (self.H * 0.45)) ** 1.4)
