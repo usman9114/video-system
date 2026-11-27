@@ -40,14 +40,22 @@ def redact(im: Image.Image, boxes) -> Image.Image:
     return im
 
 
-def load_photo(path: Path, max_h: int = 3840, boxes=None) -> Image.Image:
-    im = redact(ImageOps.exif_transpose(Image.open(path)).convert("RGB"), boxes)
+def load_photo(path: Path, max_h: int = 3840, boxes=None, orientation=None) -> Image.Image:
+    src = Image.open(path)
+    if orientation is not None:         # framing.json override: some phone selfies carry a mirror tag on pixels that
+        ex = src.getexif()              # are already un-mirrored (text would read backwards after exif_transpose)
+        ex[0x0112] = int(orientation)
+        src.info["exif"] = ex.tobytes()
+        src = ImageOps.exif_transpose(src) if int(orientation) != 1 else src.copy()
+    else:
+        src = ImageOps.exif_transpose(src)
+    im = redact(src.convert("RGB"), boxes)
     if im.height > max_h:
         im = im.resize((round(im.width * max_h / im.height), max_h), Image.LANCZOS)
     return im
 
 
-def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5):
+def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5, pan=None):
     """Start/end crop boxes (x0,y0,w,h) with 9:16 aspect, derived from the storyline's camera_move text."""
     m = move.lower()
     full_h = min(ih, iw * 16 / 9)
@@ -62,8 +70,8 @@ def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5):
     lateral = re.search(r"lateral|pan", m)
     if lateral:
         travel = 0.5 if iw / ih > 1.0 else 0.12          # landscape: real pan; portrait: small drift
-        a, b = 0.5 - travel / 2, 0.5 + travel / 2
-        if "right-to-left" in m:
+        a, b = pan if pan else (0.5 - travel / 2, 0.5 + travel / 2)
+        if "right-to-left" in m and not pan:
             a, b = b, a
         s = 1.03
         return box(s, a, 0.5), box(s * (1.03 if "push" in m else 1.0), b, 0.5)
@@ -139,6 +147,8 @@ def main():
     picks = json.loads((trip / "work/hero_pick.json").read_text()) if (trip / "work/hero_pick.json").exists() else {}
     focus = json.loads((trip / "work/focus.json").read_text()) if (trip / "work/focus.json").exists() else {}
     redactions = json.loads((trip / "redact.json").read_text()) if (trip / "redact.json").exists() else {}
+    framing = json.loads((trip / "framing.json").read_text()) if (trip / "framing.json").exists() else {}
+    focus.update(framing.get("focus_x", {}))
     vo_dir = trip / "work/vo"
     acts = {x["name"]: x for x in sl["acts"]}
 
@@ -164,14 +174,16 @@ def main():
 
     # ---- per-scene sources -----------------------------------------------------------------------------------
     for s in scenes:
-        s["im"] = load_photo(ROOT / s["sc"]["photo"], boxes=redactions.get(s["name"]))
+        s["im"] = load_photo(ROOT / s["sc"]["photo"], boxes=redactions.get(s["name"]),
+                             orientation=framing.get("orientation", {}).get(s["name"]))
         pick = picks.get(s["name"])
         s["clip"] = Clip(ROOT / pick) if (s["sc"].get("hero") and pick) else None
         if s["clip"] is not None:     # hero clip: gentle push on the clip itself (crop in clip space)
             ch, cw = s["clip"].f.shape[1:3]
             s["b0"], s["b1"] = (0, 0, cw, ch), (cw * 0.025, ch * 0.025, cw * 0.95, ch * 0.95)
         else:
-            s["b0"], s["b1"] = move_boxes(s["sc"]["camera_move"], *s["im"].size, focus.get(s["name"], 0.5))
+            s["b0"], s["b1"] = move_boxes(s["sc"]["camera_move"], *s["im"].size, focus.get(s["name"], 0.5),
+                                          framing.get("pan_x", {}).get(s["name"]))
         print(f"  {s['start']:6.2f}-{s['end']:6.2f}  {s['name']:10s} {'HERO' if s['clip'] is not None else 'move'}"
               f"  vo={'y' if s['vo'] else '-'}  {s['sc']['caption']}")
 

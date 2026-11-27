@@ -6,7 +6,10 @@
     python3 -m lane.modal_lipsync wait <call_id>
     python3 -m lane.modal_lipsync lipsync --video face.mp4 --audio voice.mp3 --out out.mp4 [--mode student|teacher]
 
-Auth: `x-api-key` is a network secret injected by the proxy (we send a placeholder). Costs are logged to
+    python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub                 # one-time weights
+    python3 -m lane.modal_lipsync ab --model latentsync16|xdub --video f.mp4 --audio v.mp3 --out o.mp4
+
+Auth: `x-api-key` = env LIPSYNC_API_KEY when set (new account), else a placeholder the proxy replaces. Costs are logged to
 reports/modal-usage.jsonl (GPU seconds × L40S rate, reported by the worker). Free credits: $30/month.
 """
 from __future__ import annotations
@@ -14,6 +17,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -27,7 +31,7 @@ USAGE = ROOT / "reports" / "modal-usage.jsonl"
 def call(method, path, body=None, timeout=120):
     data = json.dumps(body).encode() if body is not None else None
     req = request.Request(API + path, data=data, method=method,
-                          headers={"x-api-key": "proxy-injected", "Content-Type": "application/json"})
+                          headers={"x-api-key": os.environ.get("LIPSYNC_API_KEY", "proxy-injected"), "Content-Type": "application/json"})
     try:
         with request.urlopen(req, timeout=timeout) as r:
             return json.loads(r.read())
@@ -67,6 +71,14 @@ def main():
     l.add_argument("--audio", required=True)
     l.add_argument("--out", required=True)
     l.add_argument("--mode", default="student")
+    abd = sub.add_parser("ab-download", help="one-time weights for a lip-sync A/B candidate")
+    abd.add_argument("--model", choices=["latentsync16", "xdub"], required=True)
+    ab = sub.add_parser("ab", help="lip-sync A/B candidate on Modal L40S (LatentSync 1.6 full settings / X-Dub)")
+    ab.add_argument("--model", choices=["latentsync16", "xdub"], required=True)
+    ab.add_argument("--video", required=True)
+    ab.add_argument("--audio", required=True)
+    ab.add_argument("--out", required=True)
+    ab.add_argument("--steps", type=int)
     wn = sub.add_parser("wan", help="Wan 2.2 image/text-to-video")
     wn.add_argument("--prompt", required=True)
     wn.add_argument("--image")
@@ -132,6 +144,25 @@ def main():
         return
     if a.cmd == "health":
         print(call("GET", "/health"))
+    elif a.cmd == "ab-download":
+        cid = call("POST", "/ab/download", {"model": a.model})["call_id"]
+        r = wait(cid)
+        print(json.dumps(r, indent=1)[:3000])
+    elif a.cmd == "ab":
+        body = {"model": a.model, "video_b64": base64.b64encode(Path(a.video).read_bytes()).decode(),
+                "audio_b64": base64.b64encode(Path(a.audio).read_bytes()).decode()}
+        if a.steps:
+            body["steps"] = a.steps
+        cid = call("POST", "/ab/lipsync", body, timeout=300)["call_id"]
+        print("call", cid, flush=True)
+        r = wait(cid)
+        log({"op": a.model, "call_id": cid, "ok": r.get("ok"), "gpu_seconds": r.get("gpu_seconds"), "usd": r.get("usd")})
+        if not r.get("ok"):
+            print(r.get("log", "")[-3000:])
+            sys.exit(f"{a.model} failed")
+        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.out).write_bytes(base64.b64decode(r["video_b64"]))
+        print(f"wrote {a.out}  gpu {r.get('gpu_seconds')}s ≈ ${r.get('usd')}")
     elif a.cmd == "download":
         print(call("POST", "/download", {"variants": a.variants}))
     elif a.cmd == "wait":
