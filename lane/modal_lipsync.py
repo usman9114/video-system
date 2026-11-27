@@ -82,6 +82,7 @@ def main():
                     help='JSON file: [{"image","prompt","out","seconds"?,"seed"?,"orient"?,"focus_x"?,"focus_y"?}]')
     fw.add_argument("--steps", type=int, default=3)
     fw.add_argument("--fps", type=int, default=24)
+    fw.add_argument("--gpu", default="L40S", choices=["L40S", "H100"])
     a = ap.parse_args()
     if a.cmd == "fastwan-download":
         cid = call("POST", "/fastwan/download", {})["call_id"]
@@ -91,7 +92,7 @@ def main():
         return
     if a.cmd == "fastwan":
         items = json.loads(Path(a.items).read_text())
-        body = {"steps": a.steps, "fps": a.fps, "items": []}
+        body = {"steps": a.steps, "fps": a.fps, "gpu": a.gpu, "items": []}
         for it in items:
             b = {k: v for k, v in it.items() if k not in ("image", "out")}
             b["image_b64"] = base64.b64encode(Path(it["image"]).read_bytes()).decode()
@@ -99,7 +100,7 @@ def main():
         cid = call("POST", "/fastwan/batch", body, timeout=300)["call_id"]
         print("call", cid, flush=True)
         r = wait(cid, every=20, limit=3600)
-        log({"op": "fastwan", "n": len(items), "steps": a.steps, "call_id": cid, "ok": r.get("ok"),
+        log({"op": "fastwan", "gpu": a.gpu, "n": len(items), "steps": a.steps, "call_id": cid, "ok": r.get("ok"),
              "load_seconds": r.get("load_seconds"), "gpu_seconds": r.get("gpu_seconds"), "usd": r.get("usd")})
         if not r.get("ok"):
             print(str(r.get("log", r))[-3000:])

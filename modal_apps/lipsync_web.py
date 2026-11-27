@@ -168,7 +168,7 @@ def download_fastwan() -> dict:
 
 
 @app.function(image=fastwan_image, volumes={W: weights}, gpu="L40S", timeout=3600, scaledown_window=2)
-def fastwan_batch(items: list, steps: int = 3, fps: int = 24) -> dict:
+def fastwan_batch(items: list, steps: int = 3, fps: int = 24, gpu: str = "L40S") -> dict:
     """items: [{"image_b64", "prompt", "seconds"(3.5), "seed"}]. Loads the model ONCE, animates every photo.
     Returns per-item mp4 (b64) + timing. Distilled → guidance 1.0 (no CFG pass)."""
     import io
@@ -195,7 +195,7 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24) -> dict:
         from PIL import ImageOps
         img = ImageOps.fit(img, (W_, H_), method=Image.LANCZOS,
                            centering=(float(it.get("focus_x", 0.5)), float(it.get("focus_y", 0.5))))
-        n = int(round(it.get("seconds", 3.5) * fps / 4)) * 4 + 1
+        n = int(it["frames"]) if it.get("frames") else int(round(it.get("seconds", 3.5) * fps / 4)) * 4 + 1
         g = torch.Generator("cuda").manual_seed(int(it.get("seed", 42)))
         frames = pipe(image=img, prompt=it["prompt"], height=H_, width=W_, num_frames=n, num_inference_steps=steps,
                       guidance_scale=1.0, generator=g).frames[0]
@@ -204,7 +204,7 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24) -> dict:
                     "seconds": round(time.time() - t1, 1)})
     secs = time.time() - t0
     return {"ok": True, "items": out, "load_seconds": round(load_s, 1), "gpu_seconds": round(secs, 1),
-            "usd": round(secs * L40S_USD_PER_S, 3)}
+            "gpu": gpu, "usd": round(secs * (H100_USD_PER_S if gpu == "H100" else L40S_USD_PER_S), 3)}
 
 
 @app.function(image=api_image, secrets=[modal.Secret.from_name("lipsync-api-key")])
@@ -256,7 +256,11 @@ def api():
 
     @web.post("/fastwan/batch")
     def fastwan_run(body: dict):
-        return {"call_id": fastwan_batch.spawn(body["items"], int(body.get("steps", 3)), int(body.get("fps", 24))).object_id}
+        gpu = body.get("gpu", "L40S")
+        if gpu not in ("L40S", "H100"):
+            return {"error": "gpu must be L40S or H100"}
+        fn = fastwan_batch.with_options(gpu=gpu) if gpu != "L40S" else fastwan_batch
+        return {"call_id": fn.spawn(body["items"], int(body.get("steps", 3)), int(body.get("fps", 24)), gpu).object_id}
 
     @web.get("/result/{call_id}")
     def result(call_id: str):
