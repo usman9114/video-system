@@ -1,0 +1,15 @@
+{"op": "clone", "voice_id": "jwItKKDHu8LXzA2tIhdT", "chars": 0, "at": "2026-11-27T00:50:42Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 146, "credits": 146.0, "line": "00_same", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:56Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 146, "credits": 146.0, "line": "00_same", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:56Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 59, "credits": 59.0, "line": "01_hook", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:57Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 59, "credits": 59.0, "line": "01_hook", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:57Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 96, "credits": 96.0, "line": "02_pain", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:58Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 96, "credits": 96.0, "line": "02_pain", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:58Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 185, "credits": 185.0, "line": "03_who", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:50:59Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 185, "credits": 185.0, "line": "03_who", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:00Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 116, "credits": 116.0, "line": "04_more", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:01Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 116, "credits": 116.0, "line": "04_more", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:02Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 99, "credits": 99.0, "line": "05_value", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:02Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 99, "credits": 99.0, "line": "05_value", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:03Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 70, "credits": 70.0, "line": "06_cta", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:03Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 70, "credits": 70.0, "line": "06_cta", "take": 1, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T00:51:04Z"}

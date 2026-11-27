@@ -79,7 +79,7 @@ src = pathlib.Path(__file__).resolve().parent
 job = next((str(p.parent) for p in pathlib.Path("/kaggle/input").rglob("run.py")
             if (p.parent / ".kgpu_job").exists()), "")
 if not job:
-    job = inp
+    sys.exit("kgpu: job/run.py not mounted (dataset not attached?)")
 env = dict(os.environ, KGPU_INPUT=inp, KGPU_OUTPUT=out)
 print("kgpu: inputs at", inp or "(none)", "| job at", job, flush=True)
 subprocess.run("nvidia-smi --query-gpu=name,memory.total --format=csv || true", shell=True)
@@ -152,8 +152,12 @@ def cmd_run(a) -> None:
     if not (job_dir / "run.py").exists():
         sys.exit(f"kgpu: {job_dir}/run.py missing")
     slug = _slug(job_dir.name)
-    print(f"kgpu: uploading job + {len(a.input)} input(s) as private dataset {user}/{slug}-data ...", flush=True)
-    ds = _upload_bundle(api, user, job_dir, a.input, slug + "-data")
+    print(f"kgpu: uploading job + {len(a.input)} input(s) as a fresh private dataset ...", flush=True)
+    # a FRESH dataset per run: re-versioning one dataset races with Kaggle's processing (the notebook got the old
+    # version, or none at all). docs/LESSONS.md #36
+    run_id = format(int(time.time()) % 36 ** 5, "x")
+    ds = _upload_bundle(api, user, job_dir, a.input, f"{slug}-d{run_id}")
+    (WORK / "build" / slug / "last_dataset.txt").write_text(ds)
     k = WORK / "build" / slug / "kernel"
     shutil.rmtree(k, ignore_errors=True)
     k.mkdir(parents=True)
