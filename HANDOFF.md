@@ -4,7 +4,12 @@ Living status file. Every session updates it before ending, so any Claude accoun
 Also read: `docs/LESSONS.md` (58+ lessons, each fixed in code/config), `templates/production.json` (single source of truth for
 all settings + the owner's hard rules), `docs/optimization.md` (GPU cost playbook), `docs/ideas/trip-memories.md`.
 
-_Last updated: 2026-11-27 ~16:00 UTC (session ran out of context; handoff written on owner request)_
+_Last updated: 2026-11-27 ~16:45 UTC. Status below corrected to match the last 3 commits (SyncNet done, FastWan rejected)._
+
+> **Session check first.** A session WITHOUT env `upwork-video-system` (and without the repo linked through the Claude GitHub
+> App) can't do anything that matters here: kaggle/modal/elevenlabs/chatgpt hosts → 000, `git push` → 403 "not in this
+> session's authorized repository set". Check with: `curl -s -o /dev/null -w '%{http_code}' https://www.kaggle.com/` and
+> `git push --dry-run`. If either fails, stop and ask the owner to start a new session in that environment / link GitHub.
 
 ## Two projects in this repo
 1. **Upwork promo videos** (original brief `docs/BRIEF.md`): turn the owner's one talking-head video into 10 targeted
@@ -60,32 +65,37 @@ Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.g
       `sample-video.mp4` as a private Kaggle dataset `source-video`), (b) LatentSync 1.6 on Modal L40S at full settings (the T4 test
       was crippled to num_frames 6), (c) X-Dub. Owner picks by eye; config `lipsync` updated to the winner.
 - [ ] **v6 NOT yet approved by owner.** Sent to the owner in chat at handoff time with the caveat below.
-- [ ] **SyncNet gate** (`jobs/syncnet-eval`): fixed `scenedetect>=0.6.4` (repo needs `open_video`) and recursive input glob
-      (inputs land in a subfolder). Re-run: put REAL_original_footage.mp4 (from the first run's build dir or cut from plate),
-      `SYNC3_hookcta.mp4` (= `kaggle/work/lipsync/hookcta_sync3.mp4`) and the 6 v6 clips into one dir →
-      `bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25`. Then compare LSE-C vs real & sync-3 (gate ≥ 0.9× sync-3).
+- [x] **SyncNet gate DONE** (commit aae1ff8; scores in `templates/production.json` → lipsync.quality_gate): real 8.23,
+      sync-3 7.65, TBDub teacher v6 4.2-6.1 → **fails** the 0.9×sync-3 gate (only lines 02-05 have scores; short clips need padding to ≥100 frames).
+      Re-run only for new lip-sync candidates: same dir layout → `bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25`.
 ### Trip Memories: Greece (current work)
 - [x] Stage 1 ChatGPT analysis (5 in parallel): `trips/greece/analysis.json`.
 - [x] Stage 2 storyteller agent: `trips/greece/storyline.json` + **`trips/greece/storyline.md`** (12 scenes, 54.5 s,
       4 hero scenes = IMG_9270 Anafiotika, IMG_9282 Meteora, IMG_9444 Fiat, IMG_9268 graffiti lane; all others camera-move only;
       dropped 69a32a81 as near-duplicate).
 - [ ] **Owner must approve the storyline** (and answer: are the Acropolis photos from this trip? blur the Fiat's plate?).
-- [ ] Then: `python3 -m lane.modal_lipsync fastwan --items <json>` for the 4 hero photos (items: image, prompt, out, seconds 3.5,
-      seed, orient portrait for 9:16, focus_x/y). 2 seeds each. FastWan weights are DOWNLOADED on the Modal volume
-      (`/weights/fastwan/ti2v-5b`, 23 GB, 25 files, confirmed 2026-11-27). Measure $ + quality vs TI2V-5B (gate).
-- [ ] Realism gate on every hero clip (painted faces in IMG_9268 and plate text in IMG_9444 must not shimmer) → else camera move.
-- [ ] RIFE 24→30/60 fps (not built yet; Practical-RIFE MIT on Modal). Camera-move-only scenes render natively at 30 fps (no interpolation needed).
-- [ ] Trip renderer: new template in `scripts/promo.py` (or `scripts/trip/render.py`): **apply `ImageOps.exif_transpose`**
-      (5 photos are stored sideways, one mirrored, one flipped); 9:16 1080×1920; captions ≤7 words; dissolves at act breaks;
-      music bed; optional narration in owner's ElevenLabs voice (credits!).
+- [x] **FastWan hero clips: ran + REJECTED** by the realism gate (commit 7b6be72, LESSONS #65: repaints the scene, invents a
+      readable number plate; $0.19 for 8 clips). Config default for trips is now **real photo + camera move**. So the
+      storyline's 4 "hero (full AI animation)" scenes render as camera moves unless the owner OKs a full TI2V-5B gate test
+      (≈ $0.95/clip × 4 photos × 2 seeds ≈ $7.60 of Modal free credits; owner earlier called ~$10 "a lot") → ASK first.
+- [ ] RIFE: **not needed** for the camera-move-only cut (renders natively at 30 fps). Build only if a generative clip passes.
+- [x] Trip renderer exists: `scripts/trip/render.py trips/greece [--preview]` (EXIF transpose, plate blur from
+      `trips/greece/redact.json`, 9:16 1080×1920 30 fps, title, captions, dissolves, ducked music, grade+grain, narration).
+      Smoke-tested 2026-11-27 in `--preview` mode on stand-in photos with EXIF orientation 6 → upright, captions/title OK.
+      Full render (audio + mp4) not yet run on the real photos. Narration audio: ElevenLabs cache entries exist
+      (`kaggle/cache/elevenlabs/*.json`); the mp3s are gitignored → check they are in the media backup.
 ### Modal / optimisation
 - [x] Wan TI2V-5B and I2V-A14B work on Modal (owner prefers TI2V-5B). FastWan batch function deployed, with fixes:
       cover-crop (no 4:3→16:9 squash) and EXIF transpose (the transpose fix is in the last commit → auto-deploy).
 - [ ] Gate-test SageAttention2 / MagCache / FP8 / torch.compile+snapshots (docs/optimization.md). Batch TBDub calls.
 
 ## Next step for Claude (in order)
+0. Session check (top of file). Restore the media backup; copy the 13 Greece photos from Drive → `trips/greece/photos/`.
 1. Check the last Modal deploy succeeded (`gh run list --repo usman9114/video-system --limit 1`) and `python3 -m lane.modal_lipsync health`.
-2. Ask the owner for v6 feedback and storyline approval (show `trips/greece/storyline.md`).
-3. Re-run SyncNet (above) and report scores.
-4. After approval: FastWan hero clips → realism gate → RIFE → trip render → send to owner.
+   Note: the owner has a NEW `LIPSYNC_API_KEY` value that is not active yet (GitHub secret + deploy workflow + env network
+   secret must all get the same value; the owner does the GitHub/env parts himself).
+2. Get the owner's storyline approval (+ Acropolis-photos question, plate blur yes/no, hero scenes = camera moves OK?).
+3. Trip render (`scripts/trip/render.py trips/greece`, preview first) → owner's eye → send the mp4.
+4. n8n v6: the owner already rejected the lip-sync; run the lip-sync A/B on ONE line (full-res TBDub / LatentSync 1.6 L40S /
+   X-Dub) → SyncNet gate → owner picks → config `lipsync` → re-render v7.
 5. Commit + push after each step; update this file + docs/LESSONS.md before the session ends.
