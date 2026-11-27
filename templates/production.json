@@ -116,5 +116,35 @@
       "seeds_per_photo": 2,
       "why": "owner wants >=30 fps; TI2V-5B preferred"
     }
+  },
+  "inference_optimization": {
+    "policy": "always use the most resource-efficient setup that PASSES the quality gate (docs/optimization.md); never trade visible quality for cost",
+    "quality_gate": {
+      "ssim_min": 0.95,
+      "lpips_max": 0.05,
+      "face_identity_not_worse": true,
+      "syncnet_lse_c_drop_max_pct": 2
+    },
+    "defaults": {
+      "batch_per_session": true,
+      "no_cpu_offload_if_vram_fits": true,
+      "gpu_right_size": {
+        "<=48GB": "L40S",
+        ">48GB": "H100"
+      },
+      "photo_to_video_model": "FastWan2.2-TI2V-5B (3-step) once it passes the gate vs TI2V-5B; else TI2V-5B",
+      "lipsync_final": "TBDub teacher (owner quality pick); try MagCache/Sage only via gate",
+      "scaledown_window_s": 2
+    },
+    "candidates_to_gate": [
+      "SageAttention2",
+      "FlashAttention-3 (H100)",
+      "MagCache/TeaCache (many-step models only)",
+      "FP8 (torchao) on L40S/H100",
+      "torch.compile + Modal GPU memory snapshots"
+    ],
+    "not_possible": {
+      "overclocking": "no clock/driver control on cloud GPUs; per-second billing, so gains come from doing less work"
+    }
   }
 }
