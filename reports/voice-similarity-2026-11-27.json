@@ -1,0 +1,156 @@
+{
+ "per_clip": {
+  "chatterbox/00_same_t0.wav": {
+   "similarity": -0.026,
+   "f0_median_hz": 167.8,
+   "pitch_variation_semitones": 2.02,
+   "brightness_hz": 1258,
+   "voiced_ratio": 0.72
+  },
+  "chatterbox/01_hook_t0.wav": {
+   "similarity": 0.059,
+   "f0_median_hz": 163.0,
+   "pitch_variation_semitones": 1.84,
+   "brightness_hz": 1202,
+   "voiced_ratio": 0.77
+  },
+  "chatterbox/02_pain_t0.wav": {
+   "similarity": -0.036,
+   "f0_median_hz": 181.9,
+   "pitch_variation_semitones": 1.97,
+   "brightness_hz": 1468,
+   "voiced_ratio": 0.95
+  },
+  "chatterbox/03_who_t0.wav": {
+   "similarity": 0.007,
+   "f0_median_hz": 155.6,
+   "pitch_variation_semitones": 2.53,
+   "brightness_hz": 1166,
+   "voiced_ratio": 0.89
+  },
+  "chatterbox/04_more_t0.wav": {
+   "similarity": -0.026,
+   "f0_median_hz": 164.9,
+   "pitch_variation_semitones": 2.83,
+   "brightness_hz": 1183,
+   "voiced_ratio": 0.78
+  },
+  "chatterbox/05_value_t0.wav": {
+   "similarity": 0.012,
+   "f0_median_hz": 166.8,
+   "pitch_variation_semitones": 3.67,
+   "brightness_hz": 1420,
+   "voiced_ratio": 0.86
+  },
+  "chatterbox/06_cta_t0.wav": {
+   "similarity": 0.051,
+   "f0_median_hz": 163.0,
+   "pitch_variation_semitones": 2.08,
+   "brightness_hz": 1086,
+   "voiced_ratio": 0.92
+  },
+  "qwen3tts/01_hook_t0.wav": {
+   "similarity": 0.218,
+   "f0_median_hz": 93.1,
+   "pitch_variation_semitones": 3.19,
+   "brightness_hz": 1172,
+   "voiced_ratio": 0.82
+  },
+  "qwen3tts/02_pain_t0.wav": {
+   "similarity": 0.063,
+   "f0_median_hz": 98.0,
+   "pitch_variation_semitones": 3.07,
+   "brightness_hz": 1551,
+   "voiced_ratio": 0.76
+  },
+  "qwen3tts/03_who_t0.wav": {
+   "similarity": 0.088,
+   "f0_median_hz": 102.7,
+   "pitch_variation_semitones": 2.09,
+   "brightness_hz": 1571,
+   "voiced_ratio": 0.58
+  },
+  "qwen3tts/04_more_t0.wav": {
+   "similarity": 0.046,
+   "f0_median_hz": 94.7,
+   "pitch_variation_semitones": 2.95,
+   "brightness_hz": 1374,
+   "voiced_ratio": 0.7
+  },
+  "qwen3tts/05_value_t0.wav": {
+   "similarity": 0.08,
+   "f0_median_hz": 96.4,
+   "pitch_variation_semitones": 3.82,
+   "brightness_hz": 1340,
+   "voiced_ratio": 0.72
+  },
+  "qwen3tts/06_cta_t0.wav": {
+   "similarity": 0.093,
+   "f0_median_hz": 92.0,
+   "pitch_variation_semitones": 3.48,
+   "brightness_hz": 1537,
+   "voiced_ratio": 0.79
+  },
+  "real/real_0.wav": {
+   "similarity": 0.882,
+   "f0_median_hz": 108.5,
+   "pitch_variation_semitones": 1.98,
+   "brightness_hz": 1578,
+   "voiced_ratio": 0.77
+  },
+  "real/real_1.wav": {
+   "similarity": 0.902,
+   "f0_median_hz": 112.6,
+   "pitch_variation_semitones": 2.11,
+   "brightness_hz": 1252,
+   "voiced_ratio": 0.85
+  },
+  "real/real_2.wav": {
+   "similarity": 0.849,
+   "f0_median_hz": 112.6,
+   "pitch_variation_semitones": 2.8,
+   "brightness_hz": 1724,
+   "voiced_ratio": 0.69
+  },
+  "real/real_3.wav": {
+   "similarity": 0.884,
+   "f0_median_hz": 113.3,
+   "pitch_variation_semitones": 2.84,
+   "brightness_hz": 1596,
+   "voiced_ratio": 0.7
+  },
+  "real/real_4.wav": {
+   "similarity": 0.88,
+   "f0_median_hz": 117.9,
+   "pitch_variation_semitones": 2.5,
+   "brightness_hz": 1340,
+   "voiced_ratio": 0.73
+  }
+ },
+ "summary": {
+  "chatterbox": {
+   "clips": 7,
+   "similarity_mean": 0.006,
+   "similarity_min": -0.036,
+   "f0_median_hz": 164.9,
+   "pitch_variation_semitones": 2.42,
+   "brightness_hz": 1255
+  },
+  "qwen3tts": {
+   "clips": 6,
+   "similarity_mean": 0.098,
+   "similarity_min": 0.046,
+   "f0_median_hz": 95.6,
+   "pitch_variation_semitones": 3.1,
+   "brightness_hz": 1424
+  },
+  "real": {
+   "clips": 5,
+   "similarity_mean": 0.879,
+   "similarity_min": 0.849,
+   "f0_median_hz": 112.6,
+   "pitch_variation_semitones": 2.45,
+   "brightness_hz": 1498
+  }
+ }
+}

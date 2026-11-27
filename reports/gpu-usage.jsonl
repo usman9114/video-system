@@ -15,3 +15,11 @@
 {"job": "kgpu-voice-chatterbox", "event": "start", "gpu": true, "at": "2026-11-27T00:28:01Z"}
 {"job": "kgpu-voice-chatterbox", "event": "end", "status": "complete", "wall_s": 406, "at": "2026-11-27T00:34:54Z"}
 {"job": "kgpu-transcribe", "event": "start", "gpu": true, "at": "2026-11-27T00:35:58Z"}
+{"job": "kgpu-voice-similarity", "event": "start", "gpu": true, "at": "2026-11-27T00:42:43Z"}
+{"job": "kgpu-voice-similarity", "event": "end", "status": "error", "wall_s": 31, "at": "2026-11-27T00:43:14Z"}
+{"job": "kgpu-voice-similarity", "event": "start", "gpu": true, "at": "2026-11-27T00:43:28Z"}
+{"job": "kgpu-voice-similarity", "event": "end", "status": "error", "wall_s": 62, "at": "2026-11-27T00:44:30Z"}
+{"job": "kgpu-voice-similarity", "event": "start", "gpu": true, "at": "2026-11-27T00:44:46Z"}
+{"job": "kgpu-voice-similarity", "event": "end", "status": "error", "wall_s": 62, "at": "2026-11-27T00:45:48Z"}
+{"job": "kgpu-voice-similarity", "event": "start", "gpu": true, "at": "2026-11-27T00:46:04Z"}
+{"job": "kgpu-voice-similarity", "event": "end", "status": "complete", "wall_s": 93, "at": "2026-11-27T00:47:37Z"}
