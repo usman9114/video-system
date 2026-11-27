@@ -24,6 +24,9 @@ FONT_MED = "/usr/share/fonts/opentype/inter/Inter-Medium.otf"
 FONT_SEMI = "/usr/share/fonts/opentype/inter/Inter-SemiBold.otf"
 ACT_GAIN_DB = {"low": -24.0, "mid": -22.0, "high": -20.0}
 DUCK_DB = -31.0
+ZOOM = 1.08            # max zoom change of push/pull moves; storyline "max_zoom" overrides (v2 critic: <= 1.06)
+CAP_FADE = (0.4, 0.3)  # caption fade in/out seconds; storyline "caption_fade" overrides
+TITLE_BLUR, TITLE_DIM = 14, 0.45
 
 
 def ease(x: float) -> float:          # gentle ease-in-out, like a slider/gimbal move
@@ -79,8 +82,8 @@ def move_boxes(move: str, iw: int, ih: int, focus_x: float = 0.5, pan=None):
     if "tilt-up" in m or "tilt up" in m:
         return box(1.12, focus_x, 0.62), box(1.12, focus_x, 0.40)
     if "pull-out" in m or "pull out" in m:
-        return box(1.12, focus_x, 0.45), box(1.0, focus_x, 0.5)
-    return box(1.0, focus_x, 0.5), box(1.08, focus_x, 0.5)      # push-in (default)
+        return box(1.0 + (ZOOM - 1) * 1.5, focus_x, 0.45), box(1.0, focus_x, 0.5)
+    return box(1.0, focus_x, 0.5), box(ZOOM, focus_x, 0.5)      # push-in (default)
 
 
 def lerp_box(b0, b1, k):
@@ -153,7 +156,10 @@ def main():
     vo_dir = trip / "work/vo"
     acts = {x["name"]: x for x in sl["acts"]}
     music_cfg = sl.get("music", {})
-    global DISSOLVE, TITLE_S
+    global DISSOLVE, TITLE_S, ZOOM, CAP_FADE, TITLE_BLUR, TITLE_DIM
+    ZOOM = sl.get("max_zoom", ZOOM)
+    CAP_FADE = tuple(sl.get("caption_fade", CAP_FADE))
+    TITLE_BLUR, TITLE_DIM = sl.get("title_blur", TITLE_BLUR), sl.get("title_dim", TITLE_DIM)
     if music_cfg.get("bpm"):                         # cut on the beat: scene lengths, dissolve and title in beats
         from music_upbeat import beat
         bt = beat(music_cfg["bpm"])
@@ -209,7 +215,7 @@ def main():
 
     def caption_alpha(s, tt):
         a0, a1 = s["start"] + (0.9 if s["dissolve"] else 0.5), s["start"] + min(s["sc"]["seconds"], s["dur"]) - 0.35
-        return min(max((tt - a0) / 0.4, 0), 1) * min(max((a1 - tt) / 0.3, 0), 1)
+        return min(max((tt - a0) / CAP_FADE[0], 0), 1) * min(max((a1 - tt) / CAP_FADE[1], 0), 1)
 
     def frame(tt):
         live = [s for s in scenes if s["start"] <= tt < s["end"]] or [scenes[-1]]
@@ -229,8 +235,8 @@ def main():
         if title[0] <= tt < title[1]:               # title over the softened cold-open frame
             k_in = min(max((tt - title[0]) / DISSOLVE, 0), 1)
             k_out = min(max((title[1] - tt) / DISSOLVE, 0), 1)
-            base = scene_frame(scenes[0], tt).filter(ImageFilter.GaussianBlur(14))
-            base = Image.blend(base, Image.new("RGB", (W, H), (12, 12, 14)), 0.45)
+            base = scene_frame(scenes[0], tt).filter(ImageFilter.GaussianBlur(TITLE_BLUR))
+            base = Image.blend(base, Image.new("RGB", (W, H), (12, 12, 14)), TITLE_DIM)
             base = draw_caption(base, sl["title"], 1.0, big=True, y=H // 2 - 90)
             base = draw_caption(base, sl.get("subtitle", ""), 0.85, y=H // 2 + 30)
             img = Image.blend(img, base, ease(min(k_in, k_out)))

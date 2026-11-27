@@ -370,7 +370,11 @@ def api():
     @web.middleware("http")
     async def require_key(request: Request, call_next):
         if not hmac.compare_digest(request.headers.get("x-api-key", ""), key):
-            return JSONResponse({"error": "unauthorized"}, status_code=401)
+            # 6-hex sha256 fingerprint (24 bits, not enough to recover the key) so a mismatched client/server key is
+            # diagnosable without printing either value
+            import hashlib
+            return JSONResponse({"error": "unauthorized", "server_key_fp": hashlib.sha256(key.encode()).hexdigest()[:6],
+                                 "server_key_len": len(key)}, status_code=401)
         return await call_next(request)
 
     @web.get("/health")

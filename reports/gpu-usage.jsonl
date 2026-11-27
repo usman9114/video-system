@@ -50,3 +50,7 @@
 {"job": "kgpu-syncnet-eval", "event": "end", "status": "complete", "wall_s": 62, "at": "2026-11-27T15:52:46Z"}
 {"job": "kgpu-syncnet-eval", "event": "start", "gpu": true, "at": "2026-11-27T15:57:56Z"}
 {"job": "kgpu-syncnet-eval", "event": "end", "status": "complete", "wall_s": 245, "at": "2026-11-27T16:02:00Z"}
+{"job": "kgpu-transcribe", "event": "start", "gpu": true, "at": "2026-11-27T17:32:24Z"}
+{"job": "kgpu-transcribe", "event": "end", "status": "complete", "wall_s": 123, "at": "2026-11-27T17:34:27Z"}
+{"job": "kgpu-transcribe", "event": "start", "gpu": true, "at": "2026-11-27T17:35:11Z"}
+{"job": "kgpu-transcribe", "event": "end", "status": "complete", "wall_s": 430, "at": "2026-11-27T17:42:20Z"}

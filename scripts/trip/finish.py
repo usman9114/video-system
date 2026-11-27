@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """FFmpeg finishing pass for Trip Memories (open-source only, $0): film-look grade + pro audio ducking.
 
-Video: lut3d (a gentle film LUT generated here: soft S-curve, lifted blacks, cool shadows / warm highlights,
+Video: lut3d at 40% strength (a gentle film LUT generated here: soft S-curve, lifted blacks, cool shadows / warm highlights,
        -8% saturation in the extremes) + subtle vignette + light sharpening for phone viewing.
 Audio: music ducked under the voice with sidechaincompress (smooth, like an editor's ducking) instead of gain steps,
        a high-pass + presence lift on the voice, then EBU R128 loudnorm to -14 LUFS / -1.5 dBTP (social platforms).
@@ -39,11 +39,12 @@ def main():
     src, trip, out = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3])
     work = trip / "work"
     lut = film_lut(work / "film.cube")
-    vf = (f"lut3d=file={lut}:interp=tetrahedral,vignette=angle=PI/6:mode=forward,"
-          "unsharp=5:5:0.35:5:5:0.0,format=yuv420p")
+    # v2 critic: LUT at ~40% strength, saturation ~1.0, vignette 5-8%, mild unsharp
+    vf = (f"split[o][g];[g]lut3d=file={lut}:interp=tetrahedral[l];[o][l]blend=all_mode=normal:all_opacity=0.4,"
+          "eq=saturation=0.98,vignette=angle=PI/9:mode=forward,unsharp=3:3:0.3:3:3:0.0,format=yuv420p")
     af = ("[2:a]highpass=f=80,equalizer=f=3200:t=q:w=1.2:g=2,asplit=2[vo][key];"
-          "[1:a][key]sidechaincompress=threshold=0.02:ratio=9:attack=60:release=550:makeup=1[duck];"
-          "[duck][vo]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
+          "[1:a][key]sidechaincompress=threshold=0.05:ratio=3:attack=150:release=500:makeup=1[duck];"
+          "[duck][vo]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.79:level=false[a]")
     cmd = ["ffmpeg", "-v", "error", "-y", "-i", str(src), "-i", str(work / "stem_music.wav"), "-i",
            str(work / "stem_vo.wav"), "-filter_complex", f"[0:v]{vf}[v];{af}", "-map", "[v]", "-map", "[a]",
            "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-r", "30", "-c:a", "aac", "-b:a", "192k",
