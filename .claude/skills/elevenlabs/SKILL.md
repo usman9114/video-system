@@ -45,6 +45,12 @@ so `scripts/promo.py` captions use them directly, with **no Whisper run needed**
    take with the highest similarity. Bars: owner real-vs-real = 0.88; **ElevenLabs v1 clone = 0.51 (pitch 111.8 Hz vs
    owner 112.6, brightness 1515 vs 1498)**; Qwen 0.10; Chatterbox 0.01. The owner's ear is the final judge.
 
+## Credit budget (2026-11-27)
+- An accidental click in the ElevenLabs **web app** used about 27k credits. Balance after that: **about 11.4k until the about 27 Dec reset**.
+- `say` checks the live balance and refuses any run that would leave **< 2,000 credits** (`RESERVE`).
+- Default is **1 take per line**. Use a 2nd take only for a line that fails the similarity gate or the owner's ear.
+- Remind the owner: avoid one-click generation features in the web app (video/dubbing/studio projects) while credits are low.
+
 ## Credit optimisation
 - Cost ≈ characters × takes × (1.0 v2/v3 | 0.5 flash). One 40 s script ≈ 650 chars → 2 takes ≈ 1,300 credits.
   10 videos × 2 takes ≈ 13k credits: fits Starter (40k) with room for retakes.
