@@ -10,7 +10,7 @@ sh(f"git clone -q --depth 1 https://github.com/joonson/syncnet_python.git {T}")
 sh(f"{sys.executable} -m pip install -q 'scenedetect>=0.6.4' python_speech_features")
 sh(f"cd {T} && bash download_model.sh")
 res = {}
-for f in sorted(glob.glob(f"{INP}/*.mp4")):
+for f in sorted(glob.glob(f"{INP}/**/*.mp4", recursive=True)):
     name = os.path.splitext(os.path.basename(f))[0]
     # syncnet expects 25 fps
     sh(f"ffmpeg -v error -y -i {f} -r 25 -ar 16000 {T}/{name}.mp4")

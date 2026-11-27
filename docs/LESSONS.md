@@ -60,3 +60,11 @@
 | 56 | **Wan 2.2 I2V-A14B first test** (real frame of the owner → "slow dolly-in, smile, nod"): 960×944 @ 16 fps, 5 s, **1,667 s on an H100 ≈ $1.83** (above the $1-1.50 estimate). The scene and lighting stay convincing, but it **ignored the dolly-in** (it swung the camera) and the **face identity drifts** (exaggerated smile/squint). Not usable for close face shots of the owner (brief: no synthetic-looking face). Possible use: wide or no-face B-roll. | `broll/wan/` |
 | 57 | **Wan 2.2 TI2V-5B** (same test): 960×928 @ 24 fps, 1,746 s on an L40S ≈ $0.95; smoother motion than A14B, but the **face drifts too** and it ignores the dolly-in. Verdict, saved in config `generative_video`: Wan stays experimental, **no-face B-roll only**, never for the owner's face. | `templates/production.json` |
 | 58 | **Owner rule: realism first.** Nothing may give away that it's AI; realism outranks cost and effects. Every AI-touched shot passes a realism gate (identity, SyncNet vs real footage, a ChatGPT-vision "AI tells" review of sampled frames, the owner's eye). On fail → use the real footage/photo with a real-camera-style move. | `templates/production.json` `realism_gate` |
+
+## 2026-11-27 (late)
+59. **Never run `python -m lane.kgpu` from the repo root**: the repo's `kaggle/` folder shadows the `kaggle` package. Use `bin/kgpu` (its `.venv`).
+60. **syncnet_python now needs scenedetect ≥ 0.6** (`open_video`); 0.5.1 made run_pipeline crash silently → every score None.
+61. **kgpu `--input <dir>` lands inside a subfolder** of `$KGPU_INPUT`; jobs must glob recursively.
+62. **Phone photos carry EXIF orientation**: always `ImageOps.exif_transpose` before cropping/animating (Greece set: 5 sideways, 1 mirrored, 1 flipped).
+63. **Never `resize()` a 4:3 photo to the model's 16:9**: cover-crop (`ImageOps.fit`) with a focus point.
+64. **Gitignored media dies with the container**: back it up to a private Kaggle dataset (Drive connector uploads cap ~3 MB).
