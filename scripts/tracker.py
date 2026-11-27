@@ -6,13 +6,14 @@
   python3 scripts/tracker.py move T02 doing            # lists: blocked todo doing review done
   python3 scripts/tracker.py note T02 "what happened"  # dated note
   python3 scripts/tracker.py render                    # rewrite BOARD.md only
-Commit tracker/ with your work.
+Commit tracker/ with your work, then re-publish tracker/board.html to the board artifact (URL in tracker/board.json -> artifact_url).
 """
 import argparse, datetime, json, pathlib, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BOARD = ROOT / "tracker" / "board.json"
 MD = ROOT / "tracker" / "BOARD.md"
+HTML = ROOT / "tracker" / "board.html"  # published as the board artifact; built from board_template.html
 TITLES = {"blocked": "Blocked", "todo": "To do", "doing": "In progress", "review": "Waiting on owner review", "done": "Done"}
 
 
@@ -46,6 +47,8 @@ def render(b):
             out += [f"  - {n}" for n in c.get("notes", [])]
         out.append("")
     MD.write_text("\n".join(out))
+    data = json.dumps(b, ensure_ascii=False).replace("</", "<\\/")
+    HTML.write_text((ROOT / "tracker" / "board_template.html").read_text().replace("__BOARD_JSON__", data))
 
 
 def main():

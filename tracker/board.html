@@ -1,0 +1,84 @@
+<title>Video System Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one horizontal row of lists (kanban), stacking to one column on phones. Cards read like slate notes. */
+:root {
+  --bg: #f3f4f2; --col: #e7e9e5; --card: #ffffff; --fg: #1d2420; --muted: #5d6762; --line: #d3d7d2;
+  --accent: #2f6f5e; --blocked: #b3412f; --review: #a8761b; --done: #4f7d4a; --owner-bg: #fbeee0; --owner-fg: #8a4b12;
+  --sans: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151a18; --col: #1d2421; --card: #252d2a; --fg: #e4e9e6; --muted: #9aa5a0; --line: #34403b;
+  --accent: #6fbfa6; --blocked: #e57c68; --review: #dcac55; --done: #8cc285; --owner-bg: #3a2a1a; --owner-fg: #f0b77c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #151a18; --col: #1d2421; --card: #252d2a; --fg: #e4e9e6; --muted: #9aa5a0; --line: #34403b;
+  --accent: #6fbfa6; --blocked: #e57c68; --review: #dcac55; --done: #8cc285; --owner-bg: #3a2a1a; --owner-fg: #f0b77c; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 32px; }
+header { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; margin-bottom: 14px; }
+h1 { font-size: 20px; font-weight: 600; margin: 0; text-wrap: balance; }
+.meta { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+.about { color: var(--muted); max-width: 70ch; margin: 0 0 16px; line-height: 1.5; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.filters button { font: 500 12px var(--sans); border: 1px solid var(--line); background: var(--card); color: var(--fg); padding: 5px 10px; border-radius: 999px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.filters button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.board { display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr)); gap: 12px; overflow-x: auto; align-items: start; }
+@media (max-width: 760px) { .board { grid-template-columns: 1fr; } }
+.list { background: var(--col); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.list h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; margin: 2px 4px 4px; display: flex; justify-content: space-between; color: var(--muted); }
+.list h2 .n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.list[data-l="blocked"] h2 .t { color: var(--blocked); } .list[data-l="review"] h2 .t { color: var(--review); }
+.list[data-l="done"] h2 .t { color: var(--done); } .list[data-l="doing"] h2 .t { color: var(--accent); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 9px 10px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.top { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.id { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.chip { font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.chip.owner { background: var(--owner-bg); color: var(--owner-fg); border-color: transparent; }
+.title { line-height: 1.4; overflow-wrap: anywhere; }
+.after { font-size: 12px; color: var(--muted); }
+details { font-size: 12px; color: var(--muted); }
+summary { cursor: pointer; }
+details ul { margin: 6px 0 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
+details li { overflow-wrap: anywhere; line-height: 1.45; }
+details code { font-family: var(--mono); font-size: 11px; }
+.empty { color: var(--muted); font-size: 12px; padding: 4px; }
+</style>
+<div class="wrap">
+  <header><h1>Video System Board</h1><span class="meta" id="meta"></span></header>
+  <p class="about" id="about"></p>
+  <div class="filters" id="filters" role="group" aria-label="Filter by project"></div>
+  <div class="board" id="board"></div>
+</div>
+<script id="data" type="application/json">{"about": "Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.", "lists": ["blocked", "todo", "doing", "review", "done"], "cards": [{"id": "T01", "title": "Fix Modal lip-sync API key mismatch", "list": "blocked", "project": "infra", "needs_owner": true, "notes": ["2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value."]}, {"id": "T02", "title": "Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res", "list": "blocked", "project": "n8n", "needs_owner": false, "blocked_by": ["T01"], "notes": ["python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3", "TBDub full-res needs owner's sample-video.mp4 (60 MB original)."]}, {"id": "T03", "title": "SyncNet-gate the A/B clips, side-by-side, owner picks winner", "list": "todo", "project": "n8n", "blocked_by": ["T02"], "notes": ["bin/kgpu run jobs/syncnet-eval --input <dir> --timeout-min 25. Gate: >= 0.9 x sync-3 (7.65)."]}, {"id": "T04", "title": "Render n8n video v7 with the winning lip-sync", "list": "todo", "project": "n8n", "blocked_by": ["T03"], "notes": ["Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final"]}, {"id": "T05", "title": "Get gig texts for Upwork videos 2-10", "list": "todo", "project": "upwork", "needs_owner": true, "notes": []}, {"id": "T06", "title": "Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)", "list": "blocked", "project": "greece", "needs_owner": true, "notes": ["Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.", "2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names)."]}, {"id": "T07", "title": "Owner feedback on Greece film v1", "list": "review", "project": "greece", "needs_owner": true, "notes": ["v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container."]}, {"id": "T08", "title": "Back up every export to the Kaggle media-backup dataset right after rendering", "list": "todo", "project": "infra", "notes": ["trip_greece.mp4 was lost this way (LESSONS #64)."]}, {"id": "T09", "title": "Ask owner: TI2V-5B gate test on 4 Greece hero scenes (~$7.60 Modal credits)?", "list": "todo", "project": "greece", "needs_owner": true, "notes": ["Default is real photo + camera move (FastWan rejected, LESSONS #65)."]}, {"id": "T10", "title": "Gate-test SageAttention2 / MagCache / FP8 / torch.compile; batch TBDub calls", "list": "todo", "project": "infra", "notes": ["docs/optimization.md"]}, {"id": "T11", "title": "Merge greece-v2 branch into main", "list": "todo", "project": "infra", "needs_owner": true, "notes": ["Holds X-Dub image fixes, Wan2.2 I2V batch endpoint, Greece v2 tools, 401 key fingerprint."]}, {"id": "D01", "title": "n8n v6 rendered (46 s, -14 LUFS); owner rejected lip-sync", "list": "done", "project": "n8n", "notes": ["exports/01_n8n_automation_v6.mp4 in Kaggle backup"]}, {"id": "D02", "title": "SyncNet baselines: real 8.23, sync-3 7.65, TBDub v6 4.2-6.1 (fails)", "list": "done", "project": "n8n", "notes": []}, {"id": "D03", "title": "Greece analysis + storyline (12 scenes, 54.5 s), approved by owner", "list": "done", "project": "greece", "notes": ["trips/greece/storyline.md"]}, {"id": "D04", "title": "Greece film v1 rendered and sent", "list": "done", "project": "greece", "notes": []}, {"id": "D05", "title": "FastWan hero clips tested, rejected by realism gate", "list": "done", "project": "greece", "notes": ["LESSONS #65"]}, {"id": "D06", "title": "Modal deploy fixed (Python 3.11 images, X-Dub opencv/numpy/mmcv)", "list": "done", "project": "infra", "notes": ["PRs #3, #4 + greece-v2 commits; deploy runs 19-21 green"]}, {"id": "D07", "title": "Personal cloud env 'video-system' created with all project hosts", "list": "done", "project": "infra", "notes": ["2026-11-27. Start new sessions in this env."]}, {"id": "T12", "title": "Re-render Greece v1 (master lost) once photos are uploaded", "list": "blocked", "project": "greece", "needs_owner": true, "blocked_by": [], "notes": ["2026-11-27: Owner chose re-render: upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder."]}], "updated": "2026-11-27 19:28 UTC", "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"}</script>
+<script>
+const B = JSON.parse(document.getElementById('data').textContent);
+const T = {blocked: 'Blocked', todo: 'To do', doing: 'In progress', review: 'Owner review', done: 'Done'};
+document.getElementById('meta').textContent = 'Updated ' + (B.updated || '?') + ' · ' + B.cards.length + ' cards';
+document.getElementById('about').textContent = B.about;
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+let proj = 'all';
+try { proj = localStorage.getItem('proj') || 'all'; } catch (e) {}
+const projects = ['all', ...new Set(B.cards.map(c => c.project))];
+if (!projects.includes(proj)) proj = 'all';
+function draw() {
+  document.getElementById('filters').innerHTML = projects.map(p =>
+    `<button type="button" data-p="${esc(p)}" aria-pressed="${p === proj}">${p === 'all' ? 'All projects' : esc(p)}</button>`).join('');
+  document.getElementById('board').innerHTML = B.lists.map(l => {
+    const cs = B.cards.filter(c => c.list === l && (proj === 'all' || c.project === proj));
+    return `<section class="list" data-l="${l}"><h2><span class="t">${T[l] || l}</span><span class="n">${cs.length}</span></h2>` +
+      (cs.length ? cs.map(c => `<article class="card"><div class="top"><span class="id">${c.id}</span><span class="chip">${esc(c.project || '')}</span>` +
+        (c.needs_owner ? '<span class="chip owner">needs owner</span>' : '') + `</div><div class="title">${fmt(c.title)}</div>` +
+        (c.blocked_by && c.blocked_by.length ? `<div class="after">After ${c.blocked_by.join(', ')}</div>` : '') +
+        (c.notes && c.notes.length ? `<details><summary>${c.notes.length} note${c.notes.length > 1 ? 's' : ''}</summary><ul>${c.notes.map(n => `<li>${fmt(n)}</li>`).join('')}</ul></details>` : '') +
+        '</article>').join('') : '<div class="empty">Nothing here</div>') + '</section>';
+  }).join('');
+}
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  proj = b.dataset.p; try { localStorage.setItem('proj', proj); } catch (e) {} draw();
+});
+draw();
+</script>

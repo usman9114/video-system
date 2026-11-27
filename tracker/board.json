@@ -181,7 +181,19 @@
       "notes": [
         "2026-11-27. Start new sessions in this env."
       ]
+    },
+    {
+      "id": "T12",
+      "title": "Re-render Greece v1 (master lost) once photos are uploaded",
+      "list": "blocked",
+      "project": "greece",
+      "needs_owner": true,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-27: Owner chose re-render: upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder."
+      ]
     }
   ],
-  "updated": "2026-11-27 19:27 UTC"
+  "updated": "2026-11-27 19:28 UTC",
+  "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }

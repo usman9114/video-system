@@ -1,10 +1,10 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:27 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:28 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
-## Blocked (3)
+## Blocked (4)
 
 - **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
   - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
@@ -14,6 +14,8 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
+- **T12** Re-render Greece v1 (master lost) once photos are uploaded  _(greece · needs owner)_
+  - 2026-11-27: Owner chose re-render: upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
 
 ## To do (7)
 
