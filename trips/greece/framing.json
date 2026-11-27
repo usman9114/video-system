@@ -1,0 +1,13 @@
+{
+ "_doc": "Per-photo framing checked by eye on the --preview frames. focus_x = horizontal centre of the 9:16 crop (0..1, upright coords) so faces are never cut; pan_x = [start, end] centres for lateral moves; orientation = EXIF orientation to use instead of the file's tag (IMG_9313: selfie tagged 'mirror' but pixels already read correctly).",
+ "focus_x": {},
+ "pan_x": {
+  "IMG_9451": [
+   0.36,
+   0.44
+  ]
+ },
+ "orientation": {
+  "IMG_9313": 1
+ }
+}
