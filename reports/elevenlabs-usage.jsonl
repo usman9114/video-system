@@ -40,3 +40,6 @@
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 129, "credits": 129.0, "line": "11_IMG_9421", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T20:19:43Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 122, "credits": 122.0, "line": "sample_zeus", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T22:16:45Z"}
 {"op": "tts", "model": "eleven_multilingual_v2", "chars": 184, "credits": 184.0, "line": "sample_caryatids", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T22:20:20Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 131, "credits": 131.0, "line": "seq1_caryatids", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T23:11:38Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 126, "credits": 126.0, "line": "seq2_meteora", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T23:11:38Z"}
+{"op": "tts", "model": "eleven_multilingual_v2", "chars": 98, "credits": 98.0, "line": "seq3_drive", "take": 0, "voice_id": "jwItKKDHu8LXzA2tIhdT", "at": "2026-11-27T23:11:39Z"}
