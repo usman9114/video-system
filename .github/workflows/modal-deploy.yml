@@ -1,7 +1,8 @@
 name: Deploy Modal lip-sync API
 
 # Deploys modal_apps/lipsync_web.py to Modal. Needed because the Claude cloud session's proxy can't speak gRPC.
-# Requires repo secrets MODAL_TOKEN_ID and MODAL_TOKEN_SECRET (Settings → Secrets and variables → Actions).
+# Requires repo secrets MODAL_TOKEN_ID, MODAL_TOKEN_SECRET and LIPSYNC_API_KEY (Settings → Secrets and variables → Actions).
+# LIPSYNC_API_KEY is copied into the Modal secret "lipsync-api-key" (API_KEY) that guards the HTTPS API.
 on:
   workflow_dispatch:
   push:
@@ -18,6 +19,14 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install "modal==1.6.4"
+      - name: Sync API key into Modal secret
+        run: |
+          if [ -z "$LIPSYNC_API_KEY" ]; then echo "::error::repo secret LIPSYNC_API_KEY is missing"; exit 1; fi
+          modal secret create lipsync-api-key API_KEY="$LIPSYNC_API_KEY" --force > /dev/null
+        env:
+          LIPSYNC_API_KEY: ${{ secrets.LIPSYNC_API_KEY }}
+          MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+          MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
       - run: modal deploy modal_apps/lipsync_web.py
         env:
           MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}

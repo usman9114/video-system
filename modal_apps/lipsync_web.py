@@ -2,8 +2,9 @@
 
 Deploy (from GitHub Actions or a laptop with the Modal CLI, NOT from the Claude cloud session):
     modal deploy modal_apps/lipsync_web.py
-→ one fixed URL: https://<workspace>--video-system-lipsync-api.modal.run  (requires a Modal proxy auth token:
-  headers Modal-Key / Modal-Secret).
+→ one fixed URL: https://<workspace>--video-system-lipsync-api.<region>.modal.run
+Auth: header `x-api-key` must equal API_KEY from the Modal secret "lipsync-api-key" (created by the GitHub Actions
+deploy from repo secret LIPSYNC_API_KEY; the Claude session sends it via a proxy-injected network secret).
 
 Routes:
   POST /download            {"variants": "student,teacher"}            → {"call_id"}  (CPU; fills the weights Volume)
@@ -77,12 +78,23 @@ def tbdub(video: bytes, audio: bytes, mode: str = "student") -> dict:
             "log": (r.stdout + r.stderr)[-4000:], "gpu_seconds": round(secs, 1), "usd": round(secs * L40S_USD_PER_S, 3)}
 
 
-@app.function(image=api_image)
-@modal.asgi_app(requires_proxy_auth=True)
+@app.function(image=api_image, secrets=[modal.Secret.from_name("lipsync-api-key")])
+@modal.asgi_app()
 def api():
-    from fastapi import FastAPI
+    import hmac
+    import os
+
+    from fastapi import FastAPI, Request
+    from fastapi.responses import JSONResponse
 
     web = FastAPI()
+    key = os.environ["API_KEY"]
+
+    @web.middleware("http")
+    async def require_key(request: Request, call_next):
+        if not hmac.compare_digest(request.headers.get("x-api-key", ""), key):
+            return JSONResponse({"error": "unauthorized"}, status_code=401)
+        return await call_next(request)
 
     @web.get("/health")
     def health():
