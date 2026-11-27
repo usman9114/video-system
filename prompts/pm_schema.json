@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ops", "next_actions", "owner_questions", "risks"],
+  "properties": {
+    "ops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["op", "id", "list", "text", "title", "project", "needs_owner", "blocked_by"],
+        "properties": {
+          "op": {"type": "string", "enum": ["move", "note", "add"]},
+          "id": {"type": "string", "description": "card id for move/note, empty for add"},
+          "list": {"type": "string", "enum": ["blocked", "todo", "doing", "review", "done", ""]},
+          "text": {"type": "string", "description": "note text for note/add"},
+          "title": {"type": "string", "description": "title for add"},
+          "project": {"type": "string"},
+          "needs_owner": {"type": "boolean"},
+          "blocked_by": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "next_actions": {"type": "array", "items": {"type": "string"}},
+    "owner_questions": {"type": "array", "items": {"type": "string"}},
+    "risks": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,23 +1,21 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:34 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 19:58 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
 ## Blocked (4)
 
-- **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
-  - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
-  - 2026-11-27: Re-checked: still 401, same fingerprints. Kaggle OK (usmanqureshi94), ElevenLabs OK (Starter, 28,969 of 40,000 chars used), GitHub push OK.
-  - 2026-11-27: Owner may create a new key: new value -> GitHub secret LIPSYNC_API_KEY -> re-run deploy -> session gets it via secure credential form (host nubuqqrr--video-system-lipsync-api.us-east.modal.run, header x-api-key).
 - **T02** Lip-sync A/B on line 03_who: LatentSync 1.6 / X-Dub / TBDub full-res  _(n8n · after T01)_
   - python3 -m lane.modal_lipsync ab-download --model latentsync16|xdub, then ab --model ... --video kaggle/work/lipsync/01_n8n_automation_v6/03_who_src.mp4 --audio assets/voice/01_n8n/03_who.mp3
   - TBDub full-res needs owner's sample-video.mp4 (60 MB original).
+  - 2026-11-27: Owner 2026-11-27 (late): believes a newer, better lip-sync approach was already tried before this session, and the n8n video was 'quite good already' after a GPT review; Greece v2 was underway. NOT found in repo/Kaggle/other sessions (only this session exists). LatentSync 1.6 test clip made anyway (work/ab/03_who_latentsync16.mp4, $0.27 Modal), unscored. PAUSE further lip-sync spend until owner says which approach.
 - **T06** Greece film v2: render with finishing tools (upbeat music, beat cuts, VO breathing, FFmpeg finish)  _(greece · needs owner)_
   - Tools in scripts/trip/{music_upbeat,vo_breathe,finish}.py + render.py, never run on real photos.
   - 2026-11-27: blocked, no Drive connector or linked computer in session; owner must upload the 13 photos to trips/greece/photos/ (names = Drive names).
 - **T12** Re-render Greece v1 (master lost) once photos are uploaded  _(greece · needs owner)_
   - 2026-11-27: Needs the owner to upload the 13 Greece photos (Drive upwork-video-system/trips/) into this chat or a linked folder.
+- **T16** Owner to identify the newer/better approach tried earlier (name, or file/chat) so it can be recorded and reused  _(n8n · needs owner)_
 
 ## To do (9)
 
@@ -46,8 +44,14 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
-## Done (10)
+## Done (11)
 
+- **T01** Fix Modal lip-sync API key mismatch  _(infra · needs owner)_
+  - 2026-11-27: /health 401. Server key 51 chars fp c2c204; session LIPSYNC_API_KEY 43 chars fp e6ea20. Owner: set GitHub secret LIPSYNC_API_KEY to the session value + re-run 'Deploy Modal lip-sync API', or give the session the 51-char value.
+  - 2026-11-27: Re-checked: still 401, same fingerprints. Kaggle OK (usmanqureshi94), ElevenLabs OK (Starter, 28,969 of 40,000 chars used), GitHub push OK.
+  - 2026-11-27: Owner may create a new key: new value -> GitHub secret LIPSYNC_API_KEY -> re-run deploy -> session gets it via secure credential form (host nubuqqrr--video-system-lipsync-api.us-east.modal.run, header x-api-key).
+  - 2026-11-27: blocked -> done
+  - 2026-11-27: Fixed 2026-11-27: owner set new GitHub secret, deploy re-run, /health ok, key saved in session via credential form.
 - **D01** n8n v6 rendered (46 s, -14 LUFS); owner rejected lip-sync  _(n8n)_
   - exports/01_n8n_automation_v6.mp4 in Kaggle backup
 - **D02** SyncNet baselines: real 8.23, sync-3 7.65, TBDub v6 4.2-6.1 (fails)  _(n8n)_

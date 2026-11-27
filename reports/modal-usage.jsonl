@@ -18,3 +18,4 @@
 {"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ESAS9BN5NBT0BVKC2WJ4DJ", "ok": true, "gpu_seconds": 395.3, "usd": 0.214, "at": "2026-11-27T15:29:05Z"}
 {"op": "tbdub", "mode": "teacher", "call_id": "fc-01M8ESAT7WTXFQG0006ZAKH6V8", "ok": true, "gpu_seconds": 505.1, "usd": 0.274, "at": "2026-11-27T15:32:45Z"}
 {"op": "fastwan", "gpu": "H100", "n": 8, "steps": 3, "call_id": "fc-01M8EWQ6D3HN6XD5WRRG4RR685", "ok": true, "load_seconds": 19.8, "gpu_seconds": 175.1, "usd": 0.192, "at": "2026-11-27T16:20:17Z"}
+{"op": "latentsync16", "call_id": "fc-01M8F8V0FRVJRCG81QG27A2G1P", "ok": true, "gpu_seconds": 491.5, "usd": 0.266, "at": "2026-11-27T19:57:01Z"}
