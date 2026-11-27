@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:11 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 20:13 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -51,6 +51,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Drive photos: this session has NO Google Drive connector (ListConnectors empty; registry shows Google Drive not installed). Owner to connect Google Drive in claude.ai connectors and start a new session in env video-system, or upload photos.
   - 2026-11-27: Photos in place, preview at exports/trip_greece. Waiting M1: owner OK on preview, then full render + finish.py + final_cut + backup.
   - 2026-11-27: blocked -> review
+  - 2026-11-27: Owner 2026-11-27: Greece should feel like a Netflix documentary. Plain full render stopped. ChatGPT spec: trips/greece/doc_style.md (serif place+date captions at act starts, dark title card, 0.45 s dissolves, fades to black at act breaks, 1.045 slow zoom, piano/pad/drone ~80 bpm, sat 0.95 warm). Sonnet agent implementing; preview first.
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
 
