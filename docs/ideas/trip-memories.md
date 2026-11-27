@@ -12,6 +12,17 @@ A 45-75 s film, 9:16 (Reels/TikTok) + 16:9 (YouTube), 30 fps (60 optional):
 4. **Route moment** (if photos have GPS): a stylised map with the route drawing itself between stops.
 5. **Ending**: a slow push-in on a reflective photo + *"Until next time."*
 
+## Owner's workflow idea (2026-11-27): AI does the research and the storytelling
+The traveller only gives photos + a one-line hint ("my trip to Athens, May 2026").
+1. **Photo analyst (ChatGPT, vision, 5 photos in parallel):** `scripts/trip/analyze_photos.py` → per photo: place guess
+   + confidence, what we see, mood, story-beat ideas, camera move, animation prompt, caption options, facts to verify
+   (strict JSON schema `scripts/trip/photo_schema.json`; EXIF date/GPS included).
+2. **Storyteller (separate Claude agent):** `prompts/storyteller.md` → builds the arc, acts, narrative turns, pacing,
+   captions/narration, music energy, hero vs parallax scenes → `storyline.json`. Hard honesty rules: no uncertain
+   places/facts stated as fact.
+3. Owner approves the storyline → render (below).
+Upload folder: Drive `upwork-video-system/trips/<trip-name>/`.
+
 ## Pipeline (every piece already exists in this repo, except where marked NEW)
 | Step | Tool | Status |
 |---|---|---|
