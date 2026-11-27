@@ -93,7 +93,7 @@ Environment allowed hosts to recreate: api.kaggle.com, www.kaggle.com, storage.g
       cover-crop (no 4:3→16:9 squash) and EXIF transpose (the transpose fix is in the last commit → auto-deploy).
 - [ ] Gate-test SageAttention2 / MagCache / FP8 / torch.compile+snapshots (docs/optimization.md). Batch TBDub calls.
 
-## Next step for Claude (in order) — updated 2026-11-27 17:20 UTC
+## Next steps (in order) — updated 2026-11-27 17:20 UTC
 A. Owner merges PR #2 (branch `greece-film`) → Modal redeploy with the new LIPSYNC_API_KEY + LatentSync 1.6 / X-Dub routes.
    Needs a FRESH session (env secrets only load at session start). Then: `python3 -m lane.modal_lipsync health`,
    `ab-download --model latentsync16` / `--model xdub`, then `ab --model ... --video <one line src> --audio <line mp3>`
