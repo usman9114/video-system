@@ -146,6 +146,46 @@ def wan_i2v_a14b(prompt: str, image: bytes = b"", size: str = "1280*720", frame_
                          ["--offload_model", "True", "--convert_model_dtype"], H100_USD_PER_S)
 
 
+@app.function(image=wan_image, volumes={W: weights}, gpu="H100", timeout=6 * 3600, scaledown_window=2)
+def wan_i2v_a14b_batch(items: list, steps: int = 40, frame_num: int = 81) -> dict:
+    """Greece v2 realism animation, BATCHED (owner 2026-11-27: billed per container time, so keep the GPU busy):
+    load Wan2.2 I2V-A14B ONCE, then animate every item back to back. Each clip is compute-bound at 720p, so one
+    clip at a time already saturates the H100. items: [{"image_b64", "prompt", "seed"?, "orient"? ("portrait"),
+    "focus_x"?, "focus_y"?, "n_prompt"?}]. The photo is cover-cropped to 720x1280 (9:16) BEFORE animation so the
+    model spends every pixel on the frame the film shows. Output 16 fps (model native); interpolation is done later."""
+    import io
+    import sys
+    sys.path.insert(0, "/opt/Wan2.2")
+    import wan
+    from PIL import Image, ImageOps
+    from wan.configs import WAN_CONFIGS
+    from wan.utils.utils import save_video
+    cfg = WAN_CONFIGS["i2v-A14B"]
+    t0 = time.time()
+    pipe = wan.WanI2V(config=cfg, checkpoint_dir=f"{W}/wan/i2v-A14B", device_id=0, rank=0, convert_model_dtype=True)
+    load_s = time.time() - t0
+    out = []
+    for it in items:
+        t1 = time.time()
+        img = ImageOps.exif_transpose(Image.open(io.BytesIO(base64.b64decode(it["image_b64"])))).convert("RGB")
+        orient = it.get("orient", "portrait")
+        W_, H_ = (720, 1280) if orient == "portrait" else (1280, 720)
+        img = ImageOps.fit(img, (W_, H_), method=Image.LANCZOS,
+                           centering=(float(it.get("focus_x", 0.5)), float(it.get("focus_y", 0.5))))
+        kw = {"n_prompt": it["n_prompt"]} if it.get("n_prompt") else {}
+        video = pipe.generate(it["prompt"], img, max_area=W_ * H_, frame_num=frame_num, shift=cfg.sample_shift,
+                              sample_solver="unipc", sampling_steps=steps, guide_scale=cfg.sample_guide_scale,
+                              seed=int(it.get("seed", 42)), offload_model=False, **kw)
+        save_video(tensor=video[None], save_file="/tmp/clip.mp4", fps=cfg.sample_fps, nrow=1, normalize=True,
+                   value_range=(-1, 1))
+        del video
+        out.append({"video_b64": base64.b64encode(Path("/tmp/clip.mp4").read_bytes()).decode(), "frames": frame_num,
+                    "fps": cfg.sample_fps, "seconds": round(time.time() - t1, 1)})
+    secs = time.time() - t0
+    return {"ok": True, "items": out, "load_seconds": round(load_s, 1), "gpu_seconds": round(secs, 1), "gpu": "H100",
+            "usd": round(secs * H100_USD_PER_S, 3)}
+
+
 # ---------------- FastWan2.2-TI2V-5B (FastVideo, Apache-2.0): 3-step distilled TI2V-5B, BATCHED (cost-optimised) --------
 FASTWAN_REPO = "FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers"
 fastwan_image = (
@@ -355,6 +395,11 @@ def api():
         kw = {k: body[k] for k in ("size", "frame_num", "steps", "seed") if k in body}
         img = base64.b64decode(body["image_b64"]) if body.get("image_b64") else b""
         return {"call_id": fn.spawn(body["prompt"], img, **kw).object_id}
+
+    @web.post("/wan/batch")
+    def wan_batch(body: dict):
+        return {"call_id": wan_i2v_a14b_batch.spawn(body["items"], int(body.get("steps", 40)),
+                                                   int(body.get("frame_num", 81))).object_id}
 
     @web.post("/fastwan/download")
     def fastwan_download(body: dict):
