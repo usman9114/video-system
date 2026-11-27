@@ -64,7 +64,7 @@
       "act": "Up Top",
       "seconds": 4.0,
       "hero": false,
-      "camera_move": "slow lateral pan left-to-right (4:3 cropped to 9:16 cannot hold both people at once): opens on the traveller and the bus seats, drifts across to the shuttered buildings and graffiti through the right-hand window.",
+      "camera_move": "slow lateral pan right-to-left (4:3 cropped to 9:16 cannot hold both people at once): opens on the traveller and the bus seats, drifts across to the shuttered buildings and graffiti through the left-hand window.",
       "animation_prompt": "Camera move only (2.5D parallax), no generative motion. Do not alter people, faces, text, signs or buildings; both people in the foreground and the passenger behind stay exactly as photographed.",
       "caption": "Athens from the upper deck",
       "narration": "Back in Athens, now from the top deck.",

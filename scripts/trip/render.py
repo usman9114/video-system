@@ -40,8 +40,20 @@ def redact(im: Image.Image, boxes) -> Image.Image:
     return im
 
 
-def load_photo(path: Path, max_h: int = 3840, boxes=None) -> Image.Image:
-    im = redact(ImageOps.exif_transpose(Image.open(path)).convert("RGB"), boxes)
+def load_photo(path: Path, max_h: int = 3840, boxes=None, fix=None) -> Image.Image:
+    src = Image.open(path)
+    fix = fix or {}
+    if fix.get("ignore_exif_mirror"):      # flag says "mirror" but the raw pixels are the real world (text reads right)
+        ex = src.getexif()
+        o = ex.get(274, 1)
+        unmirror = {2: 1, 4: 3, 5: 8, 7: 6}
+        if o in unmirror:
+            src = src.rotate({1: 0, 3: 180, 6: 270, 8: 90}[unmirror[o]], expand=True)
+            src.info.pop("exif", None)
+        im = src
+    else:
+        im = ImageOps.exif_transpose(src)
+    im = redact(im.convert("RGB"), boxes)
     if im.height > max_h:
         im = im.resize((round(im.width * max_h / im.height), max_h), Image.LANCZOS)
     return im
@@ -139,6 +151,7 @@ def main():
     picks = json.loads((trip / "work/hero_pick.json").read_text()) if (trip / "work/hero_pick.json").exists() else {}
     focus = json.loads((trip / "work/focus.json").read_text()) if (trip / "work/focus.json").exists() else {}
     redactions = json.loads((trip / "redact.json").read_text()) if (trip / "redact.json").exists() else {}
+    fixes = json.loads((trip / "photo_fixes.json").read_text()) if (trip / "photo_fixes.json").exists() else {}
     vo_dir = trip / "work/vo"
     acts = {x["name"]: x for x in sl["acts"]}
 
@@ -164,7 +177,7 @@ def main():
 
     # ---- per-scene sources -----------------------------------------------------------------------------------
     for s in scenes:
-        s["im"] = load_photo(ROOT / s["sc"]["photo"], boxes=redactions.get(s["name"]))
+        s["im"] = load_photo(ROOT / s["sc"]["photo"], boxes=redactions.get(s["name"]), fix=fixes.get(s["name"]))
         pick = picks.get(s["name"])
         s["clip"] = Clip(ROOT / pick) if (s["sc"].get("hero") and pick) else None
         if s["clip"] is not None:     # hero clip: gentle push on the clip itself (crop in clip space)

@@ -1,0 +1,6 @@
+{
+ "IMG_9313": {
+  "ignore_exif_mirror": true,
+  "why": "EXIF orientation 2 (mirror) but raw pixels show the shirt text reading correctly = real world"
+ }
+}
