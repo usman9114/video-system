@@ -9,3 +9,4 @@
 {"op": "wan", "model": "ti2v-5B", "call_id": "fc-01M8EPXY5551ED5SP8QP3KY9TJ", "ok": false, "gpu_seconds": 7.5, "usd": 0.004, "at": "2026-11-27T14:36:02Z"}
 {"op": "wan", "model": "i2v-A14B", "call_id": "fc-01M8EQ58SRGN5XVD6M5GX9RQ1Z", "ok": false, "gpu_seconds": 211.5, "usd": 0.232, "at": "2026-11-27T14:43:25Z"}
 {"op": "wan", "model": "ti2v-5B", "call_id": "fc-01M8EQ58C2AYG5BZBD3VN5VB3Z", "ok": false, "gpu_seconds": 225.8, "usd": 0.122, "at": "2026-11-27T14:43:45Z"}
+{"op": "wan", "model": "i2v-A14B", "call_id": "fc-01M8EQH3K7BV2G6GPQKZMHYRZE", "ok": true, "gpu_seconds": 1667.0, "usd": 1.829, "at": "2026-11-27T15:15:49Z"}
