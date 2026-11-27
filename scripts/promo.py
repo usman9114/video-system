@@ -185,11 +185,12 @@ class Renderer:
     def seg_talk(self, seg, frames, i, t):
         tp = self.t["talk"]
         n = len(frames)
-        z = tp["zoom_from"] + (tp["zoom_to"] - tp["zoom_from"]) * (i / max(n - 1, 1))
+        zf, zt = seg.get("zoom", [tp["zoom_from"], tp["zoom_to"]])   # per-shot framing: punch-in / push-in
+        z = zf + (zt - zf) * ease(i / max(n - 1, 1)) if seg.get("ease_zoom") else zf + (zt - zf) * (i / max(n - 1, 1))
         src = Image.fromarray(frames[i])
         sw, sh = src.size
         fw, fh = self.W, tp["frame_h"]
-        ax, ay = tp["zoom_anchor"]
+        ax, ay = seg.get("anchor", tp["zoom_anchor"])
         scale = fw / sw * z                      # output px per source px
         vis_w, vis_h = fw / scale, fh / scale    # source px visible
         x0 = min(max(ax - vis_w * (ax / sw), 0), sw - vis_w)

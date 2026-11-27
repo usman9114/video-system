@@ -140,7 +140,9 @@ def _run(
         cmd += ["-i", img]
     if schema:
         cmd += ["--output-schema", schema]
-    cmd.append(prompt)
+    # "--" ends options: `-i` takes multiple values and would otherwise swallow the prompt as an image path
+    # (symptom: "No prompt provided via stdin" whenever --ref/--image is used). docs/LESSONS.md #50
+    cmd += ["--", prompt]
     try:
         p = subprocess.run(
             cmd,
