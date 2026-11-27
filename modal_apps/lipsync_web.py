@@ -184,7 +184,9 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24) -> dict:
     out = []
     for it in items:
         t1 = time.time()
-        img = Image.open(io.BytesIO(base64.b64decode(it["image_b64"]))).convert("RGB")
+        from PIL import ImageOps
+        # phone photos are often stored sideways + an EXIF rotation tag → apply it first
+        img = ImageOps.exif_transpose(Image.open(io.BytesIO(base64.b64decode(it["image_b64"])))).convert("RGB")
         w, h = img.size
         # TI2V-5B native 1280x704 / 704x1280 (multiples of 32); keep orientation
         orient = it.get("orient") or ("landscape" if w >= h else "portrait")

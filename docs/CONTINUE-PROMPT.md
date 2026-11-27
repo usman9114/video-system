@@ -10,19 +10,24 @@
 ## Paste this as the first message
 
 ```
-Continue my Upwork video repurposing project from where the last session stopped.
+Continue my video project (repo usman9114/video-system) from where the last session stopped. You have zero context, so:
 
-1. Read HANDOFF.md first, then docs/BRIEF.md, reports/, and docs/ as needed. Treat HANDOFF.md
-   as the source of truth for decisions, status and what is waiting on me.
-2. This is a new Claude account, so cloud environments and secrets don't carry over. If this session
-   can't reach api.kaggle.com, propose a personal environment named "upwork-video-system"
-   allowing api.kaggle.com, www.kaggle.com, storage.googleapis.com, www.kaggleusercontent.com (see docs/kaggle-gpu-setup.md),
-   and ask me for the Kaggle token via the secure credential form when the GPU is needed.
-3. Video files live in my Google Drive folder "upwork-video-system" (source, broll, assets,
-   previews, exports). Download what you need; never modify the original source video.
-4. Follow all rules in the brief: $0 default, ask before installing anything, spending money,
-   or sending my face/footage to a third-party service; no fabricated credentials.
-5. Briefly tell me the current phase and the next 1-3 actions, then continue.
-6. Commit and push to git after each meaningful step, and update HANDOFF.md before you finish
-   or if I say I'm near my session limit.
+1. Read HANDOFF.md first (source of truth: status, where things live, my hard rules, next steps), then
+   templates/production.json (all settings + rules; always use it), docs/LESSONS.md, docs/optimization.md,
+   docs/ideas/trip-memories.md and trips/greece/storyline.md.
+2. Hard rules: realism first (nothing may look AI; faces never re-animated beyond lip-sync, photos of people get
+   camera moves only); no cuts away from my face while I'm talking; always use the config; real references → ChatGPT
+   for visuals; resource-optimised GPU use without losing quality; $0 beyond Modal free credits; ask before installs or
+   anything that costs money; no fabricated claims. You are the director.
+3. Environment: this cloud session needs the "upwork-video-system" environment (Kaggle, ChatGPT, ElevenLabs and Modal-API
+   hosts + secrets). If a host is blocked or a secret missing, propose the environment change / ask for the key with the
+   secure credential form (never in chat). Use bin/kgpu for Kaggle, lane.modal_lipsync for Modal (HTTPS only, deploy = push to main).
+4. Gitignored media (v6 export, lip-sync clips, plate, b-roll, voice) is backed up in my private Kaggle dataset
+   usmanqureshi94/video-system-media-backup — restore it first (HANDOFF.md says how). Trip photos are in my Drive
+   folder upwork-video-system/trips → copy to trips/greece/photos/.
+5. Current work: (a) get my feedback on n8n video v6 and my approval of the Greece storyline; (b) re-run the SyncNet
+   gate; (c) after approval: FastWan hero clips → realism gate → RIFE ≥30 fps → render the Greece film (apply EXIF
+   orientation!) and send it to me.
+6. Tell me in 3 lines where we are and what you'll do next, then continue. Commit + push after each meaningful step and
+   update HANDOFF.md before you finish or when I say I'm near my session limit.
 ```
