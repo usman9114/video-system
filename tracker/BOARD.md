@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-28 14:15 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-28 18:06 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -34,7 +34,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - 2026-11-27: Pilot 3 shots (a0a41173 Caryatids, IMG_9282 Meteora, IMG_9451 driving) running on Modal H100; gate each for text/landmark/face. If pass: shot list for all 12 scenes (~2 shots each), budget ~$25-35 of Modal free credits, ask before going over.
   - 2026-11-28: Wan Lightning 4-step LoRA (merged, euler, CFG off) benchmark: 1 clip 105.6s, batch of 1 = 241.9s gpu incl 136s load, $0.265 vs ~$1.79/clip at 40 steps. Quality close to baseline, slightly less dolly motion.
 
-## Waiting on owner review (3)
+## Waiting on owner review (4)
 
 - **T04** Render n8n video v7 with the winning lip-sync  _(n8n · after T03)_
   - Set config lipsync -> make_faces.py scripts/videos/01_n8n_v6.json -> promo.py --final
@@ -48,6 +48,8 @@ Project board. Source of truth for what is done / in progress / open. Every agen
   - PM: 2026-11-27: ChatGPT drafted 9 gig briefs in docs/gigs_draft.md for videos 2–10. Awaiting owner confirmation or edits before scripting.
 - **T07** Owner feedback on Greece film v1  _(greece · needs owner)_
   - v1 sent in chat 2026-11-27 17:15 UTC (39 MB share copy). Master was NOT backed up to Kaggle; it died with that container.
+- **T19** Scotland short 'Looking Up' v3 delivered (2:00, re-sorted, -14.5 LUFS), backed up to Kaggle video-system-exports  _(scotland · needs owner)_
+  - 2026-11-28: Pipeline: ChatGPT storyboard (boosted) + storyboard_loop checker + Opus review; Wan 2.2 Lightning 9 shots $1.41; assemble_story.py; ChatGPT order review. Owner to review; confirm Bellany paintings.
 
 ## Done (16)
 

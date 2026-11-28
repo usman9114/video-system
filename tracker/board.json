@@ -331,8 +331,19 @@
       "notes": [
         "2026-11-27: Waste seen today: (1) 2 full renders discarded because style/narration changed AFTER render -> lock a one-page brief (style ref clip, narration, shot list) with owner BEFORE any render; (2) Greece v1 master lost (no backup) -> auto-backup in render script; (3) keys lost on env move/restart -> all keys as env network secrets; (4) 3 sample rebuilds from ambiguous 'scene 2' -> owner gives timecodes, we confirm with a timestamped sheet first; (5) Wan pilot 45+ min on H100 with no time estimate -> benchmark 1 clip first, set budget cap per job; (6) Claude tokens on reviews -> ChatGPT does review/writing by default."
       ]
+    },
+    {
+      "id": "T19",
+      "title": "Scotland short 'Looking Up' v3 delivered (2:00, re-sorted, -14.5 LUFS), backed up to Kaggle video-system-exports",
+      "list": "review",
+      "project": "scotland",
+      "needs_owner": true,
+      "blocked_by": [],
+      "notes": [
+        "2026-11-28: Pipeline: ChatGPT storyboard (boosted) + storyboard_loop checker + Opus review; Wan 2.2 Lightning 9 shots $1.41; assemble_story.py; ChatGPT order review. Owner to review; confirm Bellany paintings."
+      ]
     }
   ],
-  "updated": "2026-11-28 14:15 UTC",
+  "updated": "2026-11-28 18:06 UTC",
   "artifact_url": "https://claude.ai/artifact/82grZMVjccn4Wpab5HAoHi"
 }
