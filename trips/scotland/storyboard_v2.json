@@ -1,0 +1,295 @@
+{
+ "title": "A Room, a Cathedral, a City at Night",
+ "shots": [
+  {
+   "n": 1,
+   "photo": "flat_chair.jpg",
+   "move": "Slow push-in toward Usman in the chair.",
+   "prompt": "Slow push-in toward Usman, camera move first. Preserve his identity, clothes, pose, and the real room exactly; subtle breathing only, no new text or people.",
+   "seconds": 6,
+   "line_id": 1
+  },
+  {
+   "n": 2,
+   "photo": "flat_chair.jpg",
+   "move": "Tilt down from the framed poster to the shelf and chair.",
+   "prompt": "Tilt down from the poster to the shelf, camera move first. Preserve the real room, all objects, and any lettering exactly; keep Usman recognizable, no new text or people.",
+   "seconds": 6,
+   "line_id": 2
+  },
+  {
+   "n": 3,
+   "photo": "flat_chair.jpg",
+   "move": "Slide across the shelf toward Usman.",
+   "prompt": "Slide across the shelf toward Usman, camera move first. Preserve the real room, objects, lighting, identity, and clothes; no new text or people.",
+   "seconds": 6,
+   "line_id": 3
+  },
+  {
+   "n": 4,
+   "photo": "flat_standing.jpg",
+   "move": "Push in from full figure to medium shot.",
+   "prompt": "Push in toward Usman, camera move first. Preserve his identity, white hoodie, jeans, shoes, standing pose, and real room; no new text or people.",
+   "seconds": 6,
+   "line_id": 4
+  },
+  {
+   "n": 5,
+   "photo": "flat_standing.jpg",
+   "move": "Tilt up from the floor and table edge to Usman and the wall.",
+   "prompt": "Tilt up from the floor to Usman and the wall, camera move first. Preserve the real room, geometry, identity, and clothes; no new text or people.",
+   "seconds": 6,
+   "line_id": 5
+  },
+  {
+   "n": 6,
+   "photo": "flat_standing.jpg",
+   "move": "Small arc from the bookshelf side toward the chair.",
+   "prompt": "Make a small camera arc toward the chair, camera move first. Preserve Usman’s identity, clothes, pose, and the real room; no new text or people.",
+   "seconds": 6,
+   "line_id": 6
+  },
+  {
+   "n": 7,
+   "photo": "old_town_chambers.jpg",
+   "move": "Push in toward Usman and his companion.",
+   "prompt": "Push in toward Usman and his companion, camera move first. Preserve both identities, clothes, positions, flowers, bicycles, and the real building; no new text or people.",
+   "seconds": 6,
+   "line_id": 7
+  },
+  {
+   "n": 8,
+   "photo": "old_town_chambers.jpg",
+   "move": "Tilt from the flower bed and doorway to the sign.",
+   "prompt": "Tilt from the flowers to the Old Town Chambers sign, camera move first. Preserve the real scene and sign lettering exactly, including both people; no new text or people.",
+   "seconds": 6,
+   "line_id": 8
+  },
+  {
+   "n": 9,
+   "photo": "old_town_chambers.jpg",
+   "move": "Slide across the flowers to the pair.",
+   "prompt": "Slide across the flower bed to Usman and his companion, camera move first. Preserve their identities, clothes, and the real street scene; no new text or people.",
+   "seconds": 6,
+   "line_id": 9
+  },
+  {
+   "n": 10,
+   "photo": "seedance_stgiles_ref",
+   "move": "Use the existing five-second clip of Usman entering the nave and looking up; hold the final frame briefly.",
+   "prompt": "Use the supplied seedance_stgiles_ref clip as is, camera move first. Preserve Usman’s identity, clothes, backpack, and the real cathedral; add no text or people.",
+   "seconds": 6,
+   "line_id": 10
+  },
+  {
+   "n": 11,
+   "photo": "stgiles_nave_walk.jpg",
+   "move": "Push gently along the nave toward Usman and the chancel.",
+   "prompt": "Push along the nave toward Usman and the chancel, camera move first. Preserve the real architecture, existing visitors, identity, clothes, and backpack; no new text or people.",
+   "seconds": 6,
+   "line_id": 11
+  },
+  {
+   "n": 12,
+   "photo": "stgiles_nave_walk.jpg",
+   "move": "Tilt from Usman toward the vaulted ceiling.",
+   "prompt": "Tilt from Usman’s backpack toward the ceiling, camera move first. Preserve the real cathedral proportions and visible people; add no text or people.",
+   "seconds": 6,
+   "line_id": 12
+  },
+  {
+   "n": 13,
+   "photo": "stgiles_window_front.jpg",
+   "move": "Push in toward Usman with the window and paintings behind him.",
+   "prompt": "Push in toward Usman, camera move first. Preserve his identity, black clothes, backpack, and the real window and paintings; no new text or people.",
+   "seconds": 6,
+   "line_id": 13
+  },
+  {
+   "n": 14,
+   "photo": "stgiles_window_front.jpg",
+   "move": "Tilt from the paintings up to the stained glass.",
+   "prompt": "Tilt from the paintings to the stained glass, camera move first. Preserve the real artwork, colors, composition, and Usman; add no inscriptions, text, or people.",
+   "seconds": 6,
+   "line_id": 14
+  },
+  {
+   "n": 15,
+   "photo": "stgiles_window_front.jpg",
+   "move": "Slide across the paintings while keeping Usman in frame.",
+   "prompt": "Slide across the paintings, camera move first. Keep Usman visible and recognizable; preserve the real artwork and clothes, with no new figures or text.",
+   "seconds": 6,
+   "line_id": 15
+  },
+  {
+   "n": 16,
+   "photo": "stgiles_window_lookup.jpg",
+   "move": "Push in toward Usman looking at the artwork.",
+   "prompt": "Push in toward Usman, camera move first. Preserve his profile, identity, black clothes, backpack, and the real artwork; no new movement, text, or people.",
+   "seconds": 6,
+   "line_id": 16
+  },
+  {
+   "n": 17,
+   "photo": "stgiles_window_lookup.jpg",
+   "move": "Tilt from Usman and the paintings up to the window.",
+   "prompt": "Tilt upward from Usman and the paintings to the stained glass, camera move first. Preserve the real window and architecture; no new text or people.",
+   "seconds": 6,
+   "line_id": 17
+  },
+  {
+   "n": 18,
+   "photo": "stgiles_window_lookup.jpg",
+   "move": "Make a subtle diagonal slide following Usman’s gaze toward the window.",
+   "prompt": "Slide diagonally toward the window, camera move first. Preserve Usman’s identity and the real scene; add no objects, lettering, or people.",
+   "seconds": 6,
+   "line_id": 18
+  },
+  {
+   "n": 19,
+   "photo": "london_thames_night.jpg",
+   "move": "Push in toward Usman at the riverside railing.",
+   "prompt": "Push in toward Usman at the railing, camera move first. Preserve his identity, denim jacket, pose, and real night skyline and river; no new text or people.",
+   "seconds": 6,
+   "line_id": 19
+  },
+  {
+   "n": 20,
+   "photo": "london_thames_night.jpg",
+   "move": "Tilt from the railing and river lights up to the skyline.",
+   "prompt": "Tilt from the railing to the skyline, camera move first. Preserve the real buildings, night colors, and river lights; no new structures, text, or people.",
+   "seconds": 6,
+   "line_id": 20
+  },
+  {
+   "n": 21,
+   "photo": "london_thames_night.jpg",
+   "move": "Slide gently to reveal the skyline behind Usman.",
+   "prompt": "Slide gently with Usman in the foreground, camera move first. Preserve his identity, clothes, and real riverside skyline; add no objects, text, or people.",
+   "seconds": 6,
+   "line_id": 21
+  },
+  {
+   "n": 22,
+   "photo": "london_thames_night.jpg",
+   "move": "Pull back to end on Usman and the night view.",
+   "prompt": "Pull back to include more railing and skyline, camera move first. Preserve Usman’s identity and the real night atmosphere; no new buildings, text, or people.",
+   "seconds": 6,
+   "line_id": 22
+  }
+ ],
+ "lines": [
+  {
+   "id": 1,
+   "text": "Edinburgh made me look up. I still wonder what a place can reveal when you give it a moment.",
+   "source": "none"
+  },
+  {
+   "id": 2,
+   "text": "This rented flat became our base, and the chair looked like a good place to land.",
+   "source": "none"
+  },
+  {
+   "id": 3,
+   "text": "I liked having a quiet room to return to after the city had filled my head.",
+   "source": "none"
+  },
+  {
+   "id": 4,
+   "text": "There’s something useful about arriving before you have a plan for every hour.",
+   "source": "none"
+  },
+  {
+   "id": 5,
+   "text": "I could take a breath here, then step back out and see what caught my attention.",
+   "source": "none"
+  },
+  {
+   "id": 6,
+   "text": "The ordinary things in a room can make it feel like yours, at least for a while.",
+   "source": "none"
+  },
+  {
+   "id": 7,
+   "text": "On the Royal Mile, we stopped outside Old Town Chambers and shared the street for a moment.",
+   "source": "https://www.marriott.com/en-gb/hotels/edioc-old-town-chambers-autograph-collection/"
+  },
+  {
+   "id": 8,
+   "text": "The hotel sits at 329 High Street; the Royal Mile runs about a Scots mile between the Castle and Holyroodhouse.",
+   "source": "https://www.marriott.com/en-gb/hotels/edioc-old-town-chambers-autograph-collection/ ; https://edinburgh.org/neighbourhoods/the-royal-mile/"
+  },
+  {
+   "id": 9,
+   "text": "I remember the flowers, the doorway, and how nice it was not to hurry past each other.",
+   "source": "none"
+  },
+  {
+   "id": 10,
+   "text": "Then we crossed into St Giles’. It felt natural to stop talking and look up.",
+   "source": "none"
+  },
+  {
+   "id": 11,
+   "text": "The church was founded by King David the First in 1124, though standing here feels very much about now.",
+   "source": "https://www.stgilescathedral.org.uk/history/"
+  },
+  {
+   "id": 12,
+   "text": "The crown steeple probably dates from around 1500; even its exact date remains uncertain.",
+   "source": "https://arts.st-andrews.ac.uk/corpusofscottishchurches/site.php?id=158554"
+  },
+  {
+   "id": 13,
+   "text": "The east window drew me in, with paintings gathered below it and so much color overhead.",
+   "source": "none"
+  },
+  {
+   "id": 14,
+   "text": "This great east window shows the Crucifixion and Ascension; a guide credits its glass to Ballantine of Edinburgh.",
+   "source": "https://www.electricscotland.com/bible/illustratedguide00meikiala.pdf"
+  },
+  {
+   "id": 15,
+   "text": "The inscription dates mark Falshaw’s Lord Provost term, from 1874 to 1877.",
+   "source": "https://www.electricscotland.com/bible/illustratedguide00meikiala.pdf"
+  },
+  {
+   "id": 16,
+   "text": "I couldn’t confidently identify every painting from where I stood, so I let the details stay open.",
+   "source": "none"
+  },
+  {
+   "id": 17,
+   "text": "The church hosted John Bellany’s 1965 painting The Box Meeting in 2025; I’m not sure this is it.",
+   "source": "https://static1.squarespace.com/static/627bb98b7503e23c3b14b190/t/68e663d1b289554531ccd62e/1759929297489/St%2BGiles%27%2BNews-%2BOctober%2B2025.pdf"
+  },
+  {
+   "id": 18,
+   "text": "Bellany grew up in Port Seton, where fishing life shaped his recurring boats, fishermen, and harbours.",
+   "source": "https://www.hw.ac.uk/document-library/art-guidebook.pdf"
+  },
+  {
+   "id": 19,
+   "text": "By the Thames in London, I found myself looking across the water instead of checking the time.",
+   "source": "none"
+  },
+  {
+   "id": 20,
+   "text": "That tower is 20 Fenchurch Street, known as the Walkie-Talkie, completed in 2014 at 155 metres.",
+   "source": "https://www.cityoflondon.gov.uk/things-to-do/architecture/modern-architecture/20-fenchurch-street"
+  },
+  {
+   "id": 21,
+   "text": "Its upper floors hold the public Sky Garden, though from here I’m taking in the river and lights.",
+   "source": "https://vinoly.com/works/20-fenchurch-street/"
+  },
+  {
+   "id": 22,
+   "text": "The trip ends in London, but the feeling I’m taking home is simpler: there’s always more to notice.",
+   "source": "none"
+  }
+ ],
+ "total_seconds": 132,
+ "word_count": 305
+}

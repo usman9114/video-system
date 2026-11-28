@@ -1,0 +1,340 @@
+{
+ "title": "A Room, a Cathedral, a City at Night",
+ "scenes": [
+  {
+   "name": "The Edinburgh flat",
+   "photos": [
+    "flat_chair.jpg",
+    "flat_standing.jpg"
+   ],
+   "purpose": "Settle into the rented flat and establish it as the trip’s home base."
+  },
+  {
+   "name": "Old Town Chambers",
+   "photos": [
+    "old_town_chambers.jpg"
+   ],
+   "purpose": "Introduce the Royal Mile stop and a shared moment with Usman’s companion."
+  },
+  {
+   "name": "St Giles’ Cathedral",
+   "photos": [
+    "stgiles_nave_walk.jpg"
+   ],
+   "purpose": "Move from the street into the cathedral and build a sense of wonder."
+  },
+  {
+   "name": "Window and paintings",
+   "photos": [
+    "stgiles_window_front.jpg",
+    "stgiles_window_lookup.jpg"
+   ],
+   "purpose": "Pause on the stained glass and the paintings below it; keep uncertain identifications provisional."
+  },
+  {
+   "name": "London by the Thames",
+   "photos": [
+    "london_thames_night.jpg"
+   ],
+   "purpose": "End the journey with a quiet night view across the Thames."
+  }
+ ],
+ "shots": [
+  {
+   "n": 1,
+   "photo": "flat_chair.jpg",
+   "move": "Slow push-in from the room toward Usman seated in the chair.",
+   "prompt": "Animate the supplied real photo with a gentle, steady push-in. Keep Usman’s face, clothes, pose, furniture, and room unchanged. Subtle natural breathing only; add no people or text.",
+   "seconds": 5,
+   "line_id": 1
+  },
+  {
+   "n": 2,
+   "photo": "flat_chair.jpg",
+   "move": "Tilt down from the framed poster toward the shelf and chair.",
+   "prompt": "Begin on the framed poster and make a slow tilt down into the existing room composition. Preserve all objects and their details, including any poster lettering; do not invent or alter text. Keep Usman still and recognizable.",
+   "seconds": 5,
+   "line_id": 2
+  },
+  {
+   "n": 3,
+   "photo": "flat_chair.jpg",
+   "move": "Slow lateral slide across the shelf toward Usman.",
+   "prompt": "Make a smooth, subtle left-to-right camera slide across the existing shelf and toward Usman. Preserve the room, objects, lighting, and Usman’s identity and clothes. No new objects, people, or text.",
+   "seconds": 5,
+   "line_id": 3
+  },
+  {
+   "n": 4,
+   "photo": "flat_standing.jpg",
+   "move": "Slow push-in from full figure to medium shot.",
+   "prompt": "Slowly push in toward Usman while retaining the original room and his relaxed standing pose. Keep his face, white hoodie, jeans, and shoes consistent. No added movement beyond subtle breathing; no new people or text.",
+   "seconds": 5,
+   "line_id": 4
+  },
+  {
+   "n": 5,
+   "photo": "flat_standing.jpg",
+   "move": "Tilt up from the floor and table edge to Usman and the wall.",
+   "prompt": "Make a measured tilt up from the existing floor and furniture to Usman and the framed picture. Preserve the photo’s geometry, objects, and lighting. Keep Usman’s identity and outfit unchanged; add no text or people.",
+   "seconds": 5,
+   "line_id": 5
+  },
+  {
+   "n": 6,
+   "photo": "flat_standing.jpg",
+   "move": "Gentle arc from the bookshelf side toward the chair.",
+   "prompt": "Create a very small, smooth camera arc that reveals the existing chair and table while keeping Usman centered. Preserve his face, clothes, pose, and the room exactly; do not generate new objects, people, or text.",
+   "seconds": 5,
+   "line_id": 6
+  },
+  {
+   "n": 7,
+   "photo": "old_town_chambers.jpg",
+   "move": "Slow push-in toward Usman and his companion.",
+   "prompt": "Gently push in toward Usman and his companion in the supplied street photo. Preserve both people’s identities, clothes, expressions, and positions, as well as the flowers, bicycles, and building. No new people or text.",
+   "seconds": 5,
+   "line_id": 7
+  },
+  {
+   "n": 8,
+   "photo": "old_town_chambers.jpg",
+   "move": "Tilt from the flower bed and doorway up to the sign.",
+   "prompt": "Tilt slowly from the existing flowers and entrance up toward the Old Town Chambers sign. Keep all sign lettering as it appears in the source image, with no invented text. Preserve the people and setting.",
+   "seconds": 5,
+   "line_id": 8
+  },
+  {
+   "n": 9,
+   "photo": "old_town_chambers.jpg",
+   "move": "Lateral slide across the flowers to the pair.",
+   "prompt": "Make a gentle lateral slide across the existing flower bed, ending on Usman and his companion. Keep both recognizable and still, with their clothes and the street scene unchanged. Add no people or text.",
+   "seconds": 5,
+   "line_id": 9
+  },
+  {
+   "n": 10,
+   "photo": "stgiles_nave_walk.jpg",
+   "move": "Use the existing 5-second generated clip of Usman walking into the nave and looking up.",
+   "prompt": "Use the existing seedance_stgiles_ref.mp4 clip as supplied. Preserve Usman’s identity, clothes, backpack, and the real cathedral interior. Add no people, objects, or text.",
+   "seconds": 5,
+   "line_id": 10
+  },
+  {
+   "n": 11,
+   "photo": "stgiles_nave_walk.jpg",
+   "move": "Slow push-in toward Usman and the distant chancel.",
+   "prompt": "From the supplied photo, make a gentle push-in along the nave toward Usman and the blue vaulted chancel. Preserve the architecture, existing visitors, and Usman’s identity, clothes, and backpack. No new people or text.",
+   "seconds": 5,
+   "line_id": 11
+  },
+  {
+   "n": 12,
+   "photo": "stgiles_nave_walk.jpg",
+   "move": "Tilt up from Usman toward the vaulted ceiling.",
+   "prompt": "Slowly tilt up from Usman’s backpack and the nave toward the existing vaulted ceiling and chancel. Keep the cathedral’s real details and proportions; preserve all visible people. Add no new objects or text.",
+   "seconds": 5,
+   "line_id": 12
+  },
+  {
+   "n": 13,
+   "photo": "stgiles_window_front.jpg",
+   "move": "Slow push-in toward Usman in front of the window and paintings.",
+   "prompt": "Gently push in on Usman with the existing stained-glass window and paintings behind him. Preserve his identity, black clothes, and backpack, along with the artwork’s colors and composition. Do not add or alter lettering.",
+   "seconds": 5,
+   "line_id": 13
+  },
+  {
+   "n": 14,
+   "photo": "stgiles_window_front.jpg",
+   "move": "Tilt from the paintings up to the stained-glass window.",
+   "prompt": "Make a slow upward tilt from the existing paintings, past Usman, to the stained-glass window. Preserve all visible details and the actual composition; do not invent inscriptions, people, or text.",
+   "seconds": 5,
+   "line_id": 14
+  },
+  {
+   "n": 15,
+   "photo": "stgiles_window_front.jpg",
+   "move": "Subtle lateral slide across the paintings, keeping Usman in frame.",
+   "prompt": "Make a restrained lateral camera slide across the two existing paintings while keeping Usman visible. Preserve the artwork and his identity and clothes. No added figures, objects, or text.",
+   "seconds": 5,
+   "line_id": 15
+  },
+  {
+   "n": 16,
+   "photo": "stgiles_window_lookup.jpg",
+   "move": "Slow push-in as Usman looks toward the artwork.",
+   "prompt": "Gently push in toward Usman as he looks at the existing paintings. Preserve his profile, identity, black clothes, and backpack, along with the artwork. No extra movement, people, or text.",
+   "seconds": 5,
+   "line_id": 16
+  },
+  {
+   "n": 17,
+   "photo": "stgiles_window_lookup.jpg",
+   "move": "Tilt up from Usman and the paintings to the window.",
+   "prompt": "Slowly tilt upward from Usman and the paintings to the stained glass above. Keep the original window, artwork, and architecture intact. Do not create readable new text or add people.",
+   "seconds": 5,
+   "line_id": 17
+  },
+  {
+   "n": 18,
+   "photo": "stgiles_window_lookup.jpg",
+   "move": "Gentle diagonal slide following Usman’s upward gaze.",
+   "prompt": "Make a subtle diagonal camera slide that follows Usman’s existing upward gaze from the painting toward the window. Preserve his identity and the real scene, with no added objects, people, or lettering.",
+   "seconds": 5,
+   "line_id": 18
+  },
+  {
+   "n": 19,
+   "photo": "london_thames_night.jpg",
+   "move": "Slow push-in toward Usman at the riverside railing.",
+   "prompt": "Gently push in toward Usman at the railing. Preserve his face, denim jacket, pose, and the existing night skyline and river lights. Keep the real photo’s atmosphere; add no people, buildings, or text.",
+   "seconds": 5,
+   "line_id": 19
+  },
+  {
+   "n": 20,
+   "photo": "london_thames_night.jpg",
+   "move": "Tilt from the railing and river lights up to the skyline.",
+   "prompt": "Make a slow tilt upward from the existing railing and river lights to the skyline. Preserve the original buildings and night colors, with no new structures, people, or text.",
+   "seconds": 5,
+   "line_id": 20
+  },
+  {
+   "n": 21,
+   "photo": "london_thames_night.jpg",
+   "move": "Slow lateral slide that reveals the skyline behind Usman.",
+   "prompt": "Create a smooth, modest lateral slide, keeping Usman in the foreground while revealing the existing skyline lights. Preserve his identity and clothes and the real riverside setting. No new objects or people.",
+   "seconds": 5,
+   "line_id": 21
+  },
+  {
+   "n": 22,
+   "photo": "london_thames_night.jpg",
+   "move": "Gentle pull-back to end on Usman and the night view.",
+   "prompt": "Slowly pull back from Usman to include more of the existing riverside railing and skyline. Keep the night lighting and photo composition natural. Preserve his identity; add no people, buildings, or text.",
+   "seconds": 5,
+   "line_id": 22
+  }
+ ],
+ "lines": [
+  {
+   "id": 1,
+   "text": "I started this part of the trip by finding a quiet corner to settle into.",
+   "needs_fact": false
+  },
+  {
+   "id": 2,
+   "text": "In the rented flat, small details made the room feel like a place of its own.",
+   "needs_fact": false
+  },
+  {
+   "id": 3,
+   "text": "A lamp, books, games, and a plant filled the frame around me.",
+   "needs_fact": false
+  },
+  {
+   "id": 4,
+   "text": "Then I got to my feet and took in the room from another angle.",
+   "needs_fact": false
+  },
+  {
+   "id": 5,
+   "text": "The poster on the wall carried a holiday theme that stayed with me.",
+   "needs_fact": false
+  },
+  {
+   "id": 6,
+   "text": "For a moment, the flat became my base between days out.",
+   "needs_fact": false
+  },
+  {
+   "id": 7,
+   "text": "On the Royal Mile, I paused outside Old Town Chambers with my companion.",
+   "needs_fact": true
+  },
+  {
+   "id": 8,
+   "text": "The entrance, flowers, and bicycles gave this stop its own street scene.",
+   "needs_fact": false
+  },
+  {
+   "id": 9,
+   "text": "We shared a moment here, surrounded by the color of the flower bed.",
+   "needs_fact": false
+  },
+  {
+   "id": 10,
+   "text": "Inside St Giles’, I walked into the nave and looked up.",
+   "needs_fact": false
+  },
+  {
+   "id": 11,
+   "text": "The long view drew me forward, toward the blue vaulted chancel.",
+   "needs_fact": false
+  },
+  {
+   "id": 12,
+   "text": "I let my eyes follow the height and detail above me.",
+   "needs_fact": false
+  },
+  {
+   "id": 13,
+   "text": "At the far end, a stained-glass window rises above two paintings.",
+   "needs_fact": false
+  },
+  {
+   "id": 14,
+   "text": "The window inscription names Sir James Falshaw and dates from the eighteen-seventies. [FACT TO VERIFY]",
+   "needs_fact": true
+  },
+  {
+   "id": 15,
+   "text": "The paintings below appear to be signed Bellany; I’m checking the attribution. [FACT TO VERIFY]",
+   "needs_fact": true
+  },
+  {
+   "id": 16,
+   "text": "I turned toward the paintings and took a closer look.",
+   "needs_fact": false
+  },
+  {
+   "id": 17,
+   "text": "Above them, the colored glass holds its own stories in the light.",
+   "needs_fact": false
+  },
+  {
+   "id": 18,
+   "text": "I followed the window upward, then carried that image with me.",
+   "needs_fact": false
+  },
+  {
+   "id": 19,
+   "text": "Later, by the Thames in London, the city lights framed the night.",
+   "needs_fact": true
+  },
+  {
+   "id": 20,
+   "text": "The skyline included the Walkie-Talkie, its shape clear among the buildings. [FACT TO VERIFY]",
+   "needs_fact": true
+  },
+  {
+   "id": 21,
+   "text": "After Edinburgh, this riverside view marked another city in the trip.",
+   "needs_fact": false
+  },
+  {
+   "id": 22,
+   "text": "I looked out across the water and let the journey settle into night.",
+   "needs_fact": false
+  }
+ ],
+ "facts_to_research": [
+  "Confirm the exact location of Old Town Chambers on the Royal Mile and whether that description is accurate.",
+  "Check relevant St Giles’ Cathedral history before adding any historical narration.",
+  "Verify the stained-glass inscription, including Sir James Falshaw’s title and the dates 1874 and 1877.",
+  "Verify whether the paintings below the window are by John Bellany; the visible signature is only a tentative clue.",
+  "Confirm that the London skyline view is on the Thames and identify 20 Fenchurch Street as the Walkie-Talkie."
+ ],
+ "total_seconds": 110
+}
