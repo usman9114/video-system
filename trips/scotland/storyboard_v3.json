@@ -1,0 +1,498 @@
+{
+ "logline": "A journey from the quiet ceiling of a rented room to Edinburgh’s great east window, then onward to London’s night skyline: looking up turns a passing visit into a way of paying attention.",
+ "theme": "Looking up: attention changes the scale of a place.",
+ "acts": [
+  {
+   "name": "I — The room",
+   "beat": "A quiet room becomes a starting point; the ordinary ceiling and objects invite a change in attention.",
+   "start_s": 0
+  },
+  {
+   "name": "II — The city and the cathedral",
+   "beat": "The Royal Mile leads from shared street life into St Giles’, where the upward gaze reaches its emotional peak.",
+   "start_s": 31
+  },
+  {
+   "name": "III — The view stays with me",
+   "beat": "The London skyline echoes the cathedral’s upward pull, returning the story to its opening question.",
+   "start_s": 94
+  }
+ ],
+ "shots": [
+  {
+   "n": 1,
+   "type": "gen",
+   "photo": "flat_chair.jpg",
+   "prompt": "Slow push toward the ceiling and poster, camera move first. Minimal subject motion; keep the real room, poster, identity, and clothes unchanged. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 1,
+   "sound": "Room tone; a soft low musical note."
+  },
+  {
+   "n": 2,
+   "type": "crop",
+   "photo": "flat_chair.jpg",
+   "crop": [
+    0.14,
+    0.05,
+    0.86,
+    0.53
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 1,
+   "sound": "Quiet room hum."
+  },
+  {
+   "n": 3,
+   "type": "gen",
+   "photo": "flat_chair.jpg",
+   "prompt": "Gentle push toward Usman seated in the chair, camera move first. Minimal subject motion; keep identity, clothes, pose, and real room. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 2,
+   "sound": "Distant city ambience."
+  },
+  {
+   "n": 4,
+   "type": "crop",
+   "photo": "flat_chair.jpg",
+   "crop": [
+    0.05,
+    0.36,
+    0.55,
+    0.91
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 2,
+   "sound": "Soft fabric rustle; room tone."
+  },
+  {
+   "n": 5,
+   "type": "gen",
+   "photo": "flat_standing.jpg",
+   "prompt": "Slow tilt from the floor toward Usman and the wall, camera move first. Minimal subject motion; preserve identity, clothes, pose, and room geometry. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 3,
+   "sound": "A gentle musical pulse begins."
+  },
+  {
+   "n": 6,
+   "type": "crop",
+   "photo": "flat_standing.jpg",
+   "crop": [
+    0.42,
+    0.04,
+    0.94,
+    0.56
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 3,
+   "sound": "Room tone fades into street hum."
+  },
+  {
+   "n": 7,
+   "type": "gen",
+   "photo": "old_town_chambers.jpg",
+   "prompt": "Slow upward tilt from flowers and doorway toward the building, camera move first. Minimal subject motion; preserve both people, clothes, flowers, bicycles, sign, and real street. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 4,
+   "sound": "Edinburgh street murmur; light footsteps."
+  },
+  {
+   "n": 8,
+   "type": "crop",
+   "photo": "old_town_chambers.jpg",
+   "crop": [
+    0.24,
+    0.03,
+    0.79,
+    0.39
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 4,
+   "sound": "Street hum; music opens slightly."
+  },
+  {
+   "n": 9,
+   "type": "crop",
+   "photo": "old_town_chambers.jpg",
+   "crop": [
+    0.03,
+    0.46,
+    0.47,
+    0.91
+   ],
+   "push": "right",
+   "seconds": 4,
+   "line_id": 5,
+   "sound": "Footsteps on stone."
+  },
+  {
+   "n": 10,
+   "type": "gen",
+   "photo": "old_town_chambers.jpg",
+   "prompt": "Slow lateral camera slide across the real street scene toward the pair. Minimal subject motion; preserve identities, clothes, flowers, bicycles, and building. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 5,
+   "sound": "Street ambience carries through."
+  },
+  {
+   "n": 11,
+   "type": "crop",
+   "photo": "old_town_chambers.jpg",
+   "crop": [
+    0.39,
+    0.23,
+    0.72,
+    0.52
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 6,
+   "sound": "A bicycle bell in the distance."
+  },
+  {
+   "n": 12,
+   "type": "crop",
+   "photo": "stgiles_nave_walk.jpg",
+   "crop": [
+    0.18,
+    0.01,
+    0.83,
+    0.47
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 6,
+   "sound": "Footsteps begin to echo indoors."
+  },
+  {
+   "n": 13,
+   "type": "gen",
+   "photo": "stgiles_nave_walk.jpg",
+   "prompt": "Gentle camera push down the nave toward Usman and the blue chancel. Minimal subject motion; preserve real architecture, visitors, identity, clothes, and backpack. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 7,
+   "sound": "Cathedral room tone; soft footfalls."
+  },
+  {
+   "n": 14,
+   "type": "crop",
+   "photo": "stgiles_nave_walk.jpg",
+   "crop": [
+    0.22,
+    0.15,
+    0.76,
+    0.86
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 7,
+   "sound": "Footsteps with a long stone echo."
+  },
+  {
+   "n": 15,
+   "type": "crop",
+   "photo": "stgiles_window_front.jpg",
+   "crop": [
+    0.04,
+    0.04,
+    0.96,
+    0.47
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 8,
+   "sound": "Music starts a gradual build."
+  },
+  {
+   "n": 16,
+   "type": "crop",
+   "photo": "stgiles_window_front.jpg",
+   "crop": [
+    0.19,
+    0.08,
+    0.81,
+    0.56
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 8,
+   "sound": "A faint glassy bell texture."
+  },
+  {
+   "n": 17,
+   "type": "crop",
+   "photo": "stgiles_window_front.jpg",
+   "crop": [
+    0.35,
+    0.1,
+    0.7,
+    0.43
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 9,
+   "sound": "Cathedral air; music holds."
+  },
+  {
+   "n": 18,
+   "type": "gen",
+   "photo": "stgiles_window_front.jpg",
+   "prompt": "Slow camera push toward Usman beneath the east window and paintings. Minimal subject motion; preserve identity, black clothes, backpack, real artwork, colors, and architecture. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 9,
+   "sound": "Subtle low strings rise."
+  },
+  {
+   "n": 19,
+   "type": "crop",
+   "photo": "stgiles_window_lookup.jpg",
+   "crop": [
+    0.04,
+    0.06,
+    0.64,
+    0.64
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 10,
+   "sound": "Music thins; cathedral echo."
+  },
+  {
+   "n": 20,
+   "type": "crop",
+   "photo": "stgiles_window_lookup.jpg",
+   "crop": [
+    0.18,
+    0.05,
+    0.93,
+    0.49
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 10,
+   "sound": "A single soft footstep."
+  },
+  {
+   "n": 21,
+   "type": "crop",
+   "photo": "stgiles_window_front.jpg",
+   "crop": [
+    0.4,
+    0.05,
+    0.9,
+    0.5
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 11,
+   "sound": "Music drops away."
+  },
+  {
+   "n": 22,
+   "type": "seedance",
+   "photo": "seedance_stgiles_ref",
+   "seconds": 5,
+   "line_id": 11,
+   "sound": "One second of silence, then cathedral breath and the music’s restrained peak."
+  },
+  {
+   "n": 23,
+   "type": "crop",
+   "photo": "stgiles_nave_walk.jpg",
+   "crop": [
+    0.17,
+    0.01,
+    0.84,
+    0.48
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 12,
+   "sound": "Blue-vault echo; music begins to resolve."
+  },
+  {
+   "n": 24,
+   "type": "gen",
+   "photo": "london_thames_night.jpg",
+   "prompt": "Slow push toward Usman at the riverside railing, camera move first. Minimal subject motion; preserve identity, denim jacket, pose, real skyline, river, and reflections. No new text or people.",
+   "seconds": 3.5,
+   "line_id": 12,
+   "sound": "Cathedral tone transitions into London city hum."
+  },
+  {
+   "n": 25,
+   "type": "crop",
+   "photo": "london_thames_night.jpg",
+   "crop": [
+    0.57,
+    0.02,
+    0.93,
+    0.69
+   ],
+   "push": "up",
+   "seconds": 4,
+   "line_id": 13,
+   "sound": "River wash; distant traffic."
+  },
+  {
+   "n": 26,
+   "type": "crop",
+   "photo": "london_thames_night.jpg",
+   "crop": [
+    0.49,
+    0.02,
+    0.88,
+    0.68
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 13,
+   "sound": "Low city hum; music opens."
+  },
+  {
+   "n": 27,
+   "type": "gen",
+   "photo": "london_thames_night.jpg",
+   "prompt": "Gentle upward tilt from the river reflections toward the skyline, camera move first. Minimal subject motion; preserve real buildings, night colors, water, and lights. No new structures, text, or people.",
+   "seconds": 3.5,
+   "line_id": 14,
+   "sound": "Water laps softly; distant traffic."
+  },
+  {
+   "n": 28,
+   "type": "crop",
+   "photo": "london_thames_night.jpg",
+   "crop": [
+    0.03,
+    0.48,
+    0.72,
+    0.96
+   ],
+   "push": "right",
+   "seconds": 4,
+   "line_id": 14,
+   "sound": "River wash continues."
+  },
+  {
+   "n": 29,
+   "type": "gen",
+   "photo": "london_thames_night.jpg",
+   "prompt": "Slow pull back to include Usman, railing, river, and skyline, camera move first. Minimal subject motion; preserve identity, clothes, and real night scene. No new buildings, text, or people.",
+   "seconds": 3.5,
+   "line_id": 15,
+   "sound": "Music resolves warmly; city hum softens."
+  },
+  {
+   "n": 30,
+   "type": "crop",
+   "photo": "london_thames_night.jpg",
+   "crop": [
+    0.08,
+    0.05,
+    0.95,
+    0.95
+   ],
+   "push": "in",
+   "seconds": 4,
+   "line_id": 15,
+   "sound": "River ambience fades to quiet."
+  }
+ ],
+ "lines": [
+  {
+   "id": 1,
+   "text": "Edinburgh made me look up. In the flat, even the ceiling and a poster could feel like the beginning of a story. You don’t need a grand plan to start noticing; sometimes you just need to arrive, set your bag down, and let your eyes wander.",
+   "source": "none"
+  },
+  {
+   "id": 2,
+   "text": "This rented flat became our base. The chair looked like a good place to land, and the quiet gave the day somewhere to settle. I liked having a room to return to after the city had filled my head, a small pause before heading back out.",
+   "source": "none"
+  },
+  {
+   "id": 3,
+   "text": "The ordinary things helped make the place feel like ours, at least for a little while. I could take a breath, then step outside and see what caught my attention. On the Royal Mile, that meant stopping with my companion at Old Town Chambers, among flowers, bicycles, and the passing street.",
+   "source": "https://www.marriott.com/en-gb/hotels/edioc-old-town-chambers-autograph-collection/"
+  },
+  {
+   "id": 4,
+   "text": "Old Town Chambers stands at 329 High Street. The Royal Mile runs about a Scots mile between Edinburgh Castle and the Palace of Holyroodhouse. A route like that carries more than distance: doorways, voices, and stone underfoot keep drawing your gaze from street level toward the roofline.",
+   "source": "https://www.marriott.com/en-gb/hotels/edioc-old-town-chambers-autograph-collection/ ; https://edinburgh.org/neighbourhoods/the-royal-mile/"
+  },
+  {
+   "id": 5,
+   "text": "Then St Giles’ opens around you. Founded by King David I in 1124, it is Edinburgh’s High Kirk. Its crown steeple probably dates from around 1500. Inside, the nave gives the eye room to travel: past the people, toward the blue chancel, then higher into the vault.",
+   "source": "https://www.stgilescathedral.org.uk/history/ ; https://arts.st-andrews.ac.uk/corpusofscottishchurches/site.php?id=158554"
+  },
+  {
+   "id": 6,
+   "text": "The east end gathers that upward pull into light and painted glass. The great east window depicts the Crucifixion and Ascension, and a historic guide credits it to Ballantine of Edinburgh. Below it, the paintings make another kind of invitation: to look closely, and to stay a little longer.",
+   "source": "https://www.electricscotland.com/bible/illustratedguide00meikiala.pdf"
+  },
+  {
+   "id": 7,
+   "text": "John Bellany’s harbour paintings bring boats, fishermen, and the coast into the cathedral. Bellany was born in Port Seton, where fishing life shaped those recurring subjects. The room holds both the scale of the architecture and the intimacy of a painted life; neither asks you to hurry past.",
+   "source": "https://www.hw.ac.uk/document-library/art-guidebook.pdf"
+  },
+  {
+   "id": 8,
+   "text": "Here, looking up stops being a gesture and becomes a way to pay attention. The window is at the east end of the choir; the inscription’s dates, 1874 to 1877, identify Falshaw’s time as Lord Provost. Details like these turn a beautiful view into a place with people and history inside it.",
+   "source": "https://www.electricscotland.com/bible/illustratedguide00meikiala.pdf"
+  },
+  {
+   "id": 9,
+   "text": "St Giles’ was briefly a cathedral in the seventeenth century; today it is a Presbyterian High Kirk. And then there is the blue vault, holding the moment open above us. That is the peak of the day for me: not a grand revelation, just the feeling of having looked long enough to see more.",
+   "source": "https://catalogue.nrscotland.gov.uk/nrsonlinecatalogue/browseDetails.aspx?reference=CH2%2F136"
+  },
+  {
+   "id": 10,
+   "text": "Later, by the Thames, the city offers a different ceiling. From the riverside, the Walkie-Talkie rises 155 metres above London, designed by Rafael Viñoly and completed in 2014. Its upper floors hold the public Sky Garden, but from here, the river reflections and the tower’s shape are enough to keep the eye climbing.",
+   "source": "https://www.cityoflondon.gov.uk/things-to-do/architecture/modern-architecture/20-fenchurch-street ; https://vinoly.com/works/20-fenchurch-street/"
+  },
+  {
+   "id": 11,
+   "text": "In Edinburgh I looked toward the vault; here I follow the skyline. The water keeps moving beneath both views. A place can reveal itself slowly, if you give it a moment. Maybe that’s what I wanted to bring home: the habit of looking up, and the patience to let the view answer.",
+   "source": "none"
+  }
+ ],
+ "music_cues": [
+  {
+   "t": 0,
+   "cue": "Sparse felt piano and low room tone; leave space around the opening words."
+  },
+  {
+   "t": 20,
+   "cue": "Add a muted pulse as the flat gives way to the Royal Mile."
+  },
+  {
+   "t": 40,
+   "cue": "Build gently with warm strings entering inside St Giles’."
+  },
+  {
+   "t": 76,
+   "cue": "Thin the arrangement as the window details and narration take focus."
+  },
+  {
+   "t": 83,
+   "cue": "Drop music; leave one second of near-silence immediately before the Seedance clip."
+  },
+  {
+   "t": 84,
+   "cue": "Seedance emotional peak: restrained string swell under cathedral ambience, then release."
+  },
+  {
+   "t": 98,
+   "cue": "Transition into soft city pulse and river sound."
+  },
+  {
+   "t": 116,
+   "cue": "Resolve to piano and river ambience; let the final line land before fading."
+  }
+ ],
+ "total_seconds": 120
+}

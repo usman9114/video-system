@@ -136,6 +136,11 @@ def _run(
     ]
     if search:
         cmd += ["-c", "tools.web_search=true"]
+    # boost (owner 2026-11-28): CHATGPT_EFFORT=high|xhigh raises reasoning effort; CHATGPT_MODEL picks the model
+    if os.environ.get("CHATGPT_EFFORT"):
+        cmd += ["-c", f'model_reasoning_effort="{os.environ["CHATGPT_EFFORT"]}"']
+    if os.environ.get("CHATGPT_MODEL"):
+        cmd += ["-m", os.environ["CHATGPT_MODEL"]]
     for img in images:
         cmd += ["-i", img]
     if schema:

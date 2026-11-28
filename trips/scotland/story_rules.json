@@ -1,0 +1,18 @@
+{"words": [215, 275], "seconds": [118, 132], "wps_max": 2.4,
+ "subjects": {
+  "Royal Mile": ["old_town_chambers"], "Old Town Chambers": ["old_town_chambers"], "High Street": ["old_town_chambers"], "companion": ["old_town_chambers"],
+  "window": ["stgiles_window_front", "stgiles_window_lookup"], "Ballantine": ["stgiles_window_front", "stgiles_window_lookup"],
+  "Falshaw": ["stgiles_window_front", "stgiles_window_lookup"], "Crucifixion": ["stgiles_window_front", "stgiles_window_lookup"],
+  "Ascension": ["stgiles_window_front", "stgiles_window_lookup"], "glass": ["stgiles_window_front", "stgiles_window_lookup"],
+  "Bellany": ["stgiles_window_front", "stgiles_window_lookup"], "painting": ["stgiles_window_front", "stgiles_window_lookup"],
+  "Port Seton": ["stgiles_window_front", "stgiles_window_lookup"], "fishermen": ["stgiles_window_front", "stgiles_window_lookup"],
+  "vault": ["stgiles_nave_walk", "seedance_stgiles_ref"], "nave": ["stgiles_nave_walk", "seedance_stgiles_ref"],
+  "St Giles": ["stgiles_nave_walk", "seedance_stgiles_ref", "stgiles_window_front", "stgiles_window_lookup"],
+  "King David": ["stgiles_nave_walk", "seedance_stgiles_ref"], "steeple": ["stgiles_nave_walk", "seedance_stgiles_ref"],
+  "Knox": ["stgiles_nave_walk", "seedance_stgiles_ref"],
+  "Thames": ["london_thames_night"], "London": ["london_thames_night"], "Walkie-Talkie": ["london_thames_night"],
+  "Sky Garden": ["london_thames_night"], "Viñoly": ["london_thames_night"],
+  "flat": ["flat_chair", "flat_standing"], "chair": ["flat_chair"], "poster": ["flat_standing", "flat_chair"]},
+ "forbidden": ["Thistle Chapel", "Lorimer", "I'm not sure", "hard to see"],
+ "facts_file": "trips/scotland/landmark_facts.md",
+ "notes": "Opus review: hook in first 3 s; Act I (flat) max 18 s; end with a short reflective personal line (no fact) on the last London shots that echoes the hook 'looking up'; 2-3 silent shots around the Seedance peak and the London reveal; each fact once; plain spoken, concrete, personal; no brochure filler."}
