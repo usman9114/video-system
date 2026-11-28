@@ -1,6 +1,6 @@
 # Project board
 
-_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-27 23:05 UTC._
+_Generated from `tracker/board.json` by `scripts/tracker.py`. Updated 2026-11-28 14:15 UTC._
 
 Project board. Source of truth for what is done / in progress / open. Every agent: read at session start, update with scripts/tracker.py as you work, commit it with your work. HANDOFF.md keeps the how-to detail; this keeps the state.
 
@@ -32,6 +32,7 @@ Project board. Source of truth for what is done / in progress / open. Every agen
 
 - **T17** Greece cinematic v4: Wan 2.2 I2V-A14B generated shots from real photos (owner approved 2026-11-27, ref = Gemini/Veo clip)  _(greece)_
   - 2026-11-27: Pilot 3 shots (a0a41173 Caryatids, IMG_9282 Meteora, IMG_9451 driving) running on Modal H100; gate each for text/landmark/face. If pass: shot list for all 12 scenes (~2 shots each), budget ~$25-35 of Modal free credits, ask before going over.
+  - 2026-11-28: Wan Lightning 4-step LoRA (merged, euler, CFG off) benchmark: 1 clip 105.6s, batch of 1 = 241.9s gpu incl 136s load, $0.265 vs ~$1.79/clip at 40 steps. Quality close to baseline, slightly less dolly motion.
 
 ## Waiting on owner review (3)
 
