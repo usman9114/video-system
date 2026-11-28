@@ -97,7 +97,13 @@ wan_image = (
                   "sed -i 's/^from .speech2video import WanS2V/try:\\n    from .speech2video import WanS2V\\nexcept Exception:\\n    WanS2V = None/; "
                   "s/^from .animate import WanAnimate/try:\\n    from .animate import WanAnimate\\nexcept Exception:\\n    WanAnimate = None/' "
                   "/opt/Wan2.2/wan/__init__.py && python -c \"import ast, einops, decord, librosa, peft; ast.parse(open('/opt/Wan2.2/wan/__init__.py').read()); print('wan deps ok')\"")
+    # Wan2.2-Lightning fork (ModelTC): same pipeline + the EULER sampler the 4-step LoRAs were distilled with
+    # (upstream Wan2.2 only has unipc/dpm++) and CFG skipped when guide_scale == 1. Used ONLY when lightning=True.
+    .run_commands("git clone --depth 1 https://github.com/ModelTC/Wan2.2-Lightning.git /opt/Wan2.2-Lightning")
 )
+LIGHTNING_REPO = "lightx2v/Wan2.2-Lightning"
+LIGHTNING_I2V_DIR = "Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1"
+LIGHTNING_DST = f"{W}/wan/lightning/i2v-A14B"
 
 
 @app.function(image=wan_image, volumes={W: weights}, timeout=7200, cpu=4)
@@ -108,6 +114,82 @@ def download_wan(model: str = "ti2v-5B") -> dict:
     weights.commit()
     du = subprocess.run(f"du -sh {dst}", shell=True, capture_output=True, text=True).stdout
     return {"ok": r.returncode == 0, "log": r.stderr[-1500:], "du": du}
+
+
+@app.function(image=wan_image, volumes={W: weights}, timeout=3600, cpu=4)
+def download_wan_lightning() -> dict:
+    """Wan2.2-Lightning I2V-A14B 4-step LoRAs (high + low noise expert) → {W}/wan/lightning/i2v-A14B/."""
+    import os
+    import shutil
+    import subprocess
+    os.makedirs(LIGHTNING_DST, exist_ok=True)
+    tmp = "/tmp/lightning_dl"
+    files = [f"{LIGHTNING_I2V_DIR}/high_noise_model.safetensors", f"{LIGHTNING_I2V_DIR}/low_noise_model.safetensors"]
+    r = subprocess.run(f"hf download {LIGHTNING_REPO} {' '.join(files)} --local-dir {tmp}", shell=True,
+                       capture_output=True, text=True)
+    listing = ""
+    try:  # log which I2V folders exist upstream (newer LoRA versions), for the record
+        from huggingface_hub import list_repo_files
+        listing = "\n".join(f for f in list_repo_files(LIGHTNING_REPO) if "I2V" in f)
+    except Exception as e:  # noqa: BLE001
+        listing = f"(list failed: {e})"
+    ok = r.returncode == 0
+    if ok:
+        for f in files:
+            shutil.copy(f"{tmp}/{f}", f"{LIGHTNING_DST}/{Path(f).name}")
+        weights.commit()
+    du = subprocess.run(f"ls -la {LIGHTNING_DST}", shell=True, capture_output=True, text=True).stdout
+    return {"ok": ok, "log": (r.stdout + r.stderr)[-1500:], "du": du, "upstream_i2v_files": listing}
+
+
+def _merge_lightning_lora(model, lora_path: str, label: str, min_frac: float = 0.9) -> dict:
+    """Merge one Lightning LoRA into a WanModel IN PLACE: W += (alpha/rank) * up @ down (fp32 math, stored in W's dtype).
+    Keys look like 'diffusion_model.blocks.N.self_attn.q.lora_down.weight' (+ '.alpha'); lora_A/lora_B also accepted.
+    Raises if fewer than min_frac of the LoRA modules matched a model weight."""
+    import torch
+    from safetensors import safe_open
+    sd = {}
+    with safe_open(lora_path, framework="pt", device="cpu") as f:
+        for k in f.keys():
+            sd[k] = f.get_tensor(k)
+    params = dict(model.named_parameters())
+    pairs = {}  # module name -> (down key, up key)
+    for k in sd:
+        for dn, up in ((".lora_down.weight", ".lora_up.weight"), (".lora_A.weight", ".lora_B.weight")):
+            if k.endswith(dn) and k[:-len(dn)] + up in sd:
+                pairs[k[:-len(dn)]] = (k, k[:-len(dn)] + up)
+    matched, unmatched, shape_bad = 0, [], []
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    for mod, (dk, uk) in pairs.items():
+        name = mod
+        for pre in ("diffusion_model.", "model.", "transformer."):
+            if name.startswith(pre):
+                name = name[len(pre):]
+        pk = name + ".weight"
+        if pk not in params:
+            unmatched.append(mod)
+            continue
+        down, up = sd[dk].to(dev, torch.float32), sd[uk].to(dev, torch.float32)
+        rank = down.shape[0]
+        ak = mod + ".alpha"
+        alpha = float(sd[ak]) if ak in sd else float(rank)
+        delta = (alpha / rank) * (up @ down)
+        p = params[pk]
+        if tuple(delta.shape) != tuple(p.shape):
+            shape_bad.append(mod)
+            continue
+        p.data = (p.data.to(dev).float() + delta).to(p.dtype).to(p.device)
+        matched += 1
+    total = len(pairs)
+    other = sorted({k.rsplit(".", 2)[-2] if "." in k else k for k in sd
+                    if not (k.endswith((".lora_down.weight", ".lora_up.weight", ".lora_A.weight", ".lora_B.weight", ".alpha")))})
+    stats = {"expert": label, "lora_modules": total, "matched": matched, "unmatched": len(unmatched),
+             "shape_mismatch": len(shape_bad), "other_keys_ignored": len(other), "unmatched_examples": unmatched[:5]}
+    print("lightning merge", stats, flush=True)
+    if total == 0 or matched < min_frac * total:
+        raise RuntimeError(f"Lightning LoRA merge FAILED for {label}: {stats}")
+    del sd
+    return stats
 
 
 def _wan_generate(task: str, model: str, prompt: str, image: bytes, size: str, frame_num: int, steps: int,
@@ -147,15 +229,21 @@ def wan_i2v_a14b(prompt: str, image: bytes = b"", size: str = "1280*720", frame_
 
 
 @app.function(image=wan_image, volumes={W: weights}, gpu="H100", timeout=6 * 3600, scaledown_window=2)
-def wan_i2v_a14b_batch(items: list, steps: int = 40, frame_num: int = 81) -> dict:
+def wan_i2v_a14b_batch(items: list, steps: int = 40, frame_num: int = 81, lightning: bool = False) -> dict:
     """Greece v2 realism animation, BATCHED (owner 2026-11-27: billed per container time, so keep the GPU busy):
     load Wan2.2 I2V-A14B ONCE, then animate every item back to back. Each clip is compute-bound at 720p, so one
     clip at a time already saturates the H100. items: [{"image_b64", "prompt", "seed"?, "orient"? ("portrait"),
     "focus_x"?, "focus_y"?, "n_prompt"?}]. The photo is cover-cropped to 720x1280 (9:16) BEFORE animation so the
-    model spends every pixel on the frame the film shows. Output 16 fps (model native); interpolation is done later."""
+    model spends every pixel on the frame the film shows. Output 16 fps (model native); interpolation is done later.
+    lightning=True: merge the Wan2.2-Lightning 4-step LoRAs (one per expert) into the weights, euler sampler, shift 5,
+    guide_scale 1.0 (CFG off: the pipeline then skips the unconditional pass), `steps` should be 4."""
     import io
     import sys
-    sys.path.insert(0, "/opt/Wan2.2")
+    root = "/opt/Wan2.2-Lightning" if lightning else "/opt/Wan2.2"
+    for m in [m for m in sys.modules if m == "wan" or m.startswith("wan.")]:
+        del sys.modules[m]  # the two checkouts both provide package `wan`; load only the one we need
+    sys.path = [p for p in sys.path if p not in ("/opt/Wan2.2", "/opt/Wan2.2-Lightning")]
+    sys.path.insert(0, root)
     import wan
     from PIL import Image, ImageOps
     from wan.configs import WAN_CONFIGS
@@ -163,6 +251,13 @@ def wan_i2v_a14b_batch(items: list, steps: int = 40, frame_num: int = 81) -> dic
     cfg = WAN_CONFIGS["i2v-A14B"]
     t0 = time.time()
     pipe = wan.WanI2V(config=cfg, checkpoint_dir=f"{W}/wan/i2v-A14B", device_id=0, rank=0, convert_model_dtype=True)
+    merge_stats = []
+    if lightning:
+        for label, model in (("high_noise_model", pipe.high_noise_model), ("low_noise_model", pipe.low_noise_model)):
+            merge_stats.append(_merge_lightning_lora(model, f"{LIGHTNING_DST}/{label}.safetensors", label))
+        solver, shift, guide = "euler", 5.0, (1.0, 1.0)
+    else:
+        solver, shift, guide = "unipc", cfg.sample_shift, cfg.sample_guide_scale
     load_s = time.time() - t0
     out = []
     for it in items:
@@ -173,16 +268,16 @@ def wan_i2v_a14b_batch(items: list, steps: int = 40, frame_num: int = 81) -> dic
         img = ImageOps.fit(img, (W_, H_), method=Image.LANCZOS,
                            centering=(float(it.get("focus_x", 0.5)), float(it.get("focus_y", 0.5))))
         kw = {"n_prompt": it["n_prompt"]} if it.get("n_prompt") else {}
-        video = pipe.generate(it["prompt"], img, max_area=W_ * H_, frame_num=frame_num, shift=cfg.sample_shift,
-                              sample_solver="unipc", sampling_steps=steps, guide_scale=cfg.sample_guide_scale,
+        video = pipe.generate(it["prompt"], img, max_area=W_ * H_, frame_num=frame_num, shift=shift,
+                              sample_solver=solver, sampling_steps=steps, guide_scale=guide,
                               seed=int(it.get("seed", 42)), offload_model=False, **kw)
         save_video(tensor=video[None], save_file="/tmp/clip.mp4", fps=cfg.sample_fps, nrow=1, normalize=True,
                    value_range=(-1, 1))
         del video
         out.append({"video_b64": base64.b64encode(Path("/tmp/clip.mp4").read_bytes()).decode(), "frames": frame_num,
-                    "fps": cfg.sample_fps, "seconds": round(time.time() - t1, 1)})
+                    "fps": cfg.sample_fps, "seconds": round(time.time() - t1, 1), "lightning": lightning})
     secs = time.time() - t0
-    return {"ok": True, "items": out, "load_seconds": round(load_s, 1), "gpu_seconds": round(secs, 1), "gpu": "H100",
+    return {"ok": True, "items": out, "lightning": lightning, "steps": steps, "merge": merge_stats, "load_seconds": round(load_s, 1), "gpu_seconds": round(secs, 1), "gpu": "H100",
             "usd": round(secs * H100_USD_PER_S, 3)}
 
 
@@ -220,6 +315,13 @@ def fastwan_batch(items: list, steps: int = 3, fps: int = 24, gpu: str = "L40S")
     path = f"{W}/fastwan/ti2v-5b"
     vae = AutoencoderKLWan.from_pretrained(path, subfolder="vae", torch_dtype=torch.float32)
     pipe = WanImageToVideoPipeline.from_pretrained(path, vae=vae, torch_dtype=torch.bfloat16).to("cuda")
+    merge_stats = []
+    if lightning:
+        for label, model in (("high_noise_model", pipe.high_noise_model), ("low_noise_model", pipe.low_noise_model)):
+            merge_stats.append(_merge_lightning_lora(model, f"{LIGHTNING_DST}/{label}.safetensors", label))
+        solver, shift, guide = "euler", 5.0, (1.0, 1.0)
+    else:
+        solver, shift, guide = "unipc", cfg.sample_shift, cfg.sample_guide_scale
     load_s = time.time() - t0
     out = []
     for it in items:
@@ -402,10 +504,16 @@ def api():
         img = base64.b64decode(body["image_b64"]) if body.get("image_b64") else b""
         return {"call_id": fn.spawn(body["prompt"], img, **kw).object_id}
 
+    @web.post("/wan/lightning/download")
+    def wan_lightning_download(body: dict):
+        return {"call_id": download_wan_lightning.spawn().object_id}
+
     @web.post("/wan/batch")
     def wan_batch(body: dict):
-        return {"call_id": wan_i2v_a14b_batch.spawn(body["items"], int(body.get("steps", 40)),
-                                                   int(body.get("frame_num", 81))).object_id}
+        lightning = bool(body.get("lightning", False))
+        steps = int(body.get("steps") or (4 if lightning else 40))
+        return {"call_id": wan_i2v_a14b_batch.spawn(body["items"], steps, int(body.get("frame_num", 81)),
+                                                   lightning).object_id}
 
     @web.post("/fastwan/download")
     def fastwan_download(body: dict):

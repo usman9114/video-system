@@ -91,8 +91,10 @@ def main():
     wb = sub.add_parser("wan-batch", help="Wan2.2 I2V-A14B batch on H100: one model load, every item")
     wb.add_argument("--items", required=True,
                     help='JSON file: [{"image","prompt","out","seed"?,"orient"?,"focus_x"?,"focus_y"?,"n_prompt"?}]')
-    wb.add_argument("--steps", type=int, default=40)
+    wb.add_argument("--steps", type=int, default=None, help="default 40; 4 with --lightning")
     wb.add_argument("--frame-num", type=int, default=81)
+    wb.add_argument("--lightning", action="store_true", help="Wan2.2-Lightning 4-step LoRA merged at load, CFG off")
+    sub.add_parser("wan-lightning-download", help="one-time: Wan2.2-Lightning I2V-A14B LoRAs → Modal volume")
     sub.add_parser("fastwan-download", help="one-time: FastWan2.2-TI2V-5B weights → Modal volume")
     fw = sub.add_parser("fastwan", help="FastWan batch: one GPU session animates every item")
     fw.add_argument("--items", required=True,
@@ -107,9 +109,17 @@ def main():
         r = wait(cid, every=20, limit=3600)
         print(json.dumps(r, indent=1)[:2000])
         return
+    if a.cmd == "wan-lightning-download":
+        cid = call("POST", "/wan/lightning/download", {})["call_id"]
+        print("call", cid, flush=True)
+        r = wait(cid, every=15, limit=3600)
+        print(json.dumps(r, indent=1)[:2500])
+        return
     if a.cmd == "wan-batch":
+        if a.steps is None:
+            a.steps = 4 if a.lightning else 40
         items = json.loads(Path(a.items).read_text())
-        body = {"steps": a.steps, "frame_num": a.frame_num, "items": []}
+        body = {"steps": a.steps, "frame_num": a.frame_num, "lightning": a.lightning, "items": []}
         for it in items:
             b = {k: v for k, v in it.items() if k not in ("image", "out")}
             b["image_b64"] = base64.b64encode(Path(it["image"]).read_bytes()).decode()
@@ -120,7 +130,7 @@ def main():
         with open(ROOT / "reports" / "modal-calls.jsonl", "a") as f:
             f.write(json.dumps({"op": "wan-batch", "call_id": cid, "n": len(items), "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}) + "\n")
         r = wait(cid, every=30, limit=6 * 3600)
-        log({"op": "wan-batch", "model": "i2v-A14B", "n": len(items), "steps": a.steps, "call_id": cid,
+        log({"op": "wan-batch", "model": "i2v-A14B", "lightning": a.lightning, "n": len(items), "steps": a.steps, "call_id": cid,
              "ok": r.get("ok"), "load_seconds": r.get("load_seconds"), "gpu_seconds": r.get("gpu_seconds"),
              "usd": r.get("usd")})
         if not r.get("ok"):
@@ -130,6 +140,8 @@ def main():
             Path(it["out"]).parent.mkdir(parents=True, exist_ok=True)
             Path(it["out"]).write_bytes(base64.b64decode(res["video_b64"]))
             print(f"wrote {it['out']}  {res['frames']} frames @ {res['fps']} fps  {res['seconds']}s")
+        if r.get("merge"):
+            print("lora merge:", json.dumps(r["merge"]))
         print(f"batch: load {r.get('load_seconds')}s, gpu {r.get('gpu_seconds')}s ≈ ${r.get('usd')}")
         return
     if a.cmd == "fastwan":
@@ -151,6 +163,8 @@ def main():
             Path(it["out"]).parent.mkdir(parents=True, exist_ok=True)
             Path(it["out"]).write_bytes(base64.b64decode(res["video_b64"]))
             print(f"wrote {it['out']}  {res['frames']} frames  {res['seconds']}s")
+        if r.get("merge"):
+            print("lora merge:", json.dumps(r["merge"]))
         print(f"batch: load {r.get('load_seconds')}s, gpu {r.get('gpu_seconds')}s ≈ ${r.get('usd')}")
         return
     if a.cmd == "wan":
