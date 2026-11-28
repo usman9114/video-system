@@ -67,7 +67,7 @@ def main():
         prompt = ("Rule: whatever the narrator names must be clearly visible in frame while he says it; places that are not "
                   "shown must be phrased as off-screen ('down the hill', 'in the museum'). Images are attached in order, two per "
                   "phrase (start, end). For each phrase name the subject he refers to, judge visibility "
-                  "(yes / partly / no / offscreen_phrased / none_named), say why in <15 words and give one concrete fix "
+                  "(yes / partly / no / offscreen_phrased / none_named). History or facts ABOUT a subject that is itself visible (e.g. a founding date said over the church, a maker said over the window) count as 'yes'; only judge 'no' when the named thing itself is absent, say why in <15 words and give one concrete fix "
                   "(reorder sentence, reword, camera move timing, crop, different shot) or 'none'.\n" + "\n".join(lines))
         r = chatgpt.ask(prompt, images=imgs, schema=str(sp), timeout=900)
     res = r["data"]["phrases"]
