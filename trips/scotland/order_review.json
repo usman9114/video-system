@@ -1,0 +1,99 @@
+{
+ "problems": [
+  "Playback #8 repeats the same couple-at-the-entrance image as #5, so it is a duplicate.",
+  "Playback #22 shows the man walking toward the nave and altar, but it comes after the window and paintings. Move it into the nave sequence before the east-window reveal.",
+  "The Seedance clip at #21 shows the man looking up inside the nave. It currently follows the window sequence only after #22, which sends the church geography backward.",
+  "The flat sequence moves from seated views in #1–3 to a shelf detail in #4 while the narration still describes settling into the chair. The images stay in the flat, but #4 does not show the narrated chair.",
+  "The narration on #15–16 describes the window's attribution and inscription, but #16 shows the man beneath the window rather than the inscription."
+ ],
+ "order": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  9,
+  10,
+  11,
+  12,
+  22,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29
+ ],
+ "drop": [
+  8
+ ],
+ "seedance_role": "Peak: place shot 21 after the east-window and paintings sequence, following the nave walk in shot 22. Let the music fall to silence on shot 20, then reach its peak on shot 21 and ease down into the London transition at shot 23.",
+ "peak_at_shot": 21,
+ "line_shots": {
+  "L1_edinburgh_beginning": [
+   1,
+   2
+  ],
+  "L2_chair": [
+   3,
+   4
+  ],
+  "L3_old_town_chambers": [
+   5,
+   6
+  ],
+  "L4_royal_mile": [
+   7
+  ],
+  "L5_enter_st_giles": [
+   9
+  ],
+  "L6_foundation_and_nave": [
+   10,
+   11
+  ],
+  "L7_high_kirk": [
+   12
+  ],
+  "L8_east_window": [
+   13,
+   14
+  ],
+  "L9_window_attribution": [
+   15,
+   16
+  ],
+  "L10_stood_under_window": [
+   17
+  ],
+  "L11_bellany_paintings": [
+   18,
+   19
+  ],
+  "L12_river_lights": [
+   24,
+   25
+  ],
+  "L13_city_towers": [
+   26,
+   27
+  ],
+  "L14_leave_looking_up": [
+   28,
+   29
+  ]
+ },
+ "notes": "Order lists storyboard shot numbers. Shots 20–22 are silent; shot 22 moves before the window reveal, and shot 21 becomes the church's visual peak. Keep the narration attached to its subject as mapped. Shot 8's repeated image is dropped."
+}

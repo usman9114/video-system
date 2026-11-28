@@ -256,7 +256,8 @@ def main():
         if st + d > last["end"] + 0.01: overrun.append({"line": lid, "past_last_shot_s": round(st + d - last["end"], 2)})
     # ---- music
     byn = {s["n"]: s for s in shots}
-    sd = [s for s in shots if s["type"] == "seedance"]
+    pk = sb.get("peak_shot")          # music silence+swell shot: storyboard "peak_shot" (n) or the seedance shot
+    sd = [s for s in shots if s["n"] == pk] if pk else [s for s in shots if s["type"] == "seedance"]
     S0, S1 = (sd[0]["start"], sd[0]["end"]) if sd else (None, None)
     first = lambda ph: min(s["start"] for s in shots if s["photo"].startswith(ph))
     secs = [(0, first("old_town"), "low"), (first("old_town"), byn[17]["start"], "mid")]
